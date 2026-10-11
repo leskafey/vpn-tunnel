@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-10-12T12:46:01.889580+00:00",
+  "scope": "local tests of current project layout build; no VPS access",
+  "host": "Darwin",
+  "python_version": "3.14.7",
+  "standalone_SHA256": "4e80dea6a67b0b9996acde636e559629e88d87fb26c6711f4287a245655df3cc",
+  "commands": [
+    "./scripts/build.sh",
+    "./scripts/test.sh",
+    "git diff --check",
+    "git check-ignore (private installation paths)"
+  ],
+  "unit_tests_passed": 98,
+  "shell_syntax": "passed",
+  "deterministic_package_and_source_match": "passed",
+  "private_paths_ignored_by_git": "passed",
+  "coverage": [
+    "project-relative runtime and generated service paths",
+    "simulated clean installation and interrupted installation resume",
+    "empty initial user registry and profiles; temporary SMART/FULL checks",
+    "Russian rule instructions and strict IP parsing",
+    "device creation, UUID preservation, export, revoke and rollback",
+    "cleanup, policy rollback and status regressions",
+    "loopback HTTP GET/HEAD/ETag/304"
+  ],
+  "native_binaries_and_systemd": "not run: local Docker daemon unavailable",
+  "external_network_or_public_ingress": "not tested",
+  "physical_devices": "not tested",
+  "working_VPS_contacted": false,
+  "historical_reports_used_as_current_evidence": false
+}

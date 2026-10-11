@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "scope": "Disposable Ubuntu 24.04 amd64 Docker/systemd container; local synthetic VLESS endpoint",
+  "CIDRs": 43,
+  "personal_DIRECT_domains": 0,
+  "fresh_empty_cache": true,
+  "native_remote_JSON_initialization": "passed",
+  "VLESS_JSON_HTTP_200_HEAD_304": "passed",
+  "TUN_or_device_test": false,
+  "working_VPS_contacted": false,
+  "checked_date": "2026-10-11",
+  "standalone_SHA256": "8d54c2f68685b716a3b87540858c0739c6b521facc41cb6e66c69a92ce3ba100"
+}

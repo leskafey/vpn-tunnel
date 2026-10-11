@@ -1,0 +1,25 @@
+{
+  "status": "passed",
+  "scope": "Ubuntu 24.04 amd64 emulation, isolated Docker/systemd; synthetic local endpoint",
+  "bootstrap": "passed",
+  "VM_memory_MiB": 2048,
+  "bootstrap_memory_limit_MiB": 768,
+  "bootstrap_memory_peak_MiB": 768,
+  "swap_used": false,
+  "physical_amd64_resource_tested": false,
+  "native_SMART_FULL_profiles": 8,
+  "real_VLESS_new_device_and_revoke": "passed",
+  "native_DNS_TCP_UDP_real_HTTPS": "passed",
+  "local_VLESS_fake_UDP_STUN": "passed",
+  "external_UDP_STUN_tested": false,
+  "counts": {
+    "smart": 1498102,
+    "direct": 17,
+    "ads": 56136
+  },
+  "JSON_bytes": 766,
+  "CIDRs": 43,
+  "public_VPS_ingress_tested": false,
+  "working_VPS_contacted": false,
+  "standalone_SHA256": "8d54c2f68685b716a3b87540858c0739c6b521facc41cb6e66c69a92ce3ba100"
+}

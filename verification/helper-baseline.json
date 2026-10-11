@@ -1,0 +1,16 @@
+{
+  "source": "Reviewed helper functions from native-tested standalone installer, 2026-10-11",
+  "files": {
+    "source-parser.py": "5276d7cfdd3584da2f0434aeb27dba4fde2523fe523baaf78ef7d4cd59798612",
+    "personal-policy.py": "9bbaa5231745c9af28b1c56def48fe83486dda399f2b3afd9cea0c4429270def",
+    "text-builder.py": "867c8d3c53ba0297519b7488c1bbd8dcaeb48e198613bde198566c9e2f63056a",
+    "runtime-checker.py": "67d87b881864cc4f3dbdab4c2f7126183e645712f7c3f0a6a3e8d5dd44976108",
+    "dns-wire.py": "20e4208c262cbd71ab7955c3a028cd8883770e256fdd3a9138d881847460718a",
+    "personal-runtime.py": "864f4e3b7cbe917f9cb7ca7e5babe488113b163e2170e7b396fe57bf3a19ef08",
+    "personal-checker.py": "f9722ac2f9b4313ad18ce1e545131eb38cd0d95ee5e233e6c384711321524ba5",
+    "transport-probes.py": "ea4d12e1ac7f5fe0a132ebc3cf3920ac29f8ccbfbd8a213d37d4462c6bf262f9",
+    "domain-extras.py": "7e4edf7bcdac46137df06f1428d363c93702c4fd40dc2b564a6a6a5b586982cd",
+    "ip-source.py": "73751e3a054c11f97ea39d32640240a666bc33251206710dbd597ab4d66abe5a",
+    "closed-probe.py": "7da70bf8267e85336c4f36fec6a1fdc03b59e6e3dfa649cda79229175fe85598"
+  }
+}

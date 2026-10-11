@@ -1,0 +1,42 @@
+{
+  "status": "passed",
+  "systemd": "systemd 255 (255.4-1ubuntu8.17)",
+  "scope": "real systemd parser and sandbox; diagnostic executables",
+  "cases": [
+    {
+      "root": "/opt/vpn project",
+      "systemd_verify": true,
+      "literal_working_directory": true,
+      "exec_argv_and_environment": true,
+      "sandbox_writable_paths": true,
+      "watcher_triggered": true,
+      "cli_outside_project": true,
+      "exclusive_linux_state_publication": true
+    },
+    {
+      "root": "/opt/vpn \"quoted\" $HOME\\folder",
+      "systemd_verify": true,
+      "literal_working_directory": true,
+      "exec_argv_and_environment": true,
+      "sandbox_writable_paths": true,
+      "watcher_triggered": true,
+      "cli_outside_project": true,
+      "exclusive_linux_state_publication": true
+    },
+    {
+      "root": "/srv/deployments/vpn-projects/vpn-tunel",
+      "systemd_verify": true,
+      "literal_working_directory": true,
+      "exec_argv_and_environment": true,
+      "sandbox_writable_paths": true,
+      "watcher_triggered": true,
+      "cli_outside_project": true,
+      "exclusive_linux_state_publication": true
+    }
+  ],
+  "standalone_SHA256": "695e6e752d39594501fd16fca81f1572f2d5b1b637c0caa76bcb12f241c77429",
+  "VPN_native_binaries": false,
+  "full_installation": false,
+  "physical_devices": false,
+  "working_VPS_contacted": false
+}

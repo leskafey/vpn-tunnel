@@ -1,0 +1,23 @@
+{
+  "status": "passed",
+  "scope": "targeted native regressions; Ubuntu 24.04 aarch64 in disposable Docker",
+  "standalone_SHA256": "695e6e752d39594501fd16fca81f1572f2d5b1b637c0caa76bcb12f241c77429",
+  "binary_SHA256": {
+    "mihomo": "1b315bc038d05f84ee86d232f3c3d2b020b5044e9b971bb8fe215b6e6a2148f3",
+    "sing-box": "b8610f45abb7e967e195264383f5cbd20fba7821a3c37e3a8c4c5ab6cad28eac",
+    "xray": "c2d20a7045250497083afea0d79db0672f6c89a25aaaf37c92de034d6b764b04"
+  },
+  "native_profile_checks": 10,
+  "denied_destination_checks": 8,
+  "numeric_public_and_private_HTTP": "passed",
+  "domain_resolution_attempts": 0,
+  "numeric_VLESS_DNS_TCP_UDP_and_fake_IP": "passed",
+  "real_local_VLESS_revoke_and_remaining_device": "passed",
+  "isolated_ads_exception_DNS_TCP_UDP": "passed",
+  "full_installation_tested": false,
+  "long_project_root_socket_tested": true,
+  "live_systemd_tested": false,
+  "public_VPS_ingress_tested": false,
+  "physical_device_import_tested": false,
+  "working_VPS_contacted": false
+}

@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "checked_utc": "2026-10-12T13:28:36.848377+00:00",
+  "review_base": "e58a81c3ac16db1640b97d60eed2921ee7df5578",
+  "scope": "three confirmed defects, preserving current uncommitted project layout changes",
+  "standalone_SHA256": "695e6e752d39594501fd16fca81f1572f2d5b1b637c0caa76bcb12f241c77429",
+  "local_stubbed_suite": {
+    "command": "./scripts/test.sh",
+    "status": "passed",
+    "tests": 113,
+    "host": "Darwin",
+    "python": "3.14.7",
+    "system_commands_and_VPN_binaries": "stubs",
+    "HTTP_and_Unix_sockets": "real local sockets",
+    "cases": [
+      "per-directive systemd paths and literal CLI arguments outside project cwd",
+      "interruptions after staging state, staging install and during first journal fsync",
+      "exclusive state publication; foreign state and files preserved",
+      "missing journal cannot regenerate existing identity",
+      "long-root socket, cleanup on native-check failure and UTF-8 path length boundary"
+    ]
+  },
+  "linux_stubbed_suite": {
+    "command": "/repo/scripts/test.sh",
+    "status": "passed",
+    "tests": 113,
+    "host": "disposable Ubuntu 24.04 ARM64 container",
+    "python": "3.12.3",
+    "system_commands_and_VPN_binaries": "stubs",
+    "checkpoint_publication": "real Linux renameat2(RENAME_NOREPLACE)",
+    "setup_note": "Container tmpfs /tmp remounted exec for shell test programs; initial noexec run failed."
+  },
+  "native_systemd_paths": {
+    "status": "passed",
+    "report": "confirmed-defects-systemd-paths.json",
+    "command": "python3 /repo/tests/check-install-paths-linux.py",
+    "systemd": "255 (255.4-1ubuntu8.17)",
+    "programs": "diagnostic executables, not VPN binaries",
+    "full_installation": false
+  },
+  "native_configuration_and_transport": {
+    "status": "passed",
+    "report": "confirmed-defects-native-linux.json",
+    "command": "python3 /repo/tests/check-review-linux.py --long-project-root",
+    "architecture": "ARM64",
+    "binaries": "pinned Xray, sing-box and Mihomo with SHA-256 verification",
+    "native_profile_checks": 10,
+    "denied_destination_checks": 8,
+    "long_project_root": "/srv/deployments/vpn-projects/vpn-tunel",
+    "sources": "synthetic local fixtures; no external network",
+    "transport_started_by_systemd": false,
+    "full_installation": false
+  },
+  "build": {
+    "builder": "./scripts/build.sh",
+    "source_match": "./scripts/build.sh --check",
+    "status": "passed"
+  },
+  "git_diff_check": "passed",
+  "remaining_checks": [
+    "full clean Ubuntu 24.04 amd64 installation with all server sources under systemd",
+    "full installation interruption/resume and reboot in that environment",
+    "production daily refresh resource limits",
+    "public ingress and physical SMART/FULL clients",
+    "physical client refresh intervals 1h and 5m"
+  ],
+  "working_VPS_contacted": false,
+  "installed_host_VPN_modified": false,
+  "historical_reports_used_as_current_evidence": false
+}
