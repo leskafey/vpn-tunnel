@@ -10,7 +10,7 @@ import zipfile
 
 ROOT = Path(__file__).resolve().parent.parent
 HERE = ROOT / 'src'
-FILES = ('closed-probe.py', 'dns-wire.py', 'domain-extras.py', 'ip-source.py', 'personal-checker.py', 'personal-policy.py', 'personal-runtime.py', 'runtime-checker.py', 'source-parser.py', 'text-builder.py', 'transport-probes.py', 'vpn-stack-install.py', 'vpn-stack-manage.py', 'vpn-stack-runtime.py')
+FILES = ('ad-policy.py', 'closed-probe.py', 'dns-wire.py', 'domain-extras.py', 'ip-source.py', 'personal-checker.py', 'personal-policy.py', 'personal-runtime.py', 'runtime-checker.py', 'source-parser.py', 'text-builder.py', 'transport-probes.py', 'vpn-stack-install.py', 'vpn-stack-manage.py', 'vpn-stack-runtime.py', 'vpn-stack-upgrade.py')
 
 
 def package():
@@ -34,6 +34,8 @@ HEADER = '''#!/usr/bin/env python3
 
 python3 install-vpn.py audit
 python3 install-vpn.py install --server-ip PUBLIC_IPV4
+python3 install-vpn.py upgrade
+python3 install-vpn.py upgrade --recover
 """
 import base64
 import hashlib

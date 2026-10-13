@@ -85,7 +85,9 @@ def base_matches(work, names):
                         for index in range(len(name.split('.')))] for name in names}
     wanted = {root for roots in ancestors.values() for root in roots}
     matches = {name: {} for name in names}
-    for tag in ('smart', 'direct', 'ads'):
+    tags = ('smart', 'direct', 'ads') + tuple(tag for tag in ('ads-allow', 'ads-important')
+                                            if (work / (tag + '.normalized.txt')).is_file())
+    for tag in tags:
         exact, suffix, children = set(), set(), set()
         with (work / (tag + '.normalized.txt')).open(encoding='ascii') as stream:
             for row in stream:
@@ -106,7 +108,9 @@ def base_matches(work, names):
 
 
 def expected_route(name, base, personal):
-    if base['ads'] and not within(name, personal['ads-exceptions']):
+    blocked = (base['ads'] and not base.get('ads-allow', False)
+               or base.get('ads-important', False) or within(name, personal.get('ads', [])))
+    if blocked and not within(name, personal['ads-exceptions']):
         return 'fake', 'ads-reject'
     if within(name, personal['direct']):
         return 'real', 'personal-direct'
@@ -152,7 +156,7 @@ def isolate(checker, text, home, dns_port, socks_port, upstream, api=None):
 
 
 def loaded_counts(checker, api, expected):
-    # Inline providers may expose their payload in the API response. The three
+    # Inline providers may expose their payload in the API response. The four
     # personal files are each bounded at 64 KiB, so keep a bounded larger read
     # than the old MRS-only checker and never emit payloads or personal names.
     limit = 1024 * 1024
@@ -180,6 +184,21 @@ def runtime_check(s, core, pilot, work, manifest, personal, baseline_text=None):
     finally:
         s.checker.SOURCE = previous_source
     names = runtime_cases(witness, personal)
+    # Probe both automatic exception holes and important overrides; the entire
+    # providers still load even though DNS samples are bounded.
+    for tag in ('ads-allow', 'ads-important'):
+        path = work / (tag + '.normalized.txt')
+        if path.is_file():
+            with path.open(encoding='ascii') as stream:
+                for index, row in enumerate(stream):
+                    if index >= 8:
+                        break
+                    require(row.endswith('\n') and row != '\n', 'ADS_PATTERN_INVALID')
+                    root = row[2:-1] if row.startswith('+.') else row[:-1]
+                    names.append(root)
+                    if len(root) <= 238:
+                        names.append('allowed-child.' + root)
+    names = sorted(set(names))
     s.builder.atomic_json(work / 'witnesses.json', witness)
     hits = base_matches(work, names)
     expected_dns = {name: expected_route(name, hits[name], personal) for name in names}
@@ -187,7 +206,9 @@ def runtime_check(s, core, pilot, work, manifest, personal, baseline_text=None):
     rules = home / 'rules'
     rules.mkdir(parents=True, mode=0o700)
     providers, expected = {}, {}
-    for tag in ('smart', 'direct', 'ads'):
+    tags = ('smart', 'direct', 'ads') + tuple(tag for tag in ('ads-allow', 'ads-important')
+                                            if tag + '.mrs' in manifest['files'])
+    for tag in tags:
         source = work / 'assets' / (tag + '.mrs')
         shutil.copyfile(source, rules / source.name)
         require(digest(rules / source.name) == manifest['files'][source.name]['sha256'], 'TEST_MRS_COPY_CHANGED')
@@ -241,8 +262,9 @@ def runtime_check(s, core, pilot, work, manifest, personal, baseline_text=None):
                     class_counts[reason] = class_counts.get(reason, 0) + 1
                 # The prior full personal pilot proves allowed/blocked TCP/UDP paths.
                 # Here a blocked synthetic DNS sample additionally checks socket close.
-                if expected_dns[witness['ads-child']][1] == 'ads-reject':
-                    ad_ip = s.wire.lookup(dns_port, witness['ads-child'], 'tcp')
+                blocked = next((name for name in names if expected_dns[name][1] == 'ads-reject'), None)
+                if blocked is not None:
+                    ad_ip = s.wire.lookup(dns_port, blocked, 'tcp')
                     s.checker.reject_destination(s.wire, socks_port, ad_ip)
                 for _ in range(20):
                     require(process.poll() is None, 'ISOLATED_RUNTIME_EXITED_DURING_OBSERVATION')

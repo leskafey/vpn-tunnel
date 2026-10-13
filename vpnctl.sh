@@ -12,6 +12,7 @@ if [[ ${1:-} == --help || ${1:-} == -h ]]; then
   vpnctl rule add proxy example.org
   vpnctl rule add proxy-ip 8.8.8.8
   vpnctl rule add direct example.org
+  vpnctl rule add ads ads.example.org
   vpnctl rule add ads-exceptions ads.example.org
   vpnctl rule remove proxy example.org
   vpnctl status

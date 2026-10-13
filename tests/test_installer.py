@@ -59,15 +59,15 @@ class PackageTests(unittest.TestCase):
             self.assertNotIn(b'/Users/', raw)
             self.assertNotIn(b'/var/lib/vpn-server-policy-text/', raw)
         self.assertEqual([name for name in files if name.endswith('.json')], ['code-manifest.json'])
-        self.assertEqual(len(files), 15)
+        self.assertEqual(len(files), 17)
 
     def test_unmodified_helpers_match_historical_baseline(self):
         _, files = b.package()
         baseline = json.loads((HERE.parent / 'verification/helper-baseline.json').read_bytes())['files']
         self.assertEqual(len(baseline), 11)
         for name, checksum in baseline.items():
-            if name == 'personal-runtime.py':
-                continue  # Current socket fix is covered separately; preserve the historical report.
+            if name in ('personal-runtime.py', 'personal-policy.py'):
+                continue  # Current socket and advertising changes have semantic regression tests.
             self.assertEqual(hashlib.sha256(files[name]).hexdigest(), checksum, name)
 
     def test_standalone_help_never_runs_host_audit(self):
@@ -113,6 +113,50 @@ class PackageTests(unittest.TestCase):
             i.extract_binary(out.getvalue(), {'kind': 'zip', 'member': 'core'})
         with patch.object(i, 'BIN_LIMIT', 10), self.assertRaisesRegex(i.InstallError, 'BINARY_SIZE_LIMIT'):
             i.extract_binary(gzip.compress(b'a' * 11), {'kind': 'gz'})
+
+
+class HostAuditTests(unittest.TestCase):
+    def audit(self, available_kib, *, free_bytes=2 * 1024**3, **kwargs):
+        root = Path(self.enterContext(tempfile.TemporaryDirectory(dir='/tmp')))
+        root_info = root.stat()
+        runtime = SimpleNamespace(CODE=root / 'lib', ETC=root / 'config', DATA=root / 'data')
+        original_read, original_is_dir, original_is_file = Path.read_text, Path.is_dir, Path.is_file
+        def read(path, *args, **kw):
+            if str(path) == '/etc/os-release':
+                return 'ID=ubuntu\nVERSION_ID="24.04"\n'
+            if str(path) == '/proc/meminfo':
+                return f'MemAvailable: {available_kib} kB\n'
+            return original_read(path, *args, **kw)
+        with patch.object(i, 'PROJECT', root), patch.object(i, 'ROOT', root / 'state'), \
+             patch.object(i, 'PROFILE_ROOT', root / 'profiles'), patch.object(i, 'CLI', root / 'vpnctl'), \
+             patch.object(i.sys, 'platform', 'linux'), patch.object(i.os, 'geteuid', return_value=0), \
+             patch.object(i.platform, 'machine', return_value='x86_64'), \
+             patch.object(Path, 'read_text', read), patch.object(Path, 'exists', return_value=False), \
+             patch.object(Path, 'is_dir', lambda p: str(p) == '/run/systemd/system' or original_is_dir(p)), \
+             patch.object(Path, 'is_file', lambda p: str(p) == '/sys/fs/cgroup/cgroup.controllers' or original_is_file(p)), \
+             patch.object(Path, 'stat', return_value=SimpleNamespace(st_uid=0, st_mode=root_info.st_mode)), \
+             patch.object(i.shutil, 'disk_usage', return_value=SimpleNamespace(free=free_bytes)), \
+             patch.object(i.subprocess, 'run', return_value=SimpleNamespace(stdout=b'not-found\n')), \
+             patch.object(i, 'audit_policy_namespace', return_value={}), patch.object(i, 'units', return_value={}), \
+             patch.object(i.socket, 'socket'):
+            return i.host_audit(runtime, **kwargs)
+
+    def test_memory_boundary_for_install_resume_and_upgrade(self):
+        for action, kwargs, minimum in (('install', {}, 650), ('resume', {'resume': True}, 650),
+                                       ('upgrade', {'resume': True, 'minimum_memory_mib': 512}, 512)):
+            with self.subTest(action=action):
+                with self.assertRaisesRegex(i.InstallError, 'MEMORY_OR_DISK_HEADROOM_LOW'):
+                    self.audit(minimum * 1024 - 1, **kwargs)
+                self.assertEqual(self.audit(minimum * 1024, **kwargs)['status'], 'compatible')
+
+    def test_upgrade_accepts_605_mib_while_installation_still_refuses(self):
+        self.assertEqual(self.audit(605 * 1024, resume=True, minimum_memory_mib=512)['status'], 'compatible')
+        with self.assertRaisesRegex(i.InstallError, 'MEMORY_OR_DISK_HEADROOM_LOW'):
+            self.audit(605 * 1024)
+
+    def test_upgrade_still_requires_two_gib_free_disk(self):
+        with self.assertRaisesRegex(i.InstallError, 'MEMORY_OR_DISK_HEADROOM_LOW'):
+            self.audit(512 * 1024, free_bytes=2 * 1024**3 - 1, resume=True, minimum_memory_mib=512)
 
 
 class ProfileTests(unittest.TestCase):

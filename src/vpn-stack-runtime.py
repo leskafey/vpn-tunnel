@@ -40,7 +40,9 @@ def configure_paths(project):
 configure_paths(Path(__file__).resolve().parent.parent)
 GROUP = 'vpn-policy'
 UNIT = 'vpn-stack-dns.service'
-FILES = {'proxy': 'proxy.txt', 'direct': 'direct.txt', 'ads-exceptions': 'ads-exceptions.txt'}
+FILES = {'proxy': 'proxy.txt', 'direct': 'direct.txt', 'ads-exceptions': 'ads-exceptions.txt', 'ads': 'ads.txt'}
+BASE_TAGS = ('smart', 'direct', 'ads')
+AD_TAGS = ('ads-allow', 'ads-important')
 IP_FILE = 'proxy-ip.txt'
 SOURCES = {'rulist': 'https://raw.githubusercontent.com/bol-van/rulist/main/reestr_hostname.txt',
            'antifilter': 'https://antifilter.download/list/domains.lst',
@@ -135,7 +137,8 @@ def modules():
                         wire=result['dns-wire.py'], core=result['personal-policy.py'],
                         personal=result['personal-runtime.py'], pilot=result['personal-checker.py'],
                         setup=result['transport-probes.py'], extras=result['domain-extras.py'],
-                        parser=result['source-parser.py'], ip=result['ip-source.py'], closed=result['closed-probe.py'])
+                        parser=result['source-parser.py'], ip=result['ip-source.py'], closed=result['closed-probe.py'],
+                        ad_policy=result['ad-policy.py'])
     s.builder.MIHOMO = CODE / 'bin/mihomo'
     s.builder.updater_idle = lambda: None  # All callers hold our single shared policy lock.
     s.builder.load_parser = lambda: s.parser
@@ -144,19 +147,31 @@ def modules():
     return s
 
 
+def upgrade_idle():
+    if globals().get('_UPGRADE_ALLOWED', False):
+        return
+    path = PROJECT / 'state/upgrade/transaction.json'
+    if path.exists() or path.is_symlink():
+        journal = record(path)
+        if journal.get('status') not in ('committed', 'rolled_back'):
+            raise BlockingIOError('UPGRADE_RECOVERY_REQUIRED')
+
+
 @contextmanager
 def lock():
+    upgrade_idle()
     path = DATA / 'update.lock'
     require(path.is_file() and not path.is_symlink(), 'POLICY_LOCK_REQUIRED')
     with path.open('r') as stream:
         fcntl.flock(stream.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)
+        upgrade_idle()  # Recheck after acquiring the shared lock.
         yield
 
 
 def personal(s):
     values, snapshots = {}, {}
     for key, name in FILES.items():
-        raw = raw_file(ETC / name)
+        raw = personal_raw(key, name)
         values[key] = s.core.parse_personal(raw, s.parser)
         snapshots[key] = hashlib.sha256(raw).hexdigest()
     require(len(values['direct']) <= 256 and len(direct_body(values['direct'])) <= 32768,
@@ -165,6 +180,14 @@ def personal(s):
     parse_personal_ips(raw)
     snapshots['proxy-ip'] = hashlib.sha256(raw).hexdigest()
     return values, snapshots
+
+
+def personal_raw(key, name):
+    path = ETC / name
+    # A missing new blocklist means empty for pre-existing installations.
+    if key == 'ads' and not path.exists() and not path.is_symlink():
+        return b''
+    return raw_file(path)
 
 
 def parse_personal_ips(raw):
@@ -223,9 +246,13 @@ def combined_ips(info):
     return raw, dict(info, CIDRs=count, JSON_bytes=len(raw), personal_CIDRs=len(personal_networks))
 
 
+def provider_tags(source):
+    return BASE_TAGS + tuple(tag for tag in AD_TAGS if (source / 'assets' / (tag + '.mrs')).is_file())
+
+
 def providers(source):
     return {tag: {'type': 'file', 'behavior': 'domain', 'format': 'mrs',
-                  'path': str(source / 'assets' / (tag + '.mrs'))} for tag in ('smart', 'direct', 'ads')}
+                  'path': str(source / 'assets' / (tag + '.mrs'))} for tag in provider_tags(source)}
 
 
 def base_config(s, source):
@@ -398,10 +425,11 @@ def make_full(s, work, previous=None):
                     'REGISTRY_CHANGE_GUARD')
         with (work / 'smart.raw.txt').open('a') as output:
             s.builder.append_suffixes(work / 'extra-proxy.unique.txt', output)
-        for tag, name in (('direct', 'extra-direct'), ('ads', 'oisd-small')):
-            with (work / (tag + '.raw.txt')).open('x') as output:
-                s.builder.append_suffixes(work / (name + '.unique.txt'), output)
-        for tag in ('smart', 'direct', 'ads'):
+        with (work / 'direct.raw.txt').open('x') as output:
+            s.builder.append_suffixes(work / 'extra-direct.unique.txt', output)
+        ad_tags, ad_metadata = s.ad_policy.build(s, work, commit, previous)
+        manifest['source_metadata'].update(ad_metadata)
+        for tag in ('smart', 'direct', *ad_tags):
             manifest['files'][tag + '.mrs'] = s.builder.compile_and_verify(tag, work / (tag + '.raw.txt'), work / 'assets', work)
             os.chown(work / 'assets' / (tag + '.mrs'), 0, grp.getgrnam(GROUP).gr_gid)
             (work / 'assets' / (tag + '.mrs')).chmod(0o640)
@@ -418,7 +446,7 @@ def reuse(source, previous, work):
     (work / 'assets').mkdir(mode=0o750)
     os.chown(work / 'assets', 0, grp.getgrnam(GROUP).gr_gid)
     (work / 'assets').chmod(0o750)
-    for tag in ('smart', 'direct', 'ads'):
+    for tag in provider_tags(source):
         for name in ('assets/' + tag + '.mrs', tag + '.normalized.txt'):
             os.link(source / name, work / name, follow_symlinks=False)
     return result
@@ -567,15 +595,16 @@ def recover(s):
 
 def activate(s, work, manifest, initial=False):
     _, inline = s.core.compose(base_config(s, Path(manifest['assets_source'])), manifest['personal'])
-    manifest['counts'] = {tag: manifest['files'][tag + '.mrs']['normalized_patterns'] for tag in ('smart', 'direct', 'ads')}
+    tags = provider_tags(work)
+    manifest['counts'] = {tag: manifest['files'][tag + '.mrs']['normalized_patterns'] for tag in tags}
     manifest['counts'].update(inline)
     config, _ = s.core.compose(base_config(s, Path(manifest['assets_source'])), manifest['personal'])
     atomic(work / 'backend.yaml', config.encode(), 0o640, grp.getgrnam(GROUP).gr_gid)
     raw = raw_file(work / 'backend.yaml', 1048576)
     manifest['config_sha256'] = hashlib.sha256(raw).hexdigest()
     manifest.update(schema=1, status='verified', activation='candidate')
-    names = ['assets/' + t + '.mrs' for t in ('smart', 'direct', 'ads')]
-    names += [t + '.normalized.txt' for t in ('smart', 'direct', 'ads')]
+    names = ['assets/' + t + '.mrs' for t in tags]
+    names += [t + '.normalized.txt' for t in tags]
     names += ['backend.yaml', 'witnesses.json', 'proxy-ipv4.json', 'personal-direct-domains.json']
     manifest['checksums'] = {name: digest(work / name) for name in names}
     atomic(work / 'manifest.json', dump(manifest), 0o640, grp.getgrnam(GROUP).gr_gid)
@@ -631,7 +660,8 @@ def activate(s, work, manifest, initial=False):
 
 def trim_files(work):
     keep = {'assets', 'owner.json', 'manifest.json', 'backend.yaml', 'witnesses.json', 'proxy-ipv4.json',
-            'personal-direct-domains.json', 'smart.normalized.txt', 'direct.normalized.txt', 'ads.normalized.txt'}
+            'personal-direct-domains.json', 'smart.normalized.txt', 'direct.normalized.txt', 'ads.normalized.txt',
+            'ads-allow.normalized.txt', 'ads-important.normalized.txt'}
     for path in work.iterdir():
         if path.name not in keep:
             # rmtree does not follow internal symlinks; top-level links are unlinked.
@@ -644,6 +674,7 @@ def cleanup():
     Unknown directories are never adopted. A malformed reference stops cleanup
     before deleting anything. Pending transactions retain all their work files.
     """
+    upgrade_idle()
     root = DATA / 'generations'
     require(root.is_dir() and not root.is_symlink() and root.stat().st_uid == 0,
             'CLEANUP_ROOT_INVALID')
@@ -754,7 +785,8 @@ def apply(action):
         with generation_work() as work:
             manifest = make_full(s, work, previous) if action == 'daily' else reuse(source, previous, work)
             manifest.update(personal=values, personal_sha256=snapshots, ip=ip_info,
-                            source_entries={'ads-exceptions': {'inline_domain_suffixes': len(values['ads-exceptions'])}})
+                            source_entries={key: {'inline_domain_suffixes': len(values.get(key, []))}
+                                            for key in ('ads', 'ads-exceptions')})
             gid = grp.getgrnam(GROUP).gr_gid
             atomic(work / 'proxy-ipv4.json', body, 0o640, gid)
             atomic(work / 'personal-direct-domains.json', direct_body(values['direct']), 0o640, gid)
@@ -773,6 +805,9 @@ def fingerprint():
     result = []
     for name in (*FILES.values(), IP_FILE):
         path = ETC / name
+        if name == FILES['ads'] and not path.exists() and not path.is_symlink():
+            result.append((0, 0, 0))
+            continue
         info = path.lstat()
         require(stat.S_ISREG(info.st_mode) and info.st_uid == 0 and info.st_size <= 65536, 'PERSONAL_FILE_INVALID')
         result.append((info.st_ino, info.st_size, info.st_mtime_ns))
@@ -867,7 +902,8 @@ def status():
                  'last_successful_apply_utc': manifest.get('applied_utc'),
                  'personal_counts': {k: len(v) for k, v in manifest['personal'].items()}}
         pending = [name for key, name in {**FILES, 'proxy-ip': IP_FILE}.items()
-                   if hashlib.sha256(raw_file(ETC / name)).hexdigest() != manifest['personal_sha256'].get(key)]
+                   if hashlib.sha256(personal_raw(key, name)).hexdigest() != manifest['personal_sha256'].get(
+                       key, hashlib.sha256(b'').hexdigest() if key == 'ads' else None)]
         require(digest(CONFIG) == manifest['config_sha256'], 'ACTIVE_BACKEND_CONFIG_CHANGED')
         s = modules()
         s.personal.loaded_counts(s.checker, HOME / 'controller.sock', manifest['counts'])
@@ -898,9 +934,23 @@ def status():
             except Exception:
                 transactions[name] = 'unreadable'
                 faults.append('invalid_' + name)
+    upgrade = {'status': 'not_run'}
+    path = PROJECT / 'state/upgrade/transaction.json'
+    if path.exists() or path.is_symlink():
+        try:
+            journal = record(path)
+            upgrade = {'status': journal['status'], 'transaction': journal.get('transaction')}
+            if 'services_restored' in journal:
+                upgrade['services_restored'] = journal['services_restored']
+            if upgrade['status'] not in ('committed', 'rolled_back') or journal.get('services_restored') is False:
+                faults.append('unfinished_upgrade')
+        except Exception:
+            upgrade = {'status': 'unreadable'}
+            faults.append('invalid_upgrade_journal')
     report('status', status='healthy' if not faults and not update_faults else 'degraded',
            services=services, updates=updates, saved_policy=saved, transport_config=transport,
            unapplied_personal_files=pending, transactions=transactions,
+           upgrade=upgrade,
            faults=faults, update_faults=update_faults, update_states=update_states,
            scope='local checks; public VPN reachability not tested')
     return 1 if faults or update_faults else 0

@@ -151,7 +151,7 @@ def device(r, operation, name=None, platform=None):
                 r.run(['systemctl', 'restart', 'vpn-stack-xray.service'], 'DEVICE_TRANSPORT_RESTART_FAILED')
                 if operation == 'add':
                     source, manifest = r.active()
-                    for filename in ('witnesses.json', 'smart.normalized.txt', 'direct.normalized.txt', 'ads.normalized.txt'):
+                    for filename in ('witnesses.json', *(tag + '.normalized.txt' for tag in r.provider_tags(source))):
                         os.link(source / filename, work / filename, follow_symlinks=False)
                     probe = r.record(r.ETC / 'probe-client.json')
                     probe['outbounds'][0]['uuid'] = entry['uuid']
@@ -213,7 +213,7 @@ def rule(r, operation, kind, value):
     r.require(kind in (*r.FILES, 'proxy-ip'), 'RULE_KIND_INVALID')
     s = r.modules()
     path = r.ETC / (r.IP_FILE if kind == 'proxy-ip' else r.FILES[kind])
-    raw = r.raw_file(path)
+    raw = r.personal_raw(kind, path.name)
     if kind == 'proxy-ip':
         parse = r.parse_personal_ips
         canonical = lambda line: str(parse(line.encode())[0])
@@ -239,7 +239,7 @@ def rule(r, operation, kind, value):
     if kind == 'proxy-ip':
         _, active = r.active()
         r.ip_body([r.ipaddress.ip_network(c) for c in active['ip']['source_CIDRs']] + parse(candidate))
-    r.require(r.raw_file(path) == raw, 'RULE_FILE_CHANGED_DURING_EDIT')
+    r.require(r.personal_raw(kind, path.name) == raw, 'RULE_FILE_CHANGED_DURING_EDIT')
     r.atomic(path, candidate)
     r.report('rule', status='saved', kind=kind, application='automatic watcher',
              device_DIRECT_interval='5m', device_IP_interval='1h')
@@ -256,7 +256,7 @@ def main():
                      default='universal', help='Необязательно: по умолчанию общий профиль для всех устройств')
     rules = commands.add_parser('rule')
     rules.add_argument('operation', choices=('add', 'remove'))
-    rules.add_argument('kind', choices=('proxy', 'direct', 'ads-exceptions', 'proxy-ip'))
+    rules.add_argument('kind', choices=('proxy', 'direct', 'ads', 'ads-exceptions', 'proxy-ip'))
     rules.add_argument('value')
     commands.add_parser('status', help='Локальные службы, обновления, последняя политика и неприменённые правки; код 1 при неисправности')
     commands.add_parser('cleanup', help='Удалить остатки обновлений, сохранив активные данные, транзакцию и откат; работает при полном диске')

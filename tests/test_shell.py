@@ -77,6 +77,19 @@ class ShellTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertEqual(self.calls()[0][-4:], ['install', '--server-ip', '8.8.8.8', '--resume'])
 
+    def test_upgrade_and_recovery_need_no_server_ip(self):
+        self.assertEqual(self.run_shell('upgrade').returncode, 0)
+        self.assertEqual(self.calls()[0][-1], 'upgrade')
+        self.assertIn('--unit=vpn-stack-upgrade', self.calls()[0])
+        self.assertEqual(self.run_shell('upgrade', '--recover').returncode, 0)
+        self.assertEqual(self.calls()[1][-2:], ['upgrade', '--recover'])
+
+    def test_upgrade_rejects_install_options_before_starting_services(self):
+        for args in (('upgrade', '--server-ip', '8.8.8.8'), ('upgrade', '--resume'),
+                     ('--server-ip', '8.8.8.8', '--recover'), ('audit', '--recover')):
+            self.assertEqual(self.run_shell(*args).returncode, 2)
+        self.assertEqual(self.calls(), [])
+
     def test_invalid_arguments_never_start_services(self):
         for args in ((), ('--server-ip',), ('--server-ip', '--resume'), ('--server-ip=',),
                      ('--server-ip', '8.8.8.8', '--server-ip', '9.9.9.9'),

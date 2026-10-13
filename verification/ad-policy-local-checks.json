@@ -1,0 +1,211 @@
+{
+  "verified_utc": "2026-10-13T11:27:17.684934+00:00",
+  "standalone_sha256": "10a9e2fcf7c10d5489054d36f3cabefd95f0b1360a3476103ef6a2b90454acf3",
+  "code_sha256": {
+    "src/ad-policy.py": "c37acc4094f9ee4f17f532dec55beece91af41c4fa2955b72d2a4422ff66b910",
+    "src/closed-probe.py": "7da70bf8267e85336c4f36fec6a1fdc03b59e6e3dfa649cda79229175fe85598",
+    "src/dns-wire.py": "20e4208c262cbd71ab7955c3a028cd8883770e256fdd3a9138d881847460718a",
+    "src/domain-extras.py": "7e4edf7bcdac46137df06f1428d363c93702c4fd40dc2b564a6a6a5b586982cd",
+    "src/ip-source.py": "73751e3a054c11f97ea39d32640240a666bc33251206710dbd597ab4d66abe5a",
+    "src/personal-checker.py": "f9722ac2f9b4313ad18ce1e545131eb38cd0d95ee5e233e6c384711321524ba5",
+    "src/personal-policy.py": "6c4fd9d835fe84c92b627723c4cb5dccccbbf1a18cbb1138474ef16853898e91",
+    "src/personal-runtime.py": "20441031fa45ead584e238c8b4b51fcb5e956d0724bf4db61ce827cfce13f386",
+    "src/runtime-checker.py": "67d87b881864cc4f3dbdab4c2f7126183e645712f7c3f0a6a3e8d5dd44976108",
+    "src/source-parser.py": "5276d7cfdd3584da2f0434aeb27dba4fde2523fe523baaf78ef7d4cd59798612",
+    "src/text-builder.py": "867c8d3c53ba0297519b7488c1bbd8dcaeb48e198613bde198566c9e2f63056a",
+    "src/transport-probes.py": "ea4d12e1ac7f5fe0a132ebc3cf3920ac29f8ccbfbd8a213d37d4462c6bf262f9",
+    "src/vpn-stack-install.py": "c97029ec99172949c7bc676657418ed6ed0a367ff0ca34fe1e96eb70fb5997aa",
+    "src/vpn-stack-manage.py": "edea76e651995959f92217b135054bab02686e7bdc799490b89bdeab50a87175",
+    "src/vpn-stack-runtime.py": "23b545ca4a06f37a7cea524d05ad05e904dbf915df2907fd566b8d934971b196"
+  },
+  "local_tests": {
+    "command": "./scripts/test.sh",
+    "tests": 136,
+    "status": "passed"
+  },
+  "native_policy": {
+    "status": "passed",
+    "platform": "darwin",
+    "mihomo_version": "Mihomo Meta v1.19.31 darwin arm64 with go1.26.8 Mon Sep 14 13:24:49 UTC 2026\nUse tags: with_gvisor",
+    "binary_sha256": "fae1f37e28ee53fcf5be7a8bb121099db1fe442e44205734ed49c62579364090",
+    "scenarios": [
+      {
+        "scenario": "legacy",
+        "status": "ok",
+        "loaded_provider_rule_counts": {
+          "smart": 2,
+          "direct": 1,
+          "ads": 10001
+        },
+        "DNS_TCP_UDP_policy_checks": 44,
+        "classification_sample_counts": {
+          "ads-reject": 7,
+          "control-proxy": 2,
+          "default-direct": 5,
+          "automatic-proxy": 6,
+          "automatic-direct": 2
+        },
+        "personal_DNS_samples_per_file": 8,
+        "all_personal_entries_loaded": true,
+        "temporary_backend_stopped": true,
+        "process_memory": {},
+        "scope": "full source-text MRS plus actual personal snapshot, isolated synthetic upstream; not VLESS/device"
+      },
+      {
+        "scenario": "upstream-exceptions-important-badfilter",
+        "status": "ok",
+        "loaded_provider_rule_counts": {
+          "smart": 2,
+          "direct": 1,
+          "ads": 10001,
+          "ads-allow": 3,
+          "ads-important": 1,
+          "ads-effective": 1
+        },
+        "DNS_TCP_UDP_policy_checks": 50,
+        "classification_sample_counts": {
+          "default-direct": 9,
+          "ads-reject": 6,
+          "control-proxy": 2,
+          "automatic-proxy": 6,
+          "automatic-direct": 2
+        },
+        "personal_DNS_samples_per_file": 8,
+        "all_personal_entries_loaded": true,
+        "temporary_backend_stopped": true,
+        "process_memory": {},
+        "scope": "full source-text MRS plus actual personal snapshot, isolated synthetic upstream; not VLESS/device"
+      },
+      {
+        "scenario": "personal-block-overrides-upstream-and-direct",
+        "status": "ok",
+        "loaded_provider_rule_counts": {
+          "smart": 2,
+          "direct": 1,
+          "ads": 10001,
+          "ads-allow": 3,
+          "ads-important": 1,
+          "personal-direct": 1,
+          "personal-ads": 2,
+          "ads-effective": 1
+        },
+        "DNS_TCP_UDP_policy_checks": 54,
+        "classification_sample_counts": {
+          "ads-reject": 13,
+          "control-proxy": 2,
+          "default-direct": 4,
+          "automatic-proxy": 6,
+          "automatic-direct": 2
+        },
+        "personal_DNS_samples_per_file": 8,
+        "all_personal_entries_loaded": true,
+        "temporary_backend_stopped": true,
+        "process_memory": {},
+        "scope": "full source-text MRS plus actual personal snapshot, isolated synthetic upstream; not VLESS/device"
+      },
+      {
+        "scenario": "personal-exceptions-override-all-blocks",
+        "status": "ok",
+        "loaded_provider_rule_counts": {
+          "smart": 2,
+          "direct": 1,
+          "ads": 10001,
+          "ads-allow": 3,
+          "ads-important": 1,
+          "personal-direct": 1,
+          "ads-exceptions": 2,
+          "personal-ads": 1,
+          "ads-effective": 1
+        },
+        "DNS_TCP_UDP_policy_checks": 54,
+        "classification_sample_counts": {
+          "default-direct": 11,
+          "ads-reject": 3,
+          "control-proxy": 2,
+          "personal-direct": 3,
+          "automatic-proxy": 6,
+          "automatic-direct": 2
+        },
+        "personal_DNS_samples_per_file": 8,
+        "all_personal_entries_loaded": true,
+        "temporary_backend_stopped": true,
+        "process_memory": {},
+        "scope": "full source-text MRS plus actual personal snapshot, isolated synthetic upstream; not VLESS/device"
+      }
+    ],
+    "scope": "local synthetic DNS TCP/UDP and blocked SOCKS; no VPS/systemd/TUN/YouTube"
+  },
+  "live_source_compilation": {
+    "antizapret_commit": "92d51a26ce52f5a9100496d434dc2cccafe6c8c8",
+    "oisd-small": {
+      "valid": 56686,
+      "discarded": 0,
+      "bytes": 1104660,
+      "sha256": "d9b7a1ea628d25a89f3431a79c7133b52d3794c3f72739c7f47c663670e38359"
+    },
+    "source_metadata": {
+      "adguard-dns": {
+        "bytes": 4480030,
+        "sha256": "69b53a3278f95a00cad92226deb9262b2af341bdbd60ab3f16b6253cae24bdee",
+        "valid": 184451,
+        "unsupported": 752,
+        "disabled": 1,
+        "block": 183491,
+        "allow": 199,
+        "important": 3
+      },
+      "antizapret-ads": {
+        "bytes": 254,
+        "sha256": "f421f053c3af926c0e2a4580e5241b436b45d4f1a5e877ce2b77bf74f3d2ea5f",
+        "valid": 11,
+        "unsupported": 0,
+        "disabled": 0,
+        "block": 11,
+        "allow": 0,
+        "important": 0
+      },
+      "antizapret-ads-allow": {
+        "bytes": 183,
+        "sha256": "41d18d5b365cb7995370d34d8538c9bf81ca73f70b97451a869d78a2762477ed",
+        "valid": 5,
+        "unsupported": 0,
+        "disabled": 0,
+        "block": 0,
+        "allow": 5,
+        "important": 0
+      }
+    },
+    "compiled_providers": {
+      "ads": {
+        "sha256": "c4cb0c333c0fda749bcbd9a8c58d66b4553fa0ad9c0d5245fe8f9b99db39989b",
+        "bytes": 1805607,
+        "behavior": "domain",
+        "normalized_patterns": 187501,
+        "semantic_witness_sha256": "fe0da1d977ed244ccf50f258c1cdb386bbfd740a7fa07ef818fafb91dc1c704e",
+        "coverage_roundtrip": "passed"
+      },
+      "ads-allow": {
+        "sha256": "a844a7c8457c0fd6b97e6a3e133bccac2412af08e8769ccd81779af539801f19",
+        "bytes": 2707,
+        "behavior": "domain",
+        "normalized_patterns": 204,
+        "semantic_witness_sha256": "43185b3dad7999615b0495c14eef8bf62fde171d0ea4f0ec46df24cc317e7f70",
+        "coverage_roundtrip": "passed"
+      },
+      "ads-important": {
+        "sha256": "969dc16c2db84d5b98d612ed393ba0f6fa8ff5dedf6fb0d85bf332088d61e746",
+        "bytes": 111,
+        "behavior": "domain",
+        "normalized_patterns": 3,
+        "semantic_witness_sha256": "75abc5f4a7f6b509323f6de6b157667000526dca6cd3d4cf2401804efaf0b0f8",
+        "coverage_roundtrip": "passed"
+      }
+    },
+    "sources_from": "public source downloads in /private/tmp; no bundled list data"
+  },
+  "limits": [
+    "No working VPS deployment or verification",
+    "No physical client, TUN, systemd or YouTube ad playback test",
+    "On macOS /proc RSS and socket ownership assertions are omitted"
+  ]
+}

@@ -16,6 +16,7 @@
 Источники списков: [AntiZapret-VPN](https://github.com/GubernievS/AntiZapret-VPN),
 [rulist](https://github.com/bol-van/rulist),
 [antifilter](https://antifilter.download/), [oisd](https://github.com/sjhgvr/oisd),
+[AdGuard DNS Filter](https://github.com/AdguardTeam/AdGuardSDNSFilter),
 [официальные диапазоны Telegram](https://core.telegram.org/resources/cidr.txt).
 Списки скачиваются при установке и обновлении; их содержимое в репозитории
 не хранится.

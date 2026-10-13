@@ -25,6 +25,25 @@
 заглушками. Локальные HTTP/Unix-сокеты настоящие. Эти проверки не подтверждают
 работу systemd, нативных VPN-бинарников или подключение физического устройства.
 
+[test_upgrade.py](../tests/test_upgrade.py) проверяет сохранение ключей/профилей,
+отказ изменённому коду и ссылкам вместо каталогов, откат после активации и сбоя
+фиксации, прерывание переключения каталогов и повтор прерванного отката.
+Файловые операции настоящие; systemd, сетевые проверки и сборка политики заменены
+заглушками. [test_shell.py](../tests/test_shell.py) проверяет аргументы `upgrade`
+и `upgrade --recover`; обновление также проверяется через Python-диспетчер.
+
+[test_upgrade_review.py](../tests/test_upgrade_review.py) добавляет SIGTERM и
+ошибку сразу после `os.replace`, сохранение резервных копий при ошибке recovery,
+отказ реальных старых runtime из сохранённых fixtures, прямого cleanup, повторный запуск служб
+после terminal-состояния, ошибки DNS/старта и миграцию точного прежнего загрузчика.
+Файлы и сигнал настоящие; владельцы, Linux-платформа, systemd и DNS заменены
+заглушками. Проверка порядка fsync подтверждает вызовы, а не устойчивость к
+отключению питания. [Исследование durability](UPGRADE-DURABILITY.md).
+Точные снимки runtime из `4e643dc` и `a62ad73` хранятся в
+[`tests/fixtures/previous-runtimes`](../tests/fixtures/previous-runtimes/README.md)
+с SHA-256 и происхождением. Unit-тесты не требуют Git-истории и работают
+в shallow checkout и архиве исходников без `.git`.
+
 ## Нативные сценарии Linux
 
 Сценарии `tests/check-*-linux.py` предназначены только для одноразовых
@@ -35,6 +54,11 @@ Ubuntu-контейнеров. Они не подключаются к рабо�
 
 | Сценарий | Что проверяет и ограничения |
 | --- | --- |
+| [check-upgrade-systemd-linux.py](../tests/check-upgrade-systemd-linux.py) | Настоящий systemd 255, Mihomo, HTTP и переключение комплекта кода в ARM64-контейнере. Берёт установленный комплект из настоящего git archive родителя или a62ad73. Проверяет независимое восстановление без `lib/`, SIGTERM/исключение после replace журнала, потерю процесса после prepared/committed/rolled_back, ошибку systemd ExecStartPre и повтор recovery. Запускает apply настоящего прежнего установленного runtime и его CLI при prepared; исходные пользовательские правки и кэш сохраняются. Источники и DNS локальные; Xray и policy workers — диагностические программы. amd64 host audit, VLESS, рабочий VPS и TUN не проверяются. |
+| [check-upgrade-container-boot.py](../tests/check-upgrade-container-boot.py) | Повторная загрузка systemd/PID 1 самого одноразового контейнера после upgrade-сценария. Из реального сохранённого rollback-журнала создаётся согласованное pending-состояние; проверяются запуск core и triggers, ответ DNS, отсутствие циклов и контрольные суммы данных. Это инъекция файлового состояния, без моделирования потери питания. |
+| [check-upgrade-p1-linux.py](../tests/check-upgrade-p1-linux.py) | Дополнение к systemd upgrade fixture. Настоящий исторический apply остановлен между open и flock; аварии после handoff, prepared, двух переключений lib и во время отката. Убийство и stop/start guardian оставляют flock у PID 1; внешняя правка сохраняет отказ recovery. Миграция прерывается после каждой записи движка, указателя, обоих loaders, юнитов, target, drop-in и daemon-reload. Используется подлинный пакет транзакции a62ad73 или предыдущих исправлений. Проверяются cached loader, граф Xray → recovery, повтор восстановления, DNS и личные файлы. |
+| [check-upgrade-activation-linux.py](../tests/check-upgrade-activation-linux.py) | Настоящие systemd 255 и Mihomo: потеря updater после записи DNS-конфигурации, запуска нового backend и завершения activate до commit; потеря guardian при восстановлении backend.yaml и finish-процесса после restart и проверки политики. Для каждой точки проверяются различающийся состав providers и одинаковые counts с разными правилами. Проверяются новый PID, старое поколение и checksums, DNS TCP/UDP, fake-IP, REJECT, личные файлы/кэш и повтор recovery. Диагностические Xray/workers, локальные источники/DNS; shims добавляют только остановку процесса вокруг неизменного проверенного engine. |
+| [test_upgrade_policy.py](../tests/test_upgrade_policy.py) | Логика проверки DNS/REJECT сверх counts, отказ при смене поколения и ошибка проверки с повторным restart. DNS/API/systemd с заглушками; не нативное подтверждение. |
 | [check-install-paths-linux.py](../tests/check-install-paths-linux.py) | Настоящий systemd: разбор юнитов, рабочий каталог, аргументы, переменные окружения, ограничения записи, watcher, CLI и эксклюзивную публикацию состояния Linux, включая `/root/vpn-tunnel` и нестандартные пути. Использует диагностические программы; VPN и установку не запускает. |
 | [check-review-linux.py](../tests/check-review-linux.py) | Нативные конфигурации SMART/FULL, запрещённые назначения, локальный VLESS, DNS TCP/UDP, HTTP, fake-IP, отзыв устройства и изолированную проверку политики. Транспорт запускается напрямую, без systemd; источники — локальные тестовые данные. |
 | [check-root-access-linux.py](../tests/check-root-access-linux.py) | Настоящий Mihomo 1.19.31 и HTTP-службу под systemd при исходных правах `/root` и проекта `0700`: чтение нужных данных, запрет чтения ключей/профилей/личных правил и записи в политики, DNS TCP/UDP, смену поколений и атомарную замену конфигурации. Проверяет повторную подготовку каталогов; полный установщик не запускает. |
@@ -47,7 +71,49 @@ Ubuntu-контейнеров. Они не подключаются к рабо�
 python3 /repo/tests/check-install-paths-linux.py
 python3 /repo/tests/check-review-linux.py --long-project-root
 python3 /repo/tests/check-root-access-linux.py
+PREVIOUS_REVISION=a62ad73 python3 /repo/tests/check-upgrade-systemd-linux.py
 ```
+
+Для upgrade-сценария подготовьте `/previous` через `git archive 4e643dc`
+либо `git archive a62ad73`, а `/repo` — из текущего рабочего дерева. Нужны
+закреплённые ARM64-бинарники в `/native-binaries` и `/native-checksums.json`.
+Каждый прогон требует нового контейнера с systemd в PID 1. Для восстановления
+настоящего прежнего журнала используйте родительский `/previous`, разместите
+archive a62ad73 в `/legacy-current` и задайте `LEGACY_PACKAGE=/legacy-current`.
+Это создаёт журнал реальным кодом a62ad73, прерывает его при отсутствии `lib/`
+и восстанавливает новым движком. Копирование файлов через `docker cp` допустимо,
+если Colima не предоставляет host bind mounts.
+
+Для подтверждённых P1 используйте те же контейнерные предпосылки:
+
+```sh
+# /previous — настоящий archive a62ad73 (также поддерживается 4e643dc).
+P1_SCENARIO=preopen PREVIOUS_REVISION=a62ad73 python3 /repo/tests/check-upgrade-systemd-linux.py
+# Новый контейнер: исходный комплект a62ad73, 12 потерь процессов.
+ACTIVATION_SCENARIO=1 PREVIOUS_REVISION=a62ad73 python3 /repo/tests/check-upgrade-systemd-linux.py
+# Новый контейнер: /previous — 4e643dc, /legacy-current — a62ad73.
+P1_SCENARIO=migration PREVIOUS_REVISION=4e643dc LEGACY_PACKAGE=/legacy-current python3 /repo/tests/check-upgrade-systemd-linux.py
+```
+
+`P1_PREOPEN_POINT` ограничивает прогон одной точкой аварии. Для совместимости
+с незакоммиченными исправлениями предыдущего ревью сохраните их исходники и
+`scripts/build.py` до правки; используйте копию как `LEGACY_PACKAGE` и добавьте
+`P1_PREVIOUS_INFRASTRUCTURE=1`. Проверка создаёт транзакцию настоящим прежним
+кодом, без подмены нового журнала под старый. Между границами миграции только
+в одноразовом контейнере восстанавливается tar-снимок этой транзакции с исходными
+правами и владельцами. Ключи, UUID, профили, личные правила и cache sentinel
+сравниваются по байтам. Xray/workers диагностические, источники синтетические,
+DNS локальный; Mihomo, flock/FDSTORE и systemd настоящие.
+Для гибели guardian внутри отката диагностический ExecStart shim добавляет
+SIGSTOP после настоящей записи `rolling_back`; после этого процесс завершается
+и перезапускается с исходным loader. Движок и manifest на диске не изменяются.
+
+После upgrade-прогона можно проверить повторную загрузку **того же одноразового**
+контейнера: выполните `check-upgrade-container-boot.py prepare` внутри него,
+`docker restart <имя>` на host, затем `check-upgrade-container-boot.py check`
+в контейнере. Эта проверка намеренно переиспользует согласованные before-файлы
+реального rollback-журнала и помечает его prepared; новое обновление и сбой ФС
+не имитируются. Отчёт: `/root/vpn-upgrade-native/boot-check-report.json`.
 
 Вариант `--long-project-root` дополнительно проверяет сокет изолированной
 политики при корне `/srv/deployments/vpn-projects/vpn-tunel`.
@@ -71,6 +137,40 @@ python3 /repo/tests/check-root-access-linux.py
 журнала, длину и очистку проверочного сокета. Системные команды и бинарники
 в этих тестах заменены заглушками.
 
+[test_ad_policy.py](../tests/test_ad_policy.py) проверяет объединение рекламных
+источников, точные и доменные исключения, `$badfilter`, приоритеты личных правил,
+совместимость старых поколений, CLI, обновление и сохранение рабочей политики
+при ошибке. Нативная проверка доступна отдельно на macOS и Linux:
+
+```sh
+python3 tests/check-ad-policy-native.py --mihomo /путь/к/mihomo
+```
+
+Нужен Mihomo 1.19.31 для текущей ОС. Сценарий компилирует MRS с проверкой
+обратного преобразования и проверяет четыре конфигурации через DNS TCP/UDP и
+блокируемое SOCKS-соединение. DNS upstream синтетический и локальный; доступ
+к VPS не используется. На macOS пропускаются проверки `/proc` для памяти и
+владения слушающими сокетами. Это не проверка systemd, TUN или рекламы YouTube.
+
+## Проверка исправлений ревью HEAD a62ad73
+
+[head-review-fixes.json](../verification/head-review-fixes.json) фиксирует SHA-256
+проверенного установщика и исходников, 168 локальных тестов, native upgrade с
+реальных 4e643dc/a62ad73, миграцию настоящего старого журнала, полный граф
+systemd без циклов и повторную загрузку контейнера с согласованным pending
+состоянием. Критические проверки включают заранее открытый lock старого runtime,
+FDSTORE у PID 1 при гибели guardian, миграцию настоящих старых транзакций и
+12 аварий активации/отката при разном составе providers и одинаковых counts.
+Нативный прогон рекламной политики повторён: 218 DNS TCP/UDP-проверок,
+включая badfilter и совпадающие после нормализации формы правил.
+Для воспроизведения P1 сохранены результаты до и после исправления: PID Mihomo
+сохранялся и providers не соответствовали поколению; после исправления PID
+меняется и проверяются загруженная политика и REJECT. Cold-boot fixture использует
+отдельную диагностическую DNS-службу с ранними зависимостями systemd; это
+избегает fork с работающим DNS-потоком и сохраняет upstream после reboot.
+Файловые проверки с заглушками, нативные подтверждения и ограничения указаны
+отдельно; рабочий VPS и потеря питания ФС не проверялись.
+
 ## Исторические отчёты
 
 Файлы в `verification/` описывают конкретные проверки, окружения и SHA-256.
@@ -82,6 +182,8 @@ python3 /repo/tests/check-root-access-linux.py
 
 | Отчёт | Проверенная версия и область проверки |
 | --- | --- |
+| [upgrade-local-checks.json](../verification/upgrade-local-checks.json) | SHA-256 `c76463965021…`: 150 локальных тестов; systemd 255 в Ubuntu ARM64-контейнере, реальный Mihomo/HTTP и обновление синтетической политики. Проверены прерывание процесса при отсутствии `lib/`, восстановление через зависимость systemd и здоровый `vpnctl status` после отката. Xray/workers диагностические; без amd64 host audit, VLESS, VPS, TUN и физических клиентов. |
+| [ad-policy-local-checks.json](../verification/ad-policy-local-checks.json) | SHA-256 `10a9e2fcf7c1…`: 136 локальных тестов, Mihomo 1.19.31 ARM64 на macOS, 202 DNS TCP/UDP-проверки четырёх политик и отказ SOCKS для рекламного адреса. Реальные рекламные источники собраны в MRS с проверкой полного обратного преобразования. Без VPS, systemd, TUN, физических клиентов и проверки рекламы YouTube. |
 | [installer-linux-acceptance.json](../verification/installer-linux-acceptance.json) | SHA-256 `8d54c2f68685…`: Ubuntu 24.04 amd64 в эмуляции, изолированный Docker/systemd, установка и локальный VLESS. Физические amd64-ресурсы, публичный вход и внешний UDP STUN не проверялись. |
 | [installer-small-providers-acceptance.json](../verification/installer-small-providers-acceptance.json) | 2026-10-11, SHA-256 `8d54c2f68685…`: начальная загрузка удалённых JSON и HTTP через локальный VLESS. Без TUN и физического устройства. |
 | [review-linux-regressions.json](../verification/review-linux-regressions.json) | SHA-256 `07d8cbf44909…`: отдельные нативные проверки на Ubuntu 24.04 ARM64 в Docker. Без полной установки и systemd. |

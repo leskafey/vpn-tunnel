@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Shell entry point for the verified clean-server installer.
+# Shell entry point for installation and transactional upgrades.
 set -euo pipefail
 
 usage() {
@@ -8,9 +8,13 @@ vpn-tunnel: установка на чистый Ubuntu 24.04 x86_64
 
   sudo ./install.sh --server-ip PUBLIC_IPV4
   sudo ./install.sh --server-ip PUBLIC_IPV4 --resume
+  sudo ./install.sh upgrade
+  sudo ./install.sh upgrade --recover
   sudo ./install.sh audit
 
 --resume продолжает только прерванную установку этого проекта.
+upgrade обновляет код и правила, сохраняя ключи и профили.
+upgrade --recover откатывает незавершённое обновление.
 Правила: <проект>/config/. Профили: <проект>/profiles/. Управление: vpnctl.
 HELP
 }
@@ -18,12 +22,13 @@ HELP
 fail() { printf '%s\n' "$*" >&2; exit 2; }
 
 action=install
-if [[ ${1:-} == audit || ${1:-} == install ]]; then
+if [[ ${1:-} == audit || ${1:-} == install || ${1:-} == upgrade ]]; then
   action=$1
   shift
 fi
 server_ip=
 resume=false
+recover=false
 while (( $# )); do
   case "$1" in
     -h|--help) usage; exit 0 ;;
@@ -36,12 +41,16 @@ while (( $# )); do
       [[ -z $server_ip ]] || fail '--server-ip указан дважды.'
       server_ip=${1#*=}; [[ -n $server_ip ]] || fail 'Пустой --server-ip.'; shift ;;
     --resume) resume=true; shift ;;
+    --recover) recover=true; shift ;;
     *) fail "Неизвестный аргумент: $1. Используйте --help." ;;
   esac
 done
 if [[ $action == audit ]]; then
-  [[ -z $server_ip && $resume == false ]] || fail 'audit не принимает --server-ip или --resume.'
+  [[ -z $server_ip && $resume == false && $recover == false ]] || fail 'audit не принимает --server-ip, --resume или --recover.'
+elif [[ $action == upgrade ]]; then
+  [[ -z $server_ip && $resume == false ]] || fail 'upgrade не принимает --server-ip или --resume.'
 else
+  [[ $recover == false ]] || fail '--recover используется только с upgrade.'
   [[ -n $server_ip ]] || fail 'Укажите --server-ip PUBLIC_IPV4. Используйте --help.'
 fi
 [[ $(id -u) == 0 ]] || fail 'Запустите от root или через sudo.'
@@ -54,7 +63,11 @@ fi
 command -v systemd-run >/dev/null || fail 'Нужен сервер с systemd.'
 arguments=(install --server-ip "$server_ip")
 [[ $resume == false ]] || arguments+=(--resume)
-exec systemd-run --wait --pipe --collect --unit=vpn-stack-install \
+if [[ $action == upgrade ]]; then
+  arguments=(upgrade)
+  [[ $recover == false ]] || arguments+=(--recover)
+fi
+exec systemd-run --wait --pipe --collect --unit="vpn-stack-$action" \
   -p MemoryMax=768M -p MemorySwapMax=0 \
   -p TasksMax=64 -p RuntimeMaxSec=1800 -p UMask=0077 \
   "$(command -v python3)" "$root/install-vpn.py" "${arguments[@]}"

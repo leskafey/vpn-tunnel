@@ -1,0 +1,1152 @@
+{
+  "verified_utc": "2026-10-13T17:14:48.359555+00:00",
+  "reviewed_HEAD": "a62ad73dcd3726ef94c8720712b8738747ebe7d6",
+  "parent_revision": "4e643dc",
+  "standalone_sha256": "7ab5f00e5a170fb2ab05bed504a35cd4f7c0a17d22f5cd8dba73356bb5cf0dfd",
+  "source_sha256": {
+    "src/ad-policy.py": "112aea04329d93c7cb291c531ffc22cc595902bcefd368ec9556dea7c95a92cd",
+    "src/closed-probe.py": "7da70bf8267e85336c4f36fec6a1fdc03b59e6e3dfa649cda79229175fe85598",
+    "src/dns-wire.py": "20e4208c262cbd71ab7955c3a028cd8883770e256fdd3a9138d881847460718a",
+    "src/domain-extras.py": "7e4edf7bcdac46137df06f1428d363c93702c4fd40dc2b564a6a6a5b586982cd",
+    "src/ip-source.py": "73751e3a054c11f97ea39d32640240a666bc33251206710dbd597ab4d66abe5a",
+    "src/personal-checker.py": "f9722ac2f9b4313ad18ce1e545131eb38cd0d95ee5e233e6c384711321524ba5",
+    "src/personal-policy.py": "6c4fd9d835fe84c92b627723c4cb5dccccbbf1a18cbb1138474ef16853898e91",
+    "src/personal-runtime.py": "20441031fa45ead584e238c8b4b51fcb5e956d0724bf4db61ce827cfce13f386",
+    "src/runtime-checker.py": "67d87b881864cc4f3dbdab4c2f7126183e645712f7c3f0a6a3e8d5dd44976108",
+    "src/source-parser.py": "5276d7cfdd3584da2f0434aeb27dba4fde2523fe523baaf78ef7d4cd59798612",
+    "src/text-builder.py": "867c8d3c53ba0297519b7488c1bbd8dcaeb48e198613bde198566c9e2f63056a",
+    "src/transport-probes.py": "ea4d12e1ac7f5fe0a132ebc3cf3920ac29f8ccbfbd8a213d37d4462c6bf262f9",
+    "src/vpn-stack-install.py": "6143337fac8d37f597f3e5269be1a7f0f85ea7a5f932f79c5fb9a5640396bdd6",
+    "src/vpn-stack-manage.py": "edea76e651995959f92217b135054bab02686e7bdc799490b89bdeab50a87175",
+    "src/vpn-stack-runtime.py": "4463b272cfb246ced8f8cb841354e44aa3078ee9f78b2c2289f2fb8cd0b530d8",
+    "src/vpn-stack-upgrade.py": "b7473fe8819337d725b26235ccdde018bf7ba1d6e5e6bfd2bc2f682af2a687ef"
+  },
+  "local_tests": {
+    "command": "./scripts/test.sh",
+    "tests": 168,
+    "status": "passed",
+    "scope": "real temporary files, flock, HTTP sockets and SIGTERM; Linux/root ownership, systemd and native policy work mocked; guardian handoff mocked here and tested natively"
+  },
+  "container_checks": {
+    "parent": {
+      "actual_installed_previous_worker_and_CLI_blocked": true,
+      "legacy_pending_journal_recovered": true,
+      "crash_matrix": [
+        "publication_signal",
+        "publication_exception",
+        "prepared",
+        "committed",
+        "rolled_back",
+        "service_error"
+      ],
+      "previous_revision": "4e643dc",
+      "status": "passed",
+      "systemd": "systemd 255 (255.4-1ubuntu8.17)",
+      "architecture": "aarch64",
+      "successful_upgrade": true,
+      "boot_graph_has_no_ordering_cycles": true,
+      "native_MRS_and_DNS": true,
+      "boot_guard_recovers_missing_lib": true,
+      "keys_profiles_personal_rules_preserved": true,
+      "CLI_status_after_recovery": "healthy",
+      "scope": "ARM64 systemd, native Mihomo and HTTP, synthetic sources/local DNS; diagnostic Xray/workers; no VLESS/VPS/TUN"
+    },
+    "head": {
+      "actual_installed_previous_worker_and_CLI_blocked": true,
+      "legacy_pending_journal_recovered": false,
+      "crash_matrix": [
+        "publication_signal",
+        "publication_exception",
+        "prepared",
+        "committed",
+        "rolled_back",
+        "service_error"
+      ],
+      "previous_revision": "a62ad73",
+      "status": "passed",
+      "systemd": "systemd 255 (255.4-1ubuntu8.17)",
+      "architecture": "aarch64",
+      "successful_upgrade": true,
+      "boot_graph_has_no_ordering_cycles": true,
+      "native_MRS_and_DNS": true,
+      "boot_guard_recovers_missing_lib": true,
+      "keys_profiles_personal_rules_preserved": true,
+      "CLI_status_after_recovery": "healthy",
+      "scope": "ARM64 systemd, native Mihomo and HTTP, synthetic sources/local DNS; diagnostic Xray/workers; no VLESS/VPS/TUN"
+    },
+    "boot": {
+      "status": "passed",
+      "systemd_PID1_restarted": true,
+      "core_and_triggers_restored": true,
+      "DNS_response_verified": true,
+      "snapshot_hashes_preserved": true,
+      "policy_verification": {
+        "generation": "gen-20261013T170946Z-9e4edc73",
+        "config_sha256": "3992d81980074e9529d9717ddb1ae0973260bd58c6f0bc5aaaf5efbc455424dd",
+        "checksums": {
+          "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+          "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+          "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+          "assets/ads-allow.mrs": "820ea966cbe3fe5fbd4209d5dee76763e39a015bb52b5ce2c1124aa449f3ef31",
+          "assets/ads-important.mrs": "45a1637ef689841cac036d8d27fa4a9815908487e64a5984edd9c765751c0c6a",
+          "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+          "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+          "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+          "ads-allow.normalized.txt": "447087c994cfc3ca4fba7300d6d1c05856c3aa5c45d4e3900ffc013b98281cac",
+          "ads-important.normalized.txt": "dcff1803352bf06823e0ec61ad4fc1d97c94543a5ab3595256c3347e297711fe",
+          "backend.yaml": "3992d81980074e9529d9717ddb1ae0973260bd58c6f0bc5aaaf5efbc455424dd",
+          "witnesses.json": "14b2cffda96374fa31f0f7de39634c637b02f1521d3b8c7c7f53275f49a078f2",
+          "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+          "personal-direct-domains.json": "67255877c8510832f60b4beda8461bd28f235eebd40e4e35188b43f04e74d6c4"
+        },
+        "provider_counts": {
+          "smart": 2,
+          "direct": 1,
+          "ads": 1,
+          "ads-allow": 2,
+          "ads-important": 1,
+          "personal-proxy": 1,
+          "personal-direct": 1,
+          "ads-effective": 1
+        },
+        "DNS_TCP_UDP_checks": 12,
+        "REJECT_checks": 1
+      },
+      "no_boot_ordering_cycles": true,
+      "scope": "real container restart, injected consistent pending state from retained rollback journal; no FS power loss"
+    },
+    "ad": {
+      "status": "passed",
+      "platform": "linux",
+      "mihomo_version": "Mihomo Meta v1.19.31 linux arm64 with go1.26.8 Mon Sep 14 13:20:46 UTC 2026\nUse tags: with_gvisor",
+      "binary_sha256": "1b315bc038d05f84ee86d232f3c3d2b020b5044e9b971bb8fe215b6e6a2148f3",
+      "scenarios": [
+        {
+          "scenario": "legacy",
+          "status": "ok",
+          "loaded_provider_rule_counts": {
+            "smart": 2,
+            "direct": 1,
+            "ads": 10002
+          },
+          "DNS_TCP_UDP_policy_checks": 48,
+          "classification_sample_counts": {
+            "ads-reject": 9,
+            "control-proxy": 2,
+            "default-direct": 5,
+            "automatic-proxy": 6,
+            "automatic-direct": 2
+          },
+          "personal_DNS_samples_per_file": 8,
+          "all_personal_entries_loaded": true,
+          "temporary_backend_stopped": true,
+          "process_memory": {
+            "VmHWM_MiB": 37.62,
+            "VmRSS_MiB": 36.77
+          },
+          "scope": "full source-text MRS plus actual personal snapshot, isolated synthetic upstream; not VLESS/device"
+        },
+        {
+          "scenario": "upstream-exceptions-important-badfilter",
+          "status": "ok",
+          "loaded_provider_rule_counts": {
+            "smart": 2,
+            "direct": 1,
+            "ads": 10002,
+            "ads-allow": 3,
+            "ads-important": 1,
+            "ads-effective": 1
+          },
+          "DNS_TCP_UDP_policy_checks": 54,
+          "classification_sample_counts": {
+            "default-direct": 9,
+            "ads-reject": 8,
+            "control-proxy": 2,
+            "automatic-proxy": 6,
+            "automatic-direct": 2
+          },
+          "personal_DNS_samples_per_file": 8,
+          "all_personal_entries_loaded": true,
+          "temporary_backend_stopped": true,
+          "process_memory": {
+            "VmHWM_MiB": 38.12,
+            "VmRSS_MiB": 37.4
+          },
+          "scope": "full source-text MRS plus actual personal snapshot, isolated synthetic upstream; not VLESS/device"
+        },
+        {
+          "scenario": "personal-block-overrides-upstream-and-direct",
+          "status": "ok",
+          "loaded_provider_rule_counts": {
+            "smart": 2,
+            "direct": 1,
+            "ads": 10002,
+            "ads-allow": 3,
+            "ads-important": 1,
+            "personal-direct": 1,
+            "personal-ads": 2,
+            "ads-effective": 1
+          },
+          "DNS_TCP_UDP_policy_checks": 58,
+          "classification_sample_counts": {
+            "ads-reject": 15,
+            "control-proxy": 2,
+            "default-direct": 4,
+            "automatic-proxy": 6,
+            "automatic-direct": 2
+          },
+          "personal_DNS_samples_per_file": 8,
+          "all_personal_entries_loaded": true,
+          "temporary_backend_stopped": true,
+          "process_memory": {
+            "VmHWM_MiB": 38.38,
+            "VmRSS_MiB": 37.73
+          },
+          "scope": "full source-text MRS plus actual personal snapshot, isolated synthetic upstream; not VLESS/device"
+        },
+        {
+          "scenario": "personal-exceptions-override-all-blocks",
+          "status": "ok",
+          "loaded_provider_rule_counts": {
+            "smart": 2,
+            "direct": 1,
+            "ads": 10002,
+            "ads-allow": 3,
+            "ads-important": 1,
+            "personal-direct": 1,
+            "ads-exceptions": 2,
+            "personal-ads": 1,
+            "ads-effective": 1
+          },
+          "DNS_TCP_UDP_policy_checks": 58,
+          "classification_sample_counts": {
+            "default-direct": 11,
+            "ads-reject": 5,
+            "control-proxy": 2,
+            "personal-direct": 3,
+            "automatic-proxy": 6,
+            "automatic-direct": 2
+          },
+          "personal_DNS_samples_per_file": 8,
+          "all_personal_entries_loaded": true,
+          "temporary_backend_stopped": true,
+          "process_memory": {
+            "VmHWM_MiB": 38.62,
+            "VmRSS_MiB": 37.84
+          },
+          "scope": "full source-text MRS plus actual personal snapshot, isolated synthetic upstream; not VLESS/device"
+        }
+      ],
+      "scope": "local synthetic DNS TCP/UDP and blocked SOCKS; no VPS/systemd/TUN/YouTube"
+    }
+  },
+  "native_ad_DNS_checks": 218,
+  "durability": {
+    "power_loss_defect_confirmed": false,
+    "prepared_tree_fsync_added": true,
+    "evidence": "directory/inode synchronization ordered before prepared; real fsync on container filesystem and process fault tests; no power-loss simulation",
+    "analysis": "docs/UPGRADE-DURABILITY.md"
+  },
+  "preservation_scope": "synthetic keys, UUIDs, device registry, customized profile, existing personal inputs and cache sentinel preserved; native cache continues operating",
+  "limits": [
+    "Disposable Ubuntu 24.04 ARM64/systemd 255 containers only. systemd 254 and native amd64 host acceptance were not separately tested.",
+    "No working VPS, full installation, physical clients, TUN or genuine/public VLESS traffic used; Xray/workers remain diagnostic.",
+    "SIGKILL, os._exit and container restart verify process/PID 1 recovery; filesystem/storage power-loss behavior is untested.",
+    "OOM, every individual instruction boundary and systemd daemon-reexec were not fault-injected.",
+    "Live DNS verification samples six names (TCP/UDP), not every rule. Policy identity also relies on forced restart from restored checksum-verified config/assets and exact provider set/counts.",
+    "Private inputs, synthetic identities/UUIDs, customized profiles and cache sentinel are compared byte-for-byte. Mutable real Mihomo cache is preserved and continues operating; its changing database contents are not frozen byte-for-byte."
+  ],
+  "git_actions": {
+    "commit": false,
+    "push": false,
+    "history_rewritten": false
+  },
+  "second_review": {
+    "status": "passed",
+    "implementation": "Same flock open-file description transferred by SCM_RIGHTS to guardian and PID 1 FDSTORE. Reception barrier and accepted-store check precede prepared. Active hold target pins the service across stop/start; guardian inherits the fd on restart, recovers under deployment lock, unlocks only after files settle and queues independent service recovery. Versioned loader plus compatible cached entry point precede recovery unit changes.",
+    "before_reproductions": {
+      "preopened_lock": {
+        "scenario": "old_worker_preopened_lock",
+        "worker_exit": 0,
+        "worker_result": {
+          "status": "active",
+          "source": "gen-20261013T145808Z-402e3b21",
+          "counts": {
+            "smart": 2,
+            "direct": 1,
+            "ads": 1,
+            "personal-proxy": 1,
+            "personal-direct": 1
+          },
+          "DNS_backend_restarted": true,
+          "fake_map_preserved": true,
+          "applied_utc": "2026-10-13T14:58:11.139876+00:00",
+          "HTTP": "passed",
+          "VLESS": "not_tested",
+          "downloads": 0,
+          "MRS_compilation": false
+        },
+        "recovery_error": "UPGRADE_EXTERNAL_FILE_EDIT",
+        "upgrade_status": "prepared"
+      },
+      "migration": {
+        "scenario": "migration_interrupted_after_guard",
+        "loader_is_legacy": true,
+        "loader_exit": 1,
+        "loader_error": "vpn_upgrade_recovery.UpgradeError: UPGRADE_EXTERNAL_FILE_EDIT",
+        "systemd_start_exit": 1,
+        "guard_state": "failed"
+      }
+    },
+    "container_checks": {
+      "preopened_historical_runtime": {
+        "scenario": "preopen",
+        "status": "passed",
+        "matrix": [
+          {
+            "point": "handoff",
+            "historical_apply_exit": 90,
+            "PID1_only_flock": true,
+            "guardian_killed_and_started": true,
+            "graph_recovery_and_repeat": true,
+            "guardian_loss_inside_rollback": false
+          },
+          {
+            "point": "prepared",
+            "historical_apply_exit": 90,
+            "PID1_only_flock": true,
+            "guardian_killed_and_started": true,
+            "graph_recovery_and_repeat": true,
+            "guardian_loss_inside_rollback": false
+          },
+          {
+            "point": "lib-absent",
+            "historical_apply_exit": 90,
+            "PID1_only_flock": true,
+            "guardian_killed_and_started": true,
+            "graph_recovery_and_repeat": true,
+            "guardian_loss_inside_rollback": false
+          },
+          {
+            "point": "lib-published",
+            "historical_apply_exit": 90,
+            "PID1_only_flock": true,
+            "guardian_killed_and_started": true,
+            "graph_recovery_and_repeat": true,
+            "guardian_loss_inside_rollback": true
+          },
+          {
+            "point": "rolling-back",
+            "historical_apply_exit": 90,
+            "PID1_only_flock": true,
+            "guardian_killed_and_started": true,
+            "graph_recovery_and_repeat": true,
+            "guardian_loss_inside_rollback": false
+          },
+          {
+            "point": "rollback-file",
+            "historical_apply_exit": 90,
+            "PID1_only_flock": true,
+            "guardian_killed_and_started": true,
+            "graph_recovery_and_repeat": true,
+            "guardian_loss_inside_rollback": false
+          }
+        ],
+        "systemd": "systemd 255 (255.4-1ubuntu8.17)",
+        "previous_revision": "a62ad73",
+        "scope": "Second-review regressions. Invoked by check-upgrade-systemd-linux.py.\n\nRequires a disposable systemd/PID 1 container and real historical archives.\nFilesystem, flock, process death, FDSTORE, systemd graph, Mihomo and DNS are\nreal. Fixture sources/DNS are local; Xray/workers and host audit are diagnostic.\nThese process failures do not simulate filesystem power loss.\n"
+      },
+      "authentic_a62ad73_migration": {
+        "scenario": "migration",
+        "status": "passed",
+        "matrix": [
+          {
+            "point": "engine-file:ad-policy.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:closed-probe.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:dns-wire.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:domain-extras.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:ip-source.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:personal-checker.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:personal-policy.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:personal-runtime.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:runtime-checker.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:source-parser.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:text-builder.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:transport-probes.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:vpn-stack-install.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:vpn-stack-manage.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:vpn-stack-runtime.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:vpn-stack-upgrade.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:code-manifest.json",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-published",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "pointer",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "loader-versioned",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "loader-compatible",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "guardian-unit",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "hold-target",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "recovery-unit",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "finish-unit",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "dropin",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          },
+          {
+            "point": "reload-final",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "a62ad73",
+            "repeat_recovery": true
+          }
+        ],
+        "systemd": "systemd 255 (255.4-1ubuntu8.17)",
+        "previous_revision": "4e643dc",
+        "scope": "Second-review regressions. Invoked by check-upgrade-systemd-linux.py.\n\nRequires a disposable systemd/PID 1 container and real historical archives.\nFilesystem, flock, process death, FDSTORE, systemd graph, Mihomo and DNS are\nreal. Fixture sources/DNS are local; Xray/workers and host audit are diagnostic.\nThese process failures do not simulate filesystem power loss.\n"
+      },
+      "previous_review_infrastructure_migration": {
+        "scenario": "migration",
+        "status": "passed",
+        "matrix": [
+          {
+            "point": "engine-file:ad-policy.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:closed-probe.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:dns-wire.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:domain-extras.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:ip-source.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:personal-checker.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:personal-policy.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:personal-runtime.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:runtime-checker.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:source-parser.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:text-builder.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:transport-probes.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:vpn-stack-install.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:vpn-stack-manage.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:vpn-stack-runtime.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:vpn-stack-upgrade.py",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-file:code-manifest.json",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "engine-published",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "pointer",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "loader-versioned",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "loader-compatible",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "dropin",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          },
+          {
+            "point": "reload-final",
+            "cached_loader_and_systemd_graph": true,
+            "authentic_previous_transaction": "previous-review",
+            "repeat_recovery": true
+          }
+        ],
+        "systemd": "systemd 255 (255.4-1ubuntu8.17)",
+        "previous_revision": "4e643dc",
+        "scope": "Second-review regressions. Invoked by check-upgrade-systemd-linux.py.\n\nRequires a disposable systemd/PID 1 container and real historical archives.\nFilesystem, flock, process death, FDSTORE, systemd graph, Mihomo and DNS are\nreal. Fixture sources/DNS are local; Xray/workers and host audit are diagnostic.\nThese process failures do not simulate filesystem power loss.\n"
+      }
+    },
+    "native_fault_boundaries": 56,
+    "guardian_external_edit_rejected": true,
+    "guardian_loss_during_rolling_back": true,
+    "compatibility": [
+      "4e643dc",
+      "a62ad73",
+      "actual initial uncommitted FDSTORE package archived before this task"
+    ],
+    "checksums_and_real_external_edits_enforced": true,
+    "loader_independent_of_lib": true,
+    "minimum_systemd": 254,
+    "native_systemd_tested": 255,
+    "regression_file": "tests/check-upgrade-p1-linux.py",
+    "executed_regression_snapshots": {
+      "all": "final production source; final check-upgrade-systemd-linux.py and check-upgrade-p1-linux.py",
+      "previous_infrastructure": "23 publications; four already byte-identical systemd units are deliberately not rewritten. The historical guardian repairs lib before migration at the first boundary."
+    },
+    "executed_test_sha256": {
+      "tests/check-upgrade-systemd-linux.py": "8aabfeaa7624c2b314419dd2f9d66a1e73637b9a1aa07f9b3a383eb56cd164bf",
+      "tests/check-upgrade-p1-linux.py": "40394b29d39d1877054ce120ce5225daa31b6a2d9bd5e5656dd4361083bd6183"
+    }
+  },
+  "test_sha256": {
+    "tests/check-ad-policy-native.py": "fd943156185b082add65aacb37542721a761337e895e69604b82120472dd1ec1",
+    "tests/check-upgrade-activation-linux.py": "4dffea8ed63e39b4da65e21cca06ed6a5db095485f6847d67f8b007872ce96ad",
+    "tests/check-upgrade-container-boot.py": "5694c770d544c491a821741c9d32267929e7b577f34d631186d07fba892a3956",
+    "tests/check-upgrade-p1-linux.py": "40394b29d39d1877054ce120ce5225daa31b6a2d9bd5e5656dd4361083bd6183",
+    "tests/check-upgrade-systemd-linux.py": "8aabfeaa7624c2b314419dd2f9d66a1e73637b9a1aa07f9b3a383eb56cd164bf",
+    "tests/test_ad_policy.py": "adf7633411436e3229fb7a2debbd2c4bec788616dd75357be4607d3d443e28e1",
+    "tests/test_upgrade.py": "f4f19d2ea3c194f6accdb3ee82e9fafd2fe9bb9f493318fb5499e3467b27a51d",
+    "tests/test_upgrade_policy.py": "7e5690c5466b407eecb972e3aa34db00042eb0a54199e5841c9211f9d60413fd",
+    "tests/test_upgrade_review.py": "0f0510a8659682dc3af2d44fd0dbb774ec4703366cd625ff52d1eb93129fa61c"
+  },
+  "stubs": {
+    "local_suite": "Real temporary files, flock, HTTP and SIGTERM; Linux/root ownership, systemd, native policy staging/activation and guardian handoff mocked. test_upgrade_policy.py stubs DNS/provider calls and tests verification decisions; native matrix separately proves real loaded policy.",
+    "native_suite": [
+      "ARM64 provisioned fixture bypasses amd64-only host audit.",
+      "Sources and DNS upstream are synthetic/local; Mihomo, MRS roundtrip, real DNS TCP/UDP, SOCKS REJECT, HTTP, flock/FDSTORE and systemd are native.",
+      "Xray and policy workers use diagnostic ExecStart programs. VLESS probe callback checks real HTTP, not VLESS.",
+      "Guardian/finish fault shims add SIGSTOP after actual rollback config write, core restart or policy verification. Engine/manifest are unchanged; shim removed before recovery retry.",
+      "Migration resets a tar snapshot of transactions produced by authentic historical builds, preserving numeric ownership/modes. Initial FDSTORE package is the real uncommitted source archived before this task.",
+      "Cold boot is a real PID 1/container restart after relabeling a retained consistent rollback journal as prepared; it does not simulate filesystem power loss. A separate diagnostic DNS service persists the local upstream across restart."
+    ]
+  },
+  "third_review": {
+    "status": "passed",
+    "defect": "Guardian restored files but start left active Mihomo using the new in-memory policy.",
+    "before_reproduction": {
+      "scenario": "guardian_loss_after_policy_activation",
+      "pending_status": "applying",
+      "recovered_status": "rolled_back",
+      "services_restored": true,
+      "config_restored": true,
+      "old_provider_check_error": "PROVIDERS_NOT_READY",
+      "dns_pid_before_recovery": "375",
+      "dns_pid_after_recovery": "375"
+    },
+    "after_same_reproduction": {
+      "scenario": "guardian_loss_after_policy_activation",
+      "pending_status": "applying",
+      "recovered_status": "rolled_back",
+      "services_restored": true,
+      "config_restored": true,
+      "old_provider_check_error": null,
+      "dns_pid_before_recovery": "397",
+      "dns_pid_after_recovery": "454"
+    },
+    "before_upgrade_source_sha256": "171e7ee01865a77409c666a800b301aee6da6516630de62b2623cd09d706d75d",
+    "current_upgrade_source_sha256": "b7473fe8819337d725b26235ccdde018bf7ba1d6e5e6bfd2bc2f682af2a687ef",
+    "original_reproduction_script_sha256": "9fb886d0f40660154d499c042eb538fb1072cffedfa7c5dc660653542282f0e4",
+    "regression": "tests/check-upgrade-activation-linux.py",
+    "container_checks": {
+      "status": "passed",
+      "previous_revision": "a62ad73",
+      "matrix": [
+        {
+          "variant": "provider-set",
+          "point": "dns-config",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "provider-set",
+          "point": "mihomo-start",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "provider-set",
+          "point": "activate",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "provider-set",
+          "point": "rollback-file",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "provider-set",
+          "point": "service-restart",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "provider-set",
+          "point": "service-verification",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "same-counts",
+          "point": "dns-config",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "same-counts",
+          "point": "mihomo-start",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "same-counts",
+          "point": "activate",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "same-counts",
+          "point": "rollback-file",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "same-counts",
+          "point": "service-restart",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        },
+        {
+          "variant": "same-counts",
+          "point": "service-verification",
+          "status": "passed",
+          "new_PID": true,
+          "restored_generation": {
+            "generation": "gen-20261013T170852Z-43b6ad94",
+            "config_sha256": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+            "checksums": {
+              "assets/smart.mrs": "19741bd4d3c5a45615c763a3f7dd4b7aaafd62d6c830c1cf45551c0efb36dea7",
+              "assets/direct.mrs": "bcf29b252e4fd6d814c2f6a4ad4c9ce53ff264978e39f538b721cb7d1af56d5f",
+              "assets/ads.mrs": "9c6ff2613c8fad6caec77569a01a880b0313291410a9dc8cebcd644cb12f8871",
+              "smart.normalized.txt": "9f7d9e0e76344a03b988f6757d67403af70d47b4e7872d7c3f192d5de388f77d",
+              "direct.normalized.txt": "29a89cfa6dda6d1566532b95e111ec7f0f896cf09243961d15ea66885c280ac3",
+              "ads.normalized.txt": "47760c775de16002f2f943a28d20d4cce124a2d779af807dd6e1df3bf03fead4",
+              "backend.yaml": "8f740cf30ca89bdee0be37e978a71f4294c59230fb9787570e9142ae2c546685",
+              "witnesses.json": "666eee4a7b2ee1786f347a5dfb3ff051093c158d106c8826ce4d1890273bd743",
+              "proxy-ipv4.json": "bc9018063bec2045703c7a07ce0ff3ea86905fcda5f4310875290986d2151aee",
+              "personal-direct-domains.json": "bcf75b802ff2e75a64420c131802eaec415227d9af44ca7d6524183907ab3ae5"
+            },
+            "provider_counts": {
+              "smart": 2,
+              "direct": 1,
+              "ads": 1,
+              "personal-proxy": 1
+            },
+            "DNS_TCP_UDP_checks": 12,
+            "REJECT_checks": 1
+          },
+          "repeat_recovery": true
+        }
+      ],
+      "systemd": "systemd 255 (255.4-1ubuntu8.17)",
+      "scope": "Lost upgrade/guardian/finish processes with real systemd, Mihomo and DNS.\n\nCalled by check-upgrade-systemd-linux.py with ACTIVATION_SCENARIO=1.\nUses the authentic installed a62ad73 package, local synthetic sources/upstream,\ndiagnostic Xray/workers and fault-injection shims around unchanged engines.\nNo VPS, power loss or full VLESS test.\n"
+    },
+    "native_fault_boundaries": 12,
+    "policy_confirmation": "Rollback restarts tracked core after the boot guard and without policy lock; active generation/config hashes, full provider set/counts, DNS TCP/UDP and REJECT are checked. Same-count native cases accept the new policy by counts before rollback, but its DNS differs; the restored policy and fake-IP/REJECT are then confirmed.",
+    "terminal_journal_migration": "Old services_restored=true without service_verification requires service verification/restart, without replaying file backups.",
+    "start_limit": "Repeated native finish losses reproduced start-limit-hit. Addressed reset-failed for restored core precedes rollback restart. Same 12-case matrix then passed.",
+    "preserved_prior_changes": {
+      "src/ad-policy.py": true,
+      "src/vpn-stack-runtime.py": true
+    },
+    "unchanged_FDSTORE_and_durable_infrastructure_functions": {
+      "notify": true,
+      "arm_guardian": true,
+      "guardian_stored": true,
+      "guardian_unit": true,
+      "hold_unit": true,
+      "infrastructure": true,
+      "fence": true,
+      "sync_tree": true
+    },
+    "protected_file_operations": "Guardian unfences while the original flock and PID 1 FDSTORE are still held; then unlocks and drops FDSTORE. Policy-lock owner also unfences before unlocking on terminal transactions.",
+    "workers": "Stop/start of dependent workers and service finishing happen after the boot guard and outside the policy lock.",
+    "fixture_changes": "Local MockDNS runs in its own early systemd unit instead of a thread inherited by fault-injection forks. HTTP readiness is retried. Core and recovery graph remain real; diagnostic Xray/workers are disclosed.",
+    "nonpassing_diagnostic_runs": "Sandbox socket denial retried outside sandbox; exhausted container disk freed only by removing this task containers; a threaded-DNS fork stalled and was replaced by a separate diagnostic upstream. An early diagnostic boot unit had default dependencies and introduced an ordering cycle; its dependencies were corrected. These attempts are excluded from passed counts."
+  }
+}

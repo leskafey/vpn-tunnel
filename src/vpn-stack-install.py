@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Clean Ubuntu 24.04 amd64 installation and read-only host audit."""
+"""Ubuntu 24.04 amd64 installation, transactional upgrade and read-only audit."""
 import argparse
 import base64
 import ctypes
@@ -28,6 +28,7 @@ import tempfile
 import urllib.request
 import uuid
 import zipfile
+from types import SimpleNamespace
 
 ARTIFACTS = {
     'mihomo': {'version': '1.19.31', 'kind': 'gz',
@@ -51,6 +52,15 @@ BIN_LIMIT = 150 * 1048576
 RUNTIME = None
 
 RULE_INSTRUCTIONS = {
+    'ads.txt': '''Дополнительные домены для блокировки рекламы на сервере.
+Формат: одна запись на строку, без схемы, порта и пути; домен и поддомены.
+До 2048 уникальных доменов, файл до 64 КиБ, строка до 4096 байт.
+Личные блокировки имеют приоритет над исключениями источников и DIRECT/PROXY.
+Личные ads-exceptions.txt снимают в том числе эти блокировки.
+Примеры (не действуют):
+ads.example.org
+Изменения применяются автоматически к новым DNS-запросам; профиль не менять.
+''',
     'proxy.txt': '''Домены, которые серверный DNS направляет через VPS в SMART.
 Формат: одна запись на строку, без схемы, порта и пути; домен и его поддомены.
 Ограничения: до 2048 уникальных доменов, файл до 64 КиБ, строка до 4096 байт.
@@ -225,7 +235,7 @@ def prepare_service_directories(runtime, account, resume):
         path.chmod(mode)
 
 
-def host_audit(runtime, resume=False):
+def host_audit(runtime, resume=False, *, minimum_memory_mib=650):
     validate_project_paths()
     require(sys.platform == 'linux' and os.geteuid() == 0, 'ROOT_LINUX_REQUIRED')
     release = dict(line.split('=', 1) for line in Path('/etc/os-release').read_text().splitlines() if '=' in line)
@@ -244,7 +254,7 @@ def host_audit(runtime, resume=False):
         if path.exists() or path.is_symlink():
             conflicts.append(str(path))
     require(not conflicts, 'EXISTING_VPN_INSTALLATION_REFUSING_TO_OVERWRITE')
-    require(available >= 650 * 1024 and shutil.disk_usage(PROJECT).free >= 2 * 1024**3,
+    require(available >= minimum_memory_mib * 1024 and shutil.disk_usage(PROJECT).free >= 2 * 1024**3,
             'MEMORY_OR_DISK_HEADROOM_LOW')
     require(PROJECT.stat().st_uid == 0 and not PROJECT.stat().st_mode & 0o022,
             'ROOT_OWNED_PROJECT_REQUIRED')
@@ -384,6 +394,7 @@ Description=Apply edited personal VPN rules
 PathChanged=@CONFIG@/proxy.txt
 PathChanged=@CONFIG@/direct.txt
 PathChanged=@CONFIG@/ads-exceptions.txt
+PathChanged=@CONFIG@/ads.txt
 PathChanged=@CONFIG@/proxy-ip.txt
 PathChanged=@CONFIG@
 Unit=vpn-stack-personal.service
@@ -743,10 +754,16 @@ def datetime_utc():
 
 def main(folder=None, project=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('action', choices=('audit', 'install'))
+    parser.add_argument('action', choices=('audit', 'install', 'upgrade'))
     parser.add_argument('--server-ip')
     parser.add_argument('--resume', action='store_true')
+    parser.add_argument('--recover', action='store_true')
     args = parser.parse_args()
+    if args.action == 'upgrade':
+        require(not args.server_ip and not args.resume, 'UPGRADE_ARGUMENTS_INVALID')
+    else:
+        require(not args.recover and (args.action != 'audit' or not args.server_ip and not args.resume),
+                'INSTALL_ARGUMENTS_INVALID')
     folder = folder or Path(__file__).resolve().parent
     configure_project(project or Path(__file__).resolve().parent.parent)
     runtime = load_runtime(folder)
@@ -757,6 +774,11 @@ def main(folder=None, project=None):
         signal.signal(sig, lambda *_: (_ for _ in ()).throw(InstallError('INTERRUPTED')))
     if args.action == 'audit':
         runtime.report('audit', **host_audit(runtime))
+    elif args.action == 'upgrade':
+        spec = importlib.util.spec_from_file_location('vpn_stack_upgrade', folder / 'vpn-stack-upgrade.py')
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.upgrade(folder, SimpleNamespace(**globals()), args.recover)
     else:
         require(args.server_ip, 'SERVER_IP_ARGUMENT_REQUIRED')
         install(folder, args.server_ip, args.resume)

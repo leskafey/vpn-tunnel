@@ -1,0 +1,52 @@
+{
+  "verified_utc": "2026-10-13T12:40:13.132219+00:00",
+  "standalone_sha256": "c76463965021fe095a71901039f610ea02c191cf2921fcafddc74f57c9fbf993",
+  "code_sha256": {
+    "src/ad-policy.py": "c37acc4094f9ee4f17f532dec55beece91af41c4fa2955b72d2a4422ff66b910",
+    "src/closed-probe.py": "7da70bf8267e85336c4f36fec6a1fdc03b59e6e3dfa649cda79229175fe85598",
+    "src/dns-wire.py": "20e4208c262cbd71ab7955c3a028cd8883770e256fdd3a9138d881847460718a",
+    "src/domain-extras.py": "7e4edf7bcdac46137df06f1428d363c93702c4fd40dc2b564a6a6a5b586982cd",
+    "src/ip-source.py": "73751e3a054c11f97ea39d32640240a666bc33251206710dbd597ab4d66abe5a",
+    "src/personal-checker.py": "f9722ac2f9b4313ad18ce1e545131eb38cd0d95ee5e233e6c384711321524ba5",
+    "src/personal-policy.py": "6c4fd9d835fe84c92b627723c4cb5dccccbbf1a18cbb1138474ef16853898e91",
+    "src/personal-runtime.py": "20441031fa45ead584e238c8b4b51fcb5e956d0724bf4db61ce827cfce13f386",
+    "src/runtime-checker.py": "67d87b881864cc4f3dbdab4c2f7126183e645712f7c3f0a6a3e8d5dd44976108",
+    "src/source-parser.py": "5276d7cfdd3584da2f0434aeb27dba4fde2523fe523baaf78ef7d4cd59798612",
+    "src/text-builder.py": "867c8d3c53ba0297519b7488c1bbd8dcaeb48e198613bde198566c9e2f63056a",
+    "src/transport-probes.py": "ea4d12e1ac7f5fe0a132ebc3cf3920ac29f8ccbfbd8a213d37d4462c6bf262f9",
+    "src/vpn-stack-install.py": "6143337fac8d37f597f3e5269be1a7f0f85ea7a5f932f79c5fb9a5640396bdd6",
+    "src/vpn-stack-manage.py": "edea76e651995959f92217b135054bab02686e7bdc799490b89bdeab50a87175",
+    "src/vpn-stack-runtime.py": "9a47812eb70a2e013baeaa7f7b6fc25bd4129919bbc250a5cb883f6a5e4a822b",
+    "src/vpn-stack-upgrade.py": "ace966cf53ab8bfbe78cf6e7275014beaeb1df74794cdefec27853c5a13db1d5"
+  },
+  "local_tests": {
+    "command": "./scripts/test.sh",
+    "status": "passed",
+    "tests": 150
+  },
+  "systemd_native_test": {
+    "status": "passed",
+    "systemd": "systemd 255 (255.4-1ubuntu8.17)",
+    "architecture": "aarch64",
+    "successful_upgrade": true,
+    "native_MRS_and_DNS": true,
+    "boot_guard_recovers_missing_lib": true,
+    "keys_profiles_personal_rules_preserved": true,
+    "scope": "ARM64 systemd, native Mihomo and HTTP, synthetic sources/local DNS; diagnostic Xray/workers; no VLESS/VPS/TUN"
+  },
+  "CLI_after_recovery": {
+    "status": "healthy",
+    "upgrade": {
+      "status": "rolled_back",
+      "transaction": "up-be8439f9cee6ef25"
+    },
+    "faults": [],
+    "update_faults": []
+  },
+  "limits": [
+    "ARM64 diagnostic container; amd64 host audit bypassed",
+    "Synthetic policy sources and local DNS",
+    "Native Mihomo and real HTTP/systemd; diagnostic Xray and worker programs",
+    "No public VPS deployment, VLESS, TUN or physical client verification"
+  ]
+}
