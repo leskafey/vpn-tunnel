@@ -663,8 +663,9 @@ def install(folder, address, resume):
     ip = ipaddress.IPv4Address(address)
     require(ip.is_global, 'PUBLIC_IPV4_REQUIRED')
     expected_files = runtime.record(folder / 'code-manifest.json')['files']
+    runtime.require_baseline(expected_files)
     for name, checksum in expected_files.items():
-        require(Path(name).name == name and runtime.digest(folder / name) == checksum, 'PACKAGE_CODE_CHANGED')
+        require(runtime.package_member(name) and runtime.digest(folder / name) == checksum, 'PACKAGE_CODE_CHANGED')
     if resume and published:
         require(all(path.is_dir() and not path.is_symlink() and path.stat().st_uid == 0
                     and not path.stat().st_mode & 0o077 for path in (PROJECT / 'state', ROOT)),

@@ -50,7 +50,8 @@ class PackageTests(unittest.TestCase):
         self.assertEqual(set(files), set(manifest) | {'code-manifest.json'})
         for name, checksum in manifest.items():
             self.assertEqual(hashlib.sha256(files[name]).hexdigest(), checksum)
-            ast.parse(files[name])
+            if name.endswith('.py'):
+                ast.parse(files[name])
 
     def test_package_contains_no_existing_profiles_or_server_identity(self):
         _, files = b.package()
@@ -59,15 +60,15 @@ class PackageTests(unittest.TestCase):
             self.assertNotIn(b'/Users/', raw)
             self.assertNotIn(b'/var/lib/vpn-server-policy-text/', raw)
         self.assertEqual([name for name in files if name.endswith('.json')], ['code-manifest.json'])
-        self.assertEqual(len(files), 17)
+        self.assertEqual(len(files), 17 + len(b.BASELINE_FILES))
 
     def test_unmodified_helpers_match_historical_baseline(self):
         _, files = b.package()
         baseline = json.loads((HERE.parent / 'verification/helper-baseline.json').read_bytes())['files']
         self.assertEqual(len(baseline), 11)
         for name, checksum in baseline.items():
-            if name in ('personal-runtime.py', 'personal-policy.py'):
-                continue  # Current socket and advertising changes have semantic regression tests.
+            if name in ('personal-runtime.py', 'personal-policy.py', 'domain-extras.py'):
+                continue  # Current socket, advertising and local baseline changes have semantic regression tests.
             self.assertEqual(hashlib.sha256(files[name]).hexdigest(), checksum, name)
 
     def test_standalone_help_never_runs_host_audit(self):

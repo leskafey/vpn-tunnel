@@ -4,6 +4,7 @@ import re
 
 
 ADGUARD_URL = 'https://adguardteam.github.io/AdGuardSDNSFilter/Filters/filter.txt'
+# Keep source keys for change guards against historical saved generations.
 EXTRA_FILES = {'antizapret-ads': 'include-adblock-hosts.txt',
                'antizapret-ads-allow': 'exclude-adblock-hosts.txt'}
 DOMAIN_RULE = re.compile(r'(@@)?\|\|([^\s^$|/?:]+)\^\|?(?:\$((?:important|badfilter)(?:,(?:important|badfilter))*))?\Z')
@@ -92,17 +93,18 @@ def normalize(parser, name, source, work, previous=None):
                    **{kind: sum(k == kind for k, _ in effective) for kind in paths}}
 
 
-def build(s, work, commit, previous=None):
-    """Combine the existing OISD source with AdGuard and pinned AntiZapret lists."""
+def build(s, work, previous=None):
+    """Combine OISD and AdGuard with the installed local baseline lists."""
     blocks = [work / 'oisd-small.unique.txt']
     allows, important = [], []
     metadata = {}
-    sources = {'adguard-dns': ADGUARD_URL,
-               **{name: s.extras.BASE + commit + '/setup/root/antizapret/download/' + filename
-                  for name, filename in EXTRA_FILES.items()}}
-    for name, url in sources.items():
+    for name in ('adguard-dns', *EXTRA_FILES):
         raw = work / (name + '.source.txt')
-        info = s.builder.download(url, raw)
+        if name == 'adguard-dns':
+            info = s.builder.download(ADGUARD_URL, raw)
+        else:
+            body, info = s.baseline_source(EXTRA_FILES[name])
+            raw.write_bytes(body)
         paths, counts = normalize(s.parser, name, raw, work,
                                   previous.get('source_metadata', {}).get(name) if previous else None)
         metadata[name] = dict(info, **counts)

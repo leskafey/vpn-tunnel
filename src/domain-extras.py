@@ -23,12 +23,6 @@ import urllib.request
 from types import SimpleNamespace
 
 
-BASE = 'https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/'
-
-
-REF = 'https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/ref/heads/main'
-
-
 IANA = 'https://data.iana.org/TLD/tlds-alpha-by-domain.txt'
 
 
@@ -54,7 +48,7 @@ def sha(raw):
 def allowed_url(url):
     value = urllib.parse.urlsplit(url)
     require(value.scheme == 'https' and value.hostname in
-            ('api.github.com', 'raw.githubusercontent.com', 'data.iana.org')
+            ('data.iana.org',)
             and value.port in (None, 443) and value.username is None and value.password is None,
             'EXTRA_SOURCE_URL_NOT_ALLOWED')
 
@@ -136,11 +130,4 @@ def covered(name, roots):
 def no_lost_coverage(old, fresh):
     lost = sum(not covered(name, fresh) for name in old)
     require(lost == 0, 'EXTRA_SUFFIX_COVERAGE_REMOVED_REVIEW_REQUIRED')
-
-
-def source_url(commit, name):
-    require(isinstance(commit, str) and re.fullmatch(r'[a-f0-9]{40}', commit)
-            and name in FILES, 'EXTRA_COMMIT_OR_NAME_INVALID')
-    return BASE + commit + '/setup/root/antizapret/download/' + FILES[name]
-
 

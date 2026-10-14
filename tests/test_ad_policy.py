@@ -101,7 +101,7 @@ class SourceTests(unittest.TestCase):
         rules, _ = self.normalize('*.allowed.example\n', name='antizapret-ads-allow', previous={'valid': 0})
         self.assertEqual(rules['allow'], ['+.allowed.example'])
 
-    def test_sources_are_combined_and_author_sources_share_pinned_commit(self):
+    def test_sources_are_combined_and_only_adguard_is_downloaded(self):
         (self.work / 'oisd-small.unique.txt').write_text('oisd.example\n')
         urls = []
         def download(url, path):
@@ -110,15 +110,18 @@ class SourceTests(unittest.TestCase):
                     if url == ad.ADGUARD_URL else 'author.example\n' if 'include-adblock' in url else 'allowed.author.example\n')
             path.write_text(body)
             return {'bytes': len(body), 'sha256': 'fixture'}
-        s = SimpleNamespace(builder=SimpleNamespace(download=download), parser=parser,
-                            extras=SimpleNamespace(BASE='https://example.org/repo/'))
-        tags, metadata = ad.build(s, self.work, 'a' * 40)
+        def baseline(filename):
+            body = b'author.example\n' if filename.startswith('include-') else b'allowed.author.example\n'
+            return body, {'source': 'local-baseline', 'bytes': len(body), 'sha256': 'fixture'}
+        s = SimpleNamespace(builder=SimpleNamespace(download=download), parser=parser, baseline_source=baseline)
+        tags, metadata = ad.build(s, self.work)
         self.assertEqual(tags, ['ads', 'ads-allow', 'ads-important'])
         self.assertEqual(set((self.work / 'ads.raw.txt').read_text().splitlines()),
                          {'+.oisd.example', '+.adguard.example', '+.author.example'})
         self.assertEqual(set((self.work / 'ads-allow.raw.txt').read_text().splitlines()),
                          {'+.allowed.adguard.example', '+.allowed.author.example'})
-        self.assertTrue(all('/' + 'a' * 40 + '/' in url for url in urls[1:]))
+        self.assertEqual(urls, [ad.ADGUARD_URL])
+        self.assertEqual(metadata['antizapret-ads']['source'], 'local-baseline')
         self.assertEqual(metadata['adguard-dns']['allow'], 1)
 
 

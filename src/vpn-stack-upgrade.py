@@ -116,9 +116,13 @@ FDSTORE_BOOTSTRAP = PREVIOUS_BOOTSTRAP.replace(
     b"if '--services' not in sys.argv and '--guardian' not in sys.argv:").replace(
     b"module.boot_recover(root.parent.parent, package, services='--services' in sys.argv)",
     b"if '--guardian' in sys.argv:\n    module.guardian(root.parent.parent, package)\nelse:\n    module.boot_recover(root.parent.parent, package, services='--services' in sys.argv)")
-BOOTSTRAP = FDSTORE_BOOTSTRAP.replace(
+VERIFIED_BOOTSTRAP = FDSTORE_BOOTSTRAP.replace(
     b"if not journal.get('services_restored', False):",
     b"if not journal.get('services_restored', False) or not journal.get('service_verification'):")
+BOOTSTRAP = VERIFIED_BOOTSTRAP.replace(
+    b"assert Path(name).name == name and name.endswith('.py')",
+    b"assert Path(name).name == name and (name.endswith('.py') or name in "
+    b"('include-hosts.txt', 'exclude-hosts.txt', 'include-adblock-hosts.txt', 'exclude-adblock-hosts.txt'))")
 
 
 
@@ -161,7 +165,7 @@ def bundle(r, folder, expected):
     require(isinstance(expected, dict) and 1 <= len(expected) <= 64, 'UPGRADE_MANIFEST_INVALID')
     require(r.record(folder / 'code-manifest.json') == {'files': expected}, 'UPGRADE_MANIFEST_CHANGED')
     for name, digest in expected.items():
-        require(Path(name).name == name and name.endswith('.py') and
+        require(r.package_member(name) and
                 re.fullmatch(r'[a-f0-9]{64}', digest) is not None, 'UPGRADE_MANIFEST_INVALID')
         require(checksum(r.raw_file(folder / name, 1048576)) == digest, 'UPGRADE_CODE_CHANGED')
 
@@ -249,9 +253,9 @@ def hold_unit():
 
 def infrastructure_variants(i, path, raw):
     if path.name == 'recover.py':
-        return (raw, FDSTORE_BOOTSTRAP, PREVIOUS_BOOTSTRAP, LEGACY_BOOTSTRAP)
+        return (raw, VERIFIED_BOOTSTRAP, FDSTORE_BOOTSTRAP, PREVIOUS_BOOTSTRAP, LEGACY_BOOTSTRAP)
     if path.name == LOADER:
-        return (raw, FDSTORE_BOOTSTRAP)
+        return (raw, VERIFIED_BOOTSTRAP, FDSTORE_BOOTSTRAP)
     if path.name == BOOT_UNIT:
         return (raw, boot_unit(i.PROJECT, legacy=True), boot_unit(i.PROJECT, previous=True))
     if path.name == FINISH_UNIT:
@@ -262,11 +266,11 @@ def infrastructure_variants(i, path, raw):
 def infrastructure(i, r, units, folder, activate=True, policy_fd=None):
     root = i.PROJECT / 'state/upgrade'
     private_directory(root)
-    # Compatible loader at BOTH entry points precedes all managed unit writes:
-    # cached systemd commands may still refer to recover.py until daemon-reload.
-    outputs = {root / LOADER: BOOTSTRAP,
+    # Validate every existing output before changing loaders, selection or units.
+    # Cached systemd commands may still refer to recover.py until daemon-reload.
+    loaders = {root / LOADER: BOOTSTRAP, root / 'recover.py': BOOTSTRAP}
+    outputs = {**loaders,
                i.UNIT_ROOT / FINISH_UNIT: finish_unit(i.PROJECT),
-               root / 'recover.py': BOOTSTRAP,
                i.UNIT_ROOT / GUARDIAN_UNIT: guardian_unit(i.PROJECT),
                i.UNIT_ROOT / HOLD_UNIT: hold_unit(),
                i.UNIT_ROOT / BOOT_UNIT: boot_unit(i.PROJECT)}
@@ -289,6 +293,7 @@ def infrastructure(i, r, units, folder, activate=True, policy_fd=None):
         staged = Path(tempfile.mkdtemp(prefix='.engine-', dir=root))
         for name in (*expected, 'code-manifest.json'):
             r.atomic(staged / name, r.raw_file(folder / name, 1048576))
+        bundle(r, staged, expected)
         sync_tree(staged)
         sync_rename(staged, engine)
     pointer = root / 'engine.json'
@@ -299,12 +304,29 @@ def infrastructure(i, r, units, folder, activate=True, policy_fd=None):
         raw = r.raw_file(prior_path / 'code-manifest.json', 1048576)
         require(checksum(raw) == prior.removeprefix('engine-'), 'UPGRADE_RECOVERY_ENGINE_CHANGED')
         bundle(r, prior_path, r.record(prior_path / 'code-manifest.json')['files'])
-    r.atomic(pointer, r.dump({'directory': engine.name}))
-    # Every visible engine is complete. Old loaders still see unchanged units
-    # until both compatible entry points have been published and synced.
-    for path, raw in outputs.items():
+    else:
+        # The original legacy loader reads the transaction package directly and
+        # has no engine pointer. Seed a complete engine before replacing it;
+        # it ignores this pointer, while the first new loader can already use it.
+        # Pointer-based historical loaders must never lack their selected engine.
+        require(all(not path.exists() or r.raw_file(path, 1048576) == LEGACY_BOOTSTRAP
+                    for path in loaders), 'UPGRADE_RECOVERY_ENGINE_REQUIRED')
+        r.atomic(pointer, r.dump({'directory': engine.name}))
+    # New loaders support BOTH Python-only historical engines and the new data
+    # files. Sync both entry points before selecting an engine an old loader
+    # cannot read. Until then, remaining old loaders still use the old engine.
+    for path, raw in loaders.items():
         if not path.exists() or r.raw_file(path, 1048576) != raw:
             r.atomic(path, raw, 0o600 if path.name == 'recover.py' else 0o644)
+        sync_directory(path.parent)
+    sync_directory(root.parent)
+    r.atomic(pointer, r.dump({'directory': engine.name}))
+    # Only now may units change, including commands cached at either loader path.
+    for path, raw in outputs.items():
+        if path in loaders:
+            continue
+        if not path.exists() or r.raw_file(path, 1048576) != raw:
+            r.atomic(path, raw, 0o644)
         sync_directory(path.parent)
     sync_directory(root.parent)
     sync_directory(i.UNIT_ROOT)
@@ -850,6 +872,7 @@ def upgrade_locked(folder, i, recover_only):
             require(state['status'] == 'installed', 'UPGRADE_INSTALLED_STATE_REQUIRED')
             old_files = state['package_files']
             target = r.record(folder / 'code-manifest.json')['files']
+            r.require_baseline(target)
             bundle(r, folder, target)
             bundle(r, r.CODE, old_files)
             old_r = i.load_runtime(r.CODE)

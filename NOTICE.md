@@ -18,5 +18,9 @@
 [antifilter](https://antifilter.download/), [oisd](https://github.com/sjhgvr/oisd),
 [AdGuard DNS Filter](https://github.com/AdguardTeam/AdGuardSDNSFilter),
 [официальные диапазоны Telegram](https://core.telegram.org/resources/cidr.txt).
-Списки скачиваются при установке и обновлении; их содержимое в репозитории
-не хранится.
+rulist, antifilter, OISD и AdGuard скачиваются при сборке политики.
+Доменные и рекламные дополнения хранятся в `lists/baseline/` и входят
+в автономный установщик; происхождение записано в
+[PROVENANCE.json](lists/baseline/PROVENANCE.json).
+IP Telegram, Discord, WhatsApp и Cloudflare пока скачиваются из AntiZapret-VPN;
+для Telegram также используется официальный источник.

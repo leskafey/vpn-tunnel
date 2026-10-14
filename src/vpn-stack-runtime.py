@@ -41,6 +41,8 @@ configure_paths(Path(__file__).resolve().parent.parent)
 GROUP = 'vpn-policy'
 UNIT = 'vpn-stack-dns.service'
 FILES = {'proxy': 'proxy.txt', 'direct': 'direct.txt', 'ads-exceptions': 'ads-exceptions.txt', 'ads': 'ads.txt'}
+BASELINE_FILES = ('include-hosts.txt', 'exclude-hosts.txt',
+                  'include-adblock-hosts.txt', 'exclude-adblock-hosts.txt')
 BASE_TAGS = ('smart', 'direct', 'ads')
 AD_TAGS = ('ads-allow', 'ads-important')
 IP_FILE = 'proxy-ip.txt'
@@ -121,13 +123,33 @@ def run(arguments, code, timeout=30):
     return result.stdout
 
 
+def package_member(name):
+    return isinstance(name, str) and Path(name).name == name and (name.endswith('.py') or name in BASELINE_FILES)
+
+
+def require_baseline(manifest):
+    require(set(BASELINE_FILES) <= set(manifest), 'BASELINE_FILES_REQUIRED')
+
+
+def baseline_source(filename):
+    """Read installed public data, checked against the delivered package manifest."""
+    require(filename in BASELINE_FILES, 'BASELINE_NAME_INVALID')
+    manifest = record(CODE / 'code-manifest.json')['files']
+    require_baseline(manifest)
+    raw = raw_file(CODE / filename, 262144)
+    require(0 < len(raw) and hashlib.sha256(raw).hexdigest() == manifest[filename], 'BASELINE_DATA_CHANGED')
+    return raw, {'source': 'local-baseline', 'path': 'lib/' + filename,
+                 'bytes': len(raw), 'sha256': hashlib.sha256(raw).hexdigest()}
+
+
 def modules():
     manifest = record(CODE / 'code-manifest.json')['files']
+    require_baseline(manifest)
     result = {}
     for name, checksum in manifest.items():
-        require(Path(name).name == name and name.endswith('.py') and digest(CODE / name) == checksum,
+        require(package_member(name) and digest(CODE / name) == checksum,
                 'INSTALLED_CODE_CHANGED')
-        if name in ('vpn-stack-runtime.py', 'vpn-stack-install.py', 'vpn-stack-manage.py'):
+        if name in BASELINE_FILES or name in ('vpn-stack-runtime.py', 'vpn-stack-install.py', 'vpn-stack-manage.py'):
             continue
         spec = importlib.util.spec_from_file_location('stack_' + name.replace('-', '_').replace('.', '_'), CODE / name)
         module = importlib.util.module_from_spec(spec)
@@ -139,6 +161,7 @@ def modules():
                         setup=result['transport-probes.py'], extras=result['domain-extras.py'],
                         parser=result['source-parser.py'], ip=result['ip-source.py'], closed=result['closed-probe.py'],
                         ad_policy=result['ad-policy.py'])
+    s.baseline_source = baseline_source
     s.builder.MIHOMO = CODE / 'bin/mihomo'
     s.builder.updater_idle = lambda: None  # All callers hold our single shared policy lock.
     s.builder.load_parser = lambda: s.parser
@@ -382,13 +405,10 @@ def make_full(s, work, previous=None):
     os.chown(work / 'assets', 0, grp.getgrnam(GROUP).gr_gid)
     (work / 'assets').chmod(0o750)
     manifest = {'source_metadata': {}, 'source_entries': {}, 'files': {}}
-    commit = json.loads(s.extras.download(s.extras.REF))['object']['sha']
-    require(isinstance(commit, str) and len(commit) == 40 and all(c in '0123456789abcdef' for c in commit),
-            'EXTRA_COMMIT_INVALID')
     tlds = s.extras.delegated_tlds(s.extras.download(s.extras.IANA))
-    extras = {}
+    extras, extra_metadata = {}, {}
     for name in ('extra-proxy', 'extra-direct'):
-        raw = s.extras.download(s.extras.source_url(commit, name))
+        raw, extra_metadata[name] = s.baseline_source(s.extras.FILES[name])
         roots, zones, valid = s.extras.parse(raw, s.parser, tlds)
         if previous:
             s.extras.no_lost_coverage(previous['extras'][name]['roots'], roots)
@@ -410,7 +430,7 @@ def make_full(s, work, previous=None):
                 else:
                     count = extras[name]['valid']
                     s.builder.guard_count(name, count, 0, old_count)
-                    info = {'valid': count, 'discarded': 0}
+                    info = dict(extra_metadata[name], valid=count, discarded=0)
                 manifest['source_metadata'][name] = info
                 if name in ('rulist', 'antifilter'):
                     with (work / (name + '.domains.txt')).open() as incoming:
@@ -427,7 +447,7 @@ def make_full(s, work, previous=None):
             s.builder.append_suffixes(work / 'extra-proxy.unique.txt', output)
         with (work / 'direct.raw.txt').open('x') as output:
             s.builder.append_suffixes(work / 'extra-direct.unique.txt', output)
-        ad_tags, ad_metadata = s.ad_policy.build(s, work, commit, previous)
+        ad_tags, ad_metadata = s.ad_policy.build(s, work, previous)
         manifest['source_metadata'].update(ad_metadata)
         for tag in ('smart', 'direct', *ad_tags):
             manifest['files'][tag + '.mrs'] = s.builder.compile_and_verify(tag, work / (tag + '.raw.txt'), work / 'assets', work)
@@ -435,14 +455,18 @@ def make_full(s, work, previous=None):
             (work / 'assets' / (tag + '.mrs')).chmod(0o640)
     finally:
         s.builder.guard_count = original_guard
-    manifest.update(registry_domains=count, upstream_prefix_rewrites=rewritten, extras=extras, commit=commit,
+    manifest.update(registry_domains=count, upstream_prefix_rewrites=rewritten, extras=extras,
                     assets_source=str(work))
     return manifest
 
 
 def reuse(source, previous, work):
     result = {k: copy.deepcopy(previous[k]) for k in ('source_metadata', 'source_entries', 'files',
-              'registry_domains', 'upstream_prefix_rewrites', 'extras', 'commit', 'assets_source')}
+              'registry_domains', 'upstream_prefix_rewrites', 'extras', 'assets_source')}
+    # Historical generations have a domain commit; current ones identify local
+    # inputs by their source_metadata hashes. Reuse both without requiring a SHA.
+    if 'commit' in previous:
+        result['commit'] = previous['commit']
     (work / 'assets').mkdir(mode=0o750)
     os.chown(work / 'assets', 0, grp.getgrnam(GROUP).gr_gid)
     (work / 'assets').chmod(0o750)

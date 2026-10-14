@@ -1,0 +1,6 @@
+{
+  "commit": "b04a3dfa6ab21ba99ca42f170784875aa0f6405e",
+  "source": "install-vpn.py PAYLOAD, decoded without changes",
+  "package_sha256": "71c39f6818132be2f277ad7cacffa78e23de6170c16fbfb80641f32c43b431e5",
+  "loader_sha256": "c18febee1882b45d60d91594d60cf0fa3e5a0b7f08ed68063a93191cf406d358"
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Deterministically package public code only into one shareable Python script."""
+"""Deterministically package public code and baseline lists into one shareable Python script."""
 import ast
 import base64
 import hashlib
@@ -12,11 +12,15 @@ ROOT = Path(__file__).resolve().parent.parent
 HERE = ROOT / 'src'
 FILES = ('ad-policy.py', 'closed-probe.py', 'dns-wire.py', 'domain-extras.py', 'ip-source.py', 'personal-checker.py', 'personal-policy.py', 'personal-runtime.py', 'runtime-checker.py', 'source-parser.py', 'text-builder.py', 'transport-probes.py', 'vpn-stack-install.py', 'vpn-stack-manage.py', 'vpn-stack-runtime.py', 'vpn-stack-upgrade.py')
 
+BASELINE_FILES = ('include-hosts.txt', 'exclude-hosts.txt',
+                  'include-adblock-hosts.txt', 'exclude-adblock-hosts.txt')
+
 
 def package():
     files = {name: (HERE / name).read_bytes() for name in FILES}
     for raw in files.values():
         ast.parse(raw)
+    files.update({name: (ROOT / 'lists/baseline' / name).read_bytes() for name in BASELINE_FILES})
     manifest = {'files': {name: hashlib.sha256(raw).hexdigest() for name, raw in files.items()}}
     files['code-manifest.json'] = (json.dumps(manifest, sort_keys=True, indent=2) + '\n').encode()
     buf = io.BytesIO()
