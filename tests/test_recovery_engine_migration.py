@@ -24,6 +24,9 @@ class PublicationLost(BaseException):
 
 
 class MigrationTests(unittest.TestCase):
+    snapshot = 'b04a3df'
+    snapshot_commit = 'b04a3dfa6ab21ba99ca42f170784875aa0f6405e'
+    snapshot_bootstrap = u.VERIFIED_BOOTSTRAP
     setUp = fixtures.UpgradeTests.setUp
     fixture = fixtures.UpgradeTests.fixture
     stage_policy = fixtures.UpgradeTests.stage_policy
@@ -32,9 +35,9 @@ class MigrationTests(unittest.TestCase):
 
     def pending_fixture(self):
         self.fixture()
-        raw = (SNAPSHOT / 'b04a3df.zip').read_bytes()
-        metadata = json.loads((SNAPSHOT / 'b04a3df.json').read_bytes())
-        self.assertEqual(metadata['commit'], 'b04a3dfa6ab21ba99ca42f170784875aa0f6405e')
+        raw = (SNAPSHOT / (self.snapshot + '.zip')).read_bytes()
+        metadata = json.loads((SNAPSHOT / (self.snapshot + '.json')).read_bytes())
+        self.assertEqual(metadata['commit'], self.snapshot_commit)
         self.assertEqual(hashlib.sha256(raw).hexdigest(), metadata['package_sha256'])
         self.legacy_package = self.project / 'legacy-package'
         self.legacy_package.mkdir(mode=0o700)
@@ -42,18 +45,20 @@ class MigrationTests(unittest.TestCase):
             for name in archive.namelist():
                 self.assertEqual(Path(name).name, name)
                 r.atomic(self.legacy_package / name, archive.read(name))
-        self.legacy = load('b04a3df_engine', self.legacy_package / 'vpn-stack-upgrade.py')
+        self.legacy = load(self.snapshot + '_engine', self.legacy_package / 'vpn-stack-upgrade.py')
         self.assertEqual(hashlib.sha256(self.legacy.BOOTSTRAP).hexdigest(), metadata['loader_sha256'])
-        self.assertEqual(self.legacy.BOOTSTRAP, u.VERIFIED_BOOTSTRAP)
+        self.assertEqual(self.legacy.BOOTSTRAP, self.snapshot_bootstrap)
         expected = r.record(self.legacy_package / 'code-manifest.json')['files']
-        self.assertTrue(all(name.endswith('.py') for name in expected))
+        self.assertEqual({name for name in expected if not name.endswith('.py')},
+                         set() if self.snapshot == 'b04a3df' else set(self.legacy_package_baselines))
         self.legacy.bundle(r, self.legacy_package, expected)
-        # Model the installed pre-baseline bundle. The transaction is created by
-        # the exact b04a3df upgrade implementation and contains its exact package.
+        # Model the historical installed file set. The pending transaction is
+        # created by the exact historical upgrade code with its exact package.
         state = r.record(i.STATE)
         for name in r.BASELINE_FILES:
-            (r.CODE / name).unlink()
-            state['package_files'].pop(name)
+            if name not in expected:
+                (r.CODE / name).unlink()
+                state['package_files'].pop(name)
         r.atomic(r.CODE / 'code-manifest.json', r.dump({'files': state['package_files']}), 0o644)
         r.atomic(i.STATE, r.dump(state))
         self.before[i.STATE] = i.STATE.read_bytes()
@@ -72,7 +77,9 @@ class MigrationTests(unittest.TestCase):
             if recovery_calls > 1:
                 raise PublicationLost()
             return recover(*a, **kw)
+        historical_runtime = load(self.snapshot + '_runtime', self.legacy_package / 'vpn-stack-runtime.py')
         with patch.object(self.legacy, 'sync_rename', side_effect=lost), \
+             patch.object(r, 'require_baseline', side_effect=getattr(historical_runtime, 'require_baseline', r.require_baseline)), \
              patch.object(self.legacy, 'recover', side_effect=cannot_recover), redirect_stdout(io.StringIO()):
             with self.assertRaises(PublicationLost):
                 self.legacy.upgrade(self.legacy_package, i)
@@ -146,14 +153,16 @@ class MigrationTests(unittest.TestCase):
         self.assert_preserved()
         for path, raw in self.before.items():
             self.assertEqual(path.read_bytes(), raw, str(path))
-        self.assertTrue(all(not (r.CODE / name).exists() for name in r.BASELINE_FILES))
+        expected = r.record(i.STATE)['package_files']
+        self.assertEqual({name for name in r.BASELINE_FILES if (r.CODE / name).exists()},
+                         set(expected) & set(r.BASELINE_FILES))
 
     def test_every_loader_and_pointer_publication_boundary_runs_surviving_loader(self):
         for boundary in (u.LOADER, 'recover.py', 'engine.json'):
             for timing in ('before', 'after'):
                 for loader in (u.LOADER, 'recover.py'):
                     with self.subTest(boundary=boundary, timing=timing, loader=loader):
-                        case = MigrationTests()
+                        case = type(self)()
                         try:
                             case.setUp()
                             case.pending_fixture()
@@ -199,7 +208,7 @@ class MigrationTests(unittest.TestCase):
                        '20-vpn-upgrade-recovery.conf', 'engine.json', 'selected-engine'):
             for mutation in ('unknown', 'edit'):
                 with self.subTest(target=target, mutation=mutation):
-                    case = MigrationTests()
+                    case = type(self)()
                     try:
                         case.setUp()
                         case.pending_fixture()
@@ -262,7 +271,7 @@ class MigrationTests(unittest.TestCase):
             loaders = ('recover.py',) if boundary == 'engine.json' else (u.LOADER, 'recover.py')
             for loader in loaders:
                 with self.subTest(boundary=boundary, loader=loader):
-                    case = MigrationTests()
+                    case = type(self)()
                     try:
                         case.setUp()
                         case.pending_fixture()

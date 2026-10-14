@@ -67,7 +67,7 @@ class PackageTests(unittest.TestCase):
         baseline = json.loads((HERE.parent / 'verification/helper-baseline.json').read_bytes())['files']
         self.assertEqual(len(baseline), 11)
         for name, checksum in baseline.items():
-            if name in ('personal-runtime.py', 'personal-policy.py', 'domain-extras.py'):
+            if name in ('personal-runtime.py', 'personal-policy.py', 'domain-extras.py', 'ip-source.py'):
                 continue  # Current socket, advertising and local baseline changes have semantic regression tests.
             self.assertEqual(hashlib.sha256(files[name]).hexdigest(), checksum, name)
 

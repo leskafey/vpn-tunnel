@@ -13,6 +13,7 @@ import json
 import os
 from pathlib import Path
 import signal
+import shutil
 import socket
 import socketserver
 import struct
@@ -22,6 +23,8 @@ import tempfile
 import threading
 import urllib.request
 import zipfile
+from unittest.mock import patch
+from contextlib import nullcontext
 
 
 def module(name, path):
@@ -33,6 +36,9 @@ def module(name, path):
 
 def main():
     assert sys.platform == 'linux' and os.geteuid() == 0 and Path('/.dockerenv').is_file(), 'DISPOSABLE_CONTAINER_ONLY'
+    arm64_diagnostic = '--arm64-diagnostic' in sys.argv[1:]
+    if arm64_diagnostic:
+        assert os.uname().machine == 'aarch64' and '--binary-cache' in sys.argv[1:], 'ARM64_DIAGNOSTIC_CACHE_REQUIRED'
     os.umask(0o077)
     artifact = module('linux_test_standalone', Path('/root/vpn-tunnel/install-vpn.py'))
     payload = base64.b85decode(artifact.PAYLOAD)
@@ -61,6 +67,24 @@ def main():
         def test_modules():
             s = original_modules()
             s.setup.PUBLIC_IP = expected_exit
+            native = s.builder.native
+            def diagnostic_native(arguments, label, work, **kwargs):
+                try:
+                    return native(arguments, label, work, **kwargs)
+                except BaseException:
+                    # generation_work removes failed candidates, including logs.
+                    # Keep private diagnostics inside this disposable container.
+                    debug = Path('/root/installer-private-debug')
+                    debug.mkdir(mode=0o700, exist_ok=True)
+                    log = work / (label + '.private.log')
+                    if log.is_file():
+                        shutil.copyfile(log, debug / log.name)
+                    if len(arguments) > 4 and arguments[1] == 'convert-ruleset':
+                        source = Path(arguments[4])
+                        if source.is_file():
+                            shutil.copyfile(source, debug / source.name)
+                    raise
+            s.builder.native = diagnostic_native
             return s
         runtime.modules = test_modules
         installer.load_runtime = lambda _: runtime
@@ -108,7 +132,13 @@ def main():
             s.setup.stun_socks = local_stun
             return s
         runtime.modules = local_modules
-        installer.install(folder, alias, resume)
+        # ARM64 is diagnostic only: production still requires Ubuntu amd64.
+        # Override only the architecture check; keep all other host checks,
+        # real services, sources and policy/transport validation.
+        architecture = (patch.object(installer.platform, 'machine', return_value='x86_64')
+                        if arm64_diagnostic else nullcontext())
+        with architecture:
+            installer.install(folder, alias, resume)
         source, manifest = runtime.active()
         for user in ('vpn-stack-xray.service', 'vpn-stack-dns.service', 'vpn-stack-http.service'):
             assert runtime.run(['systemctl', 'is-active', user], 'SERVICE_NOT_ACTIVE').strip() == b'active'
@@ -121,7 +151,10 @@ def main():
         admin.device(runtime, 'revoke', 'laptop-macos')
         assert runtime.raw_file(runtime.ETC / 'xray.json', 1048576) == original
         # No generated profiles/keys enter this public report.
-        output = {'status': 'passed', 'scope': 'Ubuntu 24.04 amd64 emulation, isolated Docker/systemd; synthetic local endpoint',
+        scope = ('Ubuntu 24.04 ARM64 diagnostic, architecture check overridden, verified cached ARM64 binaries'
+                 if arm64_diagnostic else 'Ubuntu 24.04 amd64 emulation')
+        output = {'status': 'passed', 'scope': scope + '; isolated Docker/systemd; synthetic local endpoint',
+                  'host_architecture_check_overridden': arm64_diagnostic,
                   'bootstrap': 'passed', 'native_temporary_SMART_FULL_profiles': 2, 'real_VLESS_new_device_and_revoke': 'passed',
                   'native_DNS_TCP_UDP_real_HTTPS': 'passed', 'local_VLESS_fake_UDP_STUN': 'passed',
                   'external_UDP_STUN_tested': False, 'counts': manifest['counts'],

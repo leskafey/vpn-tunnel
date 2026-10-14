@@ -61,11 +61,15 @@ def previous_worker_fence(u, i, r, package, originals):
     try:
         r.apply('personal')  # Actual installed previous runtime and helpers.
         raise AssertionError('PREVIOUS_WORKER_MUTATED_PENDING_UPGRADE')
-    except r.StackError as error:
-        assert str(error) == 'POLICY_LOCK_REQUIRED'
+    except (r.StackError, BlockingIOError) as error:
+        # Newer historical runtimes check the upgrade journal before flock;
+        # both contracts must reject mutation while the transaction is pending.
+        assert str(error) in ('POLICY_LOCK_REQUIRED', 'UPGRADE_RECOVERY_REQUIRED')
     for args in (['cleanup'], ['rule', 'add', 'direct', 'refused.example']):
         result = subprocess.run([str(i.CLI), *args], capture_output=True)
-        assert result.returncode != 0 and b'POLICY_LOCK_REQUIRED' in result.stdout
+        assert result.returncode != 0
+        report = json.loads(result.stdout.split(b'VPN_STACK_REPORT=', 1)[1])
+        assert report['code'] in ('POLICY_LOCK_REQUIRED', 'POLICY_BUSY_RETRY_LATER')
         assert personal.read_bytes() == originals[personal]
     for path, raw in before.items():
         assert path.read_bytes() == raw
@@ -127,8 +131,8 @@ def crash_matrix(u, i, r, variant, originals):
             try:
                 with previous_r.lock():
                     raise AssertionError('OLD_WORKER_CROSSED_FENCE')
-            except previous_r.StackError as error:
-                assert str(error) == 'POLICY_LOCK_REQUIRED'
+            except (previous_r.StackError, BlockingIOError) as error:
+                assert str(error) in ('POLICY_LOCK_REQUIRED', 'UPGRADE_RECOVERY_REQUIRED')
             # Run historical apply with the real managed project paths.
             command = 'import importlib.util; from pathlib import Path; '
             command += "spec=importlib.util.spec_from_file_location('old', '/previous/src/vpn-stack-runtime.py'); "
@@ -398,10 +402,11 @@ def main():
             previous_u = load('actual_previous_upgrade', r.CODE / 'vpn-stack-upgrade.py')
             # The original a62ad73 infrastructure predates the new durable
             # fence fixture. Reinstall its exact loader to exercise migration.
-            r.atomic(project / 'state/upgrade/recover.py', u.LEGACY_BOOTSTRAP)
-            r.atomic(i.UNIT_ROOT / u.BOOT_UNIT, u.boot_unit(project, legacy=True), 0o644)
-            previous_u.infrastructure(previous_i, r, unit_bodies)
-            assert (project / 'state/upgrade/recover.py').read_bytes() == u.LEGACY_BOOTSTRAP
+            if previous_u.BOOTSTRAP == u.LEGACY_BOOTSTRAP:
+                r.atomic(project / 'state/upgrade/recover.py', u.LEGACY_BOOTSTRAP)
+                r.atomic(i.UNIT_ROOT / u.BOOT_UNIT, u.boot_unit(project, legacy=True), 0o644)
+                previous_u.infrastructure(previous_i, r, unit_bodies)
+                assert (project / 'state/upgrade/recover.py').read_bytes() == u.LEGACY_BOOTSTRAP
         # Install state, units and code above come from the real historical bundle.
         r = i.load_runtime(package)
         local_config(r)

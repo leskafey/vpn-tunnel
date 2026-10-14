@@ -13,7 +13,9 @@ HERE = ROOT / 'src'
 FILES = ('ad-policy.py', 'closed-probe.py', 'dns-wire.py', 'domain-extras.py', 'ip-source.py', 'personal-checker.py', 'personal-policy.py', 'personal-runtime.py', 'runtime-checker.py', 'source-parser.py', 'text-builder.py', 'transport-probes.py', 'vpn-stack-install.py', 'vpn-stack-manage.py', 'vpn-stack-runtime.py', 'vpn-stack-upgrade.py')
 
 BASELINE_FILES = ('include-hosts.txt', 'exclude-hosts.txt',
-                  'include-adblock-hosts.txt', 'exclude-adblock-hosts.txt')
+                  'include-adblock-hosts.txt', 'exclude-adblock-hosts.txt',
+                  'telegram-extra-ips.txt', 'cloudflare-extra-ips.txt',
+                  'discord-ips.txt', 'whatsapp-ips.txt')
 
 
 def package():

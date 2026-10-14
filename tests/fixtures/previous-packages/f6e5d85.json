@@ -1,0 +1,7 @@
+{
+  "commit": "f6e5d85a677014a566b8c9772095280520ccbfb7",
+  "source": "install-vpn.py PAYLOAD at the task 2 completion commit",
+  "package_sha256": "dbc0973fc4e85cc422e81c3f1f535fd7ee17a1eedc412cbf4df8479b732efe2f",
+  "installer_sha256": "e72a7b089bdf8df2872af336abc43db29a2760cfc5c520d4144c6ea81275ae4e",
+  "loader_sha256": "e65fff54a245583f267f44148cc932bd98cc48f3ba3cf667bdb2d756ceb6795d"
+}

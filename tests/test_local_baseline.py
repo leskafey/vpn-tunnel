@@ -43,7 +43,8 @@ class BaselineTests(unittest.TestCase):
         payload = next(ast.literal_eval(n.value) for n in tree.body if isinstance(n, ast.Assign)
                        and isinstance(n.targets[0], ast.Name) and n.targets[0].id == 'PAYLOAD')
         provenance = json.loads((ROOT / 'lists/baseline/PROVENANCE.json').read_bytes())
-        recorded = {Path(row['path']).name: row for row in provenance['downloaded_files']}
+        recorded = {Path(row['path']).name: row for row in
+                    provenance['downloaded_files'] + provenance['derived_files']}
         with zipfile.ZipFile(io.BytesIO(base64.b85decode(payload))) as archive:
             manifest = json.loads(archive.read('code-manifest.json'))['files']
             self.assertEqual(set(r.BASELINE_FILES), set(b.BASELINE_FILES))

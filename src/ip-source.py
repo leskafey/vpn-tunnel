@@ -50,7 +50,8 @@ import urllib.request
 SOURCE_LIMIT = 16384
 
 
-ALLOWED_HOSTS = {'api.github.com', 'raw.githubusercontent.com', 'core.telegram.org'}
+ALLOWED_SOURCES = {('core.telegram.org', '/resources/cidr.txt'),
+                   ('www.cloudflare.com', '/ips-v4'), ('www.cloudflare.com', '/ips-v4/')}
 
 
 class CandidateError(Exception):
@@ -64,9 +65,10 @@ def require(value, code):
 
 def allowed_url(url):
     parsed = urllib.parse.urlsplit(url)
-    require(parsed.scheme == 'https' and parsed.hostname in ALLOWED_HOSTS
+    require(parsed.scheme == 'https' and (parsed.hostname, parsed.path) in ALLOWED_SOURCES
             and parsed.port in (None, 443) and parsed.username is None and parsed.password is None,
             'SOURCE_URL_NOT_ALLOWED')
+    require(not parsed.query and not parsed.fragment, 'SOURCE_URL_NOT_ALLOWED')
 
 
 class Redirect(urllib.request.HTTPRedirectHandler):
@@ -89,8 +91,13 @@ def download(url):
 
 def parse_source(raw, official=False):
     require(0 < len(raw) <= SOURCE_LIMIT, 'SOURCE_SIZE_LIMIT')
+    require(official in (False, True, 'telegram', 'cloudflare'), 'SOURCE_KIND_INVALID')
+    try:
+        lines = raw.decode('utf-8-sig').splitlines()
+    except UnicodeError:
+        raise CandidateError('SOURCE_ENCODING_INVALID') from None
     ipv4, ipv6 = [], []
-    for line in raw.decode('utf-8-sig').splitlines():
+    for line in lines:
         row = line.split('#', 1)[0].strip()
         if not row:
             continue
@@ -102,16 +109,21 @@ def parse_source(raw, official=False):
             raise CandidateError('SOURCE_INVALID_CIDR') from None
         require(network.is_global, 'SOURCE_NONPUBLIC_NETWORK')
         if network.version == 6:
-            require(official and network.prefixlen >= 32, 'UNEXPECTED_IPV6_NETWORK')
+            require(official in (True, 'telegram') and network.prefixlen >= 32, 'UNEXPECTED_IPV6_NETWORK')
             ipv6.append(network)
         else:
+            require(network.network_address.is_global and network.broadcast_address.is_global
+                    and not network.network_address.is_multicast and not network.broadcast_address.is_multicast,
+                    'SOURCE_NONPUBLIC_NETWORK')
             require(network.prefixlen >= 12, 'SOURCE_NETWORK_TOO_BROAD')
             ipv4.append(network)
     require(1 <= len(ipv4) <= 256 and len(set(ipv4)) == len(ipv4)
             and len(set(ipv6)) == len(ipv6), 'SOURCE_EMPTY_OVERSIZED_OR_DUPLICATE')
-    if official:
+    if official in (True, 'telegram'):
         require(7 <= len(ipv4) <= 12 and len(ipv6) <= 16
                 and all(network.prefixlen >= 20 for network in ipv4), 'OFFICIAL_TELEGRAM_SOURCE_GUARD')
+    elif official == 'cloudflare':
+        require(10 <= len(ipv4) <= 32, 'OFFICIAL_CLOUDFLARE_SOURCE_GUARD')
     return ipv4, ipv6
 
 

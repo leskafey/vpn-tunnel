@@ -119,10 +119,14 @@ FDSTORE_BOOTSTRAP = PREVIOUS_BOOTSTRAP.replace(
 VERIFIED_BOOTSTRAP = FDSTORE_BOOTSTRAP.replace(
     b"if not journal.get('services_restored', False):",
     b"if not journal.get('services_restored', False) or not journal.get('service_verification'):")
-BOOTSTRAP = VERIFIED_BOOTSTRAP.replace(
+DOMAIN_BASELINE_BOOTSTRAP = VERIFIED_BOOTSTRAP.replace(
     b"assert Path(name).name == name and name.endswith('.py')",
     b"assert Path(name).name == name and (name.endswith('.py') or name in "
     b"('include-hosts.txt', 'exclude-hosts.txt', 'include-adblock-hosts.txt', 'exclude-adblock-hosts.txt'))")
+BOOTSTRAP = DOMAIN_BASELINE_BOOTSTRAP.replace(
+    b"'exclude-adblock-hosts.txt'))",
+    b"'exclude-adblock-hosts.txt', 'telegram-extra-ips.txt', 'cloudflare-extra-ips.txt', "
+    b"'discord-ips.txt', 'whatsapp-ips.txt'))")
 
 
 
@@ -253,9 +257,9 @@ def hold_unit():
 
 def infrastructure_variants(i, path, raw):
     if path.name == 'recover.py':
-        return (raw, VERIFIED_BOOTSTRAP, FDSTORE_BOOTSTRAP, PREVIOUS_BOOTSTRAP, LEGACY_BOOTSTRAP)
+        return (raw, DOMAIN_BASELINE_BOOTSTRAP, VERIFIED_BOOTSTRAP, FDSTORE_BOOTSTRAP, PREVIOUS_BOOTSTRAP, LEGACY_BOOTSTRAP)
     if path.name == LOADER:
-        return (raw, VERIFIED_BOOTSTRAP, FDSTORE_BOOTSTRAP)
+        return (raw, DOMAIN_BASELINE_BOOTSTRAP, VERIFIED_BOOTSTRAP, FDSTORE_BOOTSTRAP)
     if path.name == BOOT_UNIT:
         return (raw, boot_unit(i.PROJECT, legacy=True), boot_unit(i.PROJECT, previous=True))
     if path.name == FINISH_UNIT:
@@ -826,7 +830,9 @@ def stage_policy(i, r, code, work, previous):
     s = staged.modules()
     values, snapshots = staged.personal(s)
     manifest = staged.make_full(s, work, previous)
-    body, ip = staged.combined_ips(previous['ip'])
+    old_base = staged.ip_body([staged.ipaddress.ip_network(c) for c in previous['ip']['source_CIDRs']])[0]
+    _, ip = staged.fetch_ips(s, old_base)
+    body, ip = staged.combined_ips(ip)
     manifest.update(personal=values, personal_sha256=snapshots, ip=ip)
     gid = i.grp.getgrnam(staged.GROUP).gr_gid
     staged.atomic(work / 'proxy-ipv4.json', body, 0o640, gid)

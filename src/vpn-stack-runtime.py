@@ -42,14 +42,20 @@ GROUP = 'vpn-policy'
 UNIT = 'vpn-stack-dns.service'
 FILES = {'proxy': 'proxy.txt', 'direct': 'direct.txt', 'ads-exceptions': 'ads-exceptions.txt', 'ads': 'ads.txt'}
 BASELINE_FILES = ('include-hosts.txt', 'exclude-hosts.txt',
-                  'include-adblock-hosts.txt', 'exclude-adblock-hosts.txt')
+                  'include-adblock-hosts.txt', 'exclude-adblock-hosts.txt',
+                  'telegram-extra-ips.txt', 'cloudflare-extra-ips.txt',
+                  'discord-ips.txt', 'whatsapp-ips.txt')
 BASE_TAGS = ('smart', 'direct', 'ads')
 AD_TAGS = ('ads-allow', 'ads-important')
 IP_FILE = 'proxy-ip.txt'
 SOURCES = {'rulist': 'https://raw.githubusercontent.com/bol-van/rulist/main/reestr_hostname.txt',
            'antifilter': 'https://antifilter.download/list/domains.lst',
            'oisd-small': 'https://raw.githubusercontent.com/sjhgvr/oisd/main/domainswild2_small.txt'}
-IP_GROUPS = ('telegram', 'discord', 'whatsapp', 'cloudflare')
+IP_SOURCES = {'telegram': 'https://core.telegram.org/resources/cidr.txt',
+              'cloudflare': 'https://www.cloudflare.com/ips-v4/'}
+IP_BASELINES = {'telegram-extra': 'telegram-extra-ips.txt',
+                'cloudflare-extra': 'cloudflare-extra-ips.txt',
+                'discord': 'discord-ips.txt', 'whatsapp': 'whatsapp-ips.txt'}
 FAKE = ipaddress.ip_network('198.18.0.0/16')
 PINNED_VERSIONS = {'xray': '26.3.27', 'sing-box': '1.14.2', 'mihomo': '1.19.31'}
 
@@ -241,24 +247,28 @@ def ip_body(networks):
 
 
 def fetch_ips(s, previous=None):
-    commit = json.loads(s.ip.download('https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/ref/heads/main'))['object']['sha']
-    require(len(commit) == 40 and all(c in '0123456789abcdef' for c in commit), 'IP_COMMIT_INVALID')
-    networks = []
-    for name in IP_GROUPS:
-        raw = s.ip.download('https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/' + commit
-                            + '/setup/root/antizapret/download/' + name + '-ips.txt')
-        ipv4, _ = s.ip.parse_source(raw)
+    networks, metadata = [], {}
+    for name, url in IP_SOURCES.items():
+        raw = s.ip.download(url)
+        ipv4, ipv6 = s.ip.parse_source(raw, official=name)
+        metadata[name] = {'source': 'official', 'url': url, 'bytes': len(raw),
+                          'sha256': hashlib.sha256(raw).hexdigest(),
+                          'IPv4_CIDRs': len(ipv4), 'ignored_IPv6_CIDRs': len(ipv6)}
         networks.extend(ipv4)
-    ipv4, _ = s.ip.parse_source(s.ip.download('https://core.telegram.org/resources/cidr.txt'), official=True)
-    networks.extend(ipv4)
+    for name, filename in IP_BASELINES.items():
+        raw, info = s.baseline_source(filename)
+        ipv4, _ = s.ip.parse_source(raw)
+        metadata[name] = dict(info, IPv4_CIDRs=len(ipv4))
+        networks.extend(ipv4)
     raw, count = ip_body(networks)
     if previous:
-        old = [ipaddress.ip_network(c) for rule in json.loads(previous)['rules'] for c in rule['ip_cidr']]
+        old = list(ipaddress.collapse_addresses(ipaddress.ip_network(c)
+                   for rule in json.loads(previous)['rules'] for c in rule['ip_cidr']))
         fresh = [ipaddress.ip_network(c) for rule in json.loads(raw)['rules'] for c in rule['ip_cidr']]
         require(all(any(n.subnet_of(f) for f in fresh) for n in old), 'IP_PREVIOUS_COVERAGE_REMOVED')
         require(sum(n.num_addresses for n in fresh) <= sum(n.num_addresses for n in old) * 1.25,
                 'IP_COVERAGE_GROWTH_GUARD')
-    return raw, {'CIDRs': count, 'JSON_bytes': len(raw), 'commit': commit,
+    return raw, {'CIDRs': count, 'JSON_bytes': len(raw), 'sources': metadata,
                  'source_CIDRs': [str(n) for n in ipaddress.collapse_addresses(networks)]}
 
 
