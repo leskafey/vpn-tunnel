@@ -26,7 +26,7 @@ personal = load('baseline_personal', 'personal-runtime.py')
 setup = load('baseline_setup', 'transport-probes.py')
 core = load('baseline_core', 'personal-policy.py')
 FULL_BUILD = r.make_full
-TLD_BYTES = (ROOT / 'docs/antizapret-independence/2026-10-14/official/iana-tlds.txt').read_bytes()
+TLD_BYTES = (ROOT / 'tests/fixtures/antizapret-independence/2026-10-14/official/iana-tlds.txt').read_bytes()
 
 
 class BaselineTests(unittest.TestCase):

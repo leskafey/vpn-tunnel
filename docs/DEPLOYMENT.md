@@ -410,8 +410,8 @@ IP Telegram: [официальный CIDR](https://core.telegram.org/resources/c
 [официальный IPv4](https://www.cloudflare.com/ips-v4/) плюс `cloudflare-extra-ips.txt`.
 Discord и WhatsApp: локальные `discord-ips.txt` и `whatsapp-ips.txt`.
 Все четыре файла читаются из установленного `lib/`, отдельно от личного
-`config/proxy-ip.txt`. Согласованные дополнения и происхождение сохранены в
-[данных задачи 1](ANTIZAPRET-INDEPENDENCE-DATA.md); загрузок из AntiZapret-VPN нет.
+`config/proxy-ip.txt`. Состав дополнений и происхождение сохранены в
+[PROVENANCE.json](../lists/baseline/PROVENANCE.json); загрузок из AntiZapret-VPN нет.
 
 Каждый IP-вход ограничен 16 КиБ, содержит 1–256 уникальных публичных IPv4 CIDR
 с префиксом не шире `/12`. Telegram дополнительно ограничен 7–12 IPv4 CIDR

@@ -21,7 +21,7 @@ import test_recovery_engine_migration as migration
 import test_upgrade as upgrade
 
 ROOT = Path(__file__).resolve().parent.parent
-SNAPSHOTS = ROOT / 'docs/antizapret-independence/2026-10-14'
+SNAPSHOTS = ROOT / 'tests/fixtures/antizapret-independence/2026-10-14'
 IP = load('independent_ip_sources', 'ip-source.py')
 MODULES, INITIAL, STAGE, LOAD_RUNTIME = r.modules, i.initial_generation, upgrade.u.stage_policy, i.load_runtime
 OFFICIAL = {r.IP_SOURCES['telegram']: (SNAPSHOTS / 'official/telegram-cidr.txt').read_bytes(),

@@ -5,11 +5,11 @@
     "telegram": {
       "inputs": [
         {
-          "path": "docs/antizapret-independence/2026-10-14/upstream/telegram-ips.txt",
+          "path": "tests/fixtures/antizapret-independence/2026-10-14/upstream/telegram-ips.txt",
           "sha256": "b5f8a7cf0759322b17738b7051767cab46d2766445791323a6f9c41d99aadfda"
         },
         {
-          "path": "docs/antizapret-independence/2026-10-14/official/telegram-cidr.txt",
+          "path": "tests/fixtures/antizapret-independence/2026-10-14/official/telegram-cidr.txt",
           "sha256": "3ecd072cedf72eceee6961b18a51e37f905d5ce4a656a5d24cf5fea63e6ec651"
         }
       ],
@@ -108,15 +108,15 @@
     "cloudflare": {
       "inputs": [
         {
-          "path": "docs/antizapret-independence/2026-10-14/upstream/cloudflare-ips.txt",
+          "path": "tests/fixtures/antizapret-independence/2026-10-14/upstream/cloudflare-ips.txt",
           "sha256": "d178008d3648c05e233e58ffc57a11ab32f9779256427b594c7a3a76e8d4cbf5"
         },
         {
-          "path": "docs/antizapret-independence/2026-10-14/official/cloudflare-ips-v4.txt",
+          "path": "tests/fixtures/antizapret-independence/2026-10-14/official/cloudflare-ips-v4.txt",
           "sha256": "f02c6d83bc01ab0ae8577160e036d700c7455359bce054df884e5d7d9e4e9e7b"
         },
         {
-          "path": "docs/antizapret-independence/2026-10-14/official/cloudflare-ips-v6.txt",
+          "path": "tests/fixtures/antizapret-independence/2026-10-14/official/cloudflare-ips-v6.txt",
           "sha256": "9e9d39e3e83bad00c4decafd53c63fa62029f3d95db68de937d2be28234ca0a9"
         }
       ],
