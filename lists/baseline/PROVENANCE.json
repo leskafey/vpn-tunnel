@@ -1,0 +1,296 @@
+{
+  "upstream": {
+    "repository": "https://github.com/GubernievS/AntiZapret-VPN",
+    "selected_ref": "main",
+    "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+    "commit_date_utc": "2026-10-13T21:29:47Z",
+    "commit_message": "Update include-hosts.txt",
+    "tree_sha": "d450a7fc3b0bff226641ae0ec1405a0abfd05214",
+    "commit_observed_at_utc": "2026-10-14T07:42:59.942650+00:00",
+    "commit_response": "docs/antizapret-independence/2026-10-14/upstream-commit.json",
+    "commit_response_sha256": "205f7cdea7a487edc76f6609d8fbe67d9556b117be4bf263479afea837139a6a",
+    "tree_response": "docs/antizapret-independence/2026-10-14/upstream-tree.json",
+    "tree_response_sha256": "e28534dc3cadcefc2703d69db97f5ff7e8c2e2498ecd9cbe930b17b7115d741a",
+    "tree_url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/d450a7fc3b0bff226641ae0ec1405a0abfd05214?recursive=1",
+    "commit_selection_url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/commits/main",
+    "tree_retrieved_at_utc": "2026-10-14T07:47:20.544337+00:00"
+  },
+  "downloaded_files": [
+    {
+      "path": "lists/baseline/include-hosts.txt",
+      "url": "https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/28200e99440e97c5904145db3a0187c3650085c6/setup/root/antizapret/download/include-hosts.txt",
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 18116,
+      "sha256": "b2ce712d5ded2cf404ccd23180aad03dece85a75f5f6dad9a1f4f39188302ef4",
+      "preservation": "HTTP response body, unchanged",
+      "upstream_path": "setup/root/antizapret/download/include-hosts.txt",
+      "git_blob_sha1": "701d90f828b68066155a2ee2b407a3322c43e410",
+      "git_blob_verified_against_pinned_tree": true,
+      "active_entries": 1183,
+      "normalized_unique_roots": 1183,
+      "tld_suffixes": [
+        "goog",
+        "google",
+        "ua"
+      ],
+      "valid_entries": 1183
+    },
+    {
+      "path": "lists/baseline/exclude-hosts.txt",
+      "url": "https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/28200e99440e97c5904145db3a0187c3650085c6/setup/root/antizapret/download/exclude-hosts.txt",
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 538,
+      "sha256": "c50736345000374b4a58046a1e0c216d05eb8cd23a163cdbd75d5974d244a310",
+      "preservation": "HTTP response body, unchanged",
+      "upstream_path": "setup/root/antizapret/download/exclude-hosts.txt",
+      "git_blob_sha1": "a7525960d04f2fb7d5eebce2d11dc7167f339bd9",
+      "git_blob_verified_against_pinned_tree": true,
+      "active_entries": 17,
+      "normalized_unique_roots": 17,
+      "tld_suffixes": [],
+      "valid_entries": 17
+    },
+    {
+      "path": "lists/baseline/include-adblock-hosts.txt",
+      "url": "https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/28200e99440e97c5904145db3a0187c3650085c6/setup/root/antizapret/download/include-adblock-hosts.txt",
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 254,
+      "sha256": "f421f053c3af926c0e2a4580e5241b436b45d4f1a5e877ce2b77bf74f3d2ea5f",
+      "preservation": "HTTP response body, unchanged",
+      "upstream_path": "setup/root/antizapret/download/include-adblock-hosts.txt",
+      "git_blob_sha1": "30644a9fe33a318844ad6e8e0596dd86f1b44f7d",
+      "git_blob_verified_against_pinned_tree": true,
+      "active_entries": 11
+    },
+    {
+      "path": "lists/baseline/exclude-adblock-hosts.txt",
+      "url": "https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/28200e99440e97c5904145db3a0187c3650085c6/setup/root/antizapret/download/exclude-adblock-hosts.txt",
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 183,
+      "sha256": "41d18d5b365cb7995370d34d8538c9bf81ca73f70b97451a869d78a2762477ed",
+      "preservation": "HTTP response body, unchanged",
+      "upstream_path": "setup/root/antizapret/download/exclude-adblock-hosts.txt",
+      "git_blob_sha1": "e5ba43c32710ce8cd1adef33375518c034e05b63",
+      "git_blob_verified_against_pinned_tree": true,
+      "active_entries": 5
+    },
+    {
+      "path": "lists/baseline/discord-ips.txt",
+      "url": "https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/28200e99440e97c5904145db3a0187c3650085c6/setup/root/antizapret/download/discord-ips.txt",
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 240,
+      "sha256": "3ab6a487a4acb5ca6a79c983d4594397a22d092238bf17ee13f39fb27fc599fe",
+      "preservation": "HTTP response body, unchanged",
+      "upstream_path": "setup/root/antizapret/download/discord-ips.txt",
+      "git_blob_sha1": "ad30d7b5f0be120c1b63fb791d20d8db0ba6e9fb",
+      "git_blob_verified_against_pinned_tree": true,
+      "active_entries": 5,
+      "ipv4_address_count": 417792
+    },
+    {
+      "path": "lists/baseline/whatsapp-ips.txt",
+      "url": "https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/28200e99440e97c5904145db3a0187c3650085c6/setup/root/antizapret/download/whatsapp-ips.txt",
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 348,
+      "sha256": "0c6c2cfc1abe64866407fb288ba832c5a1b7a2ab0b40730d87984c8eef2ae86f",
+      "preservation": "HTTP response body, unchanged",
+      "upstream_path": "setup/root/antizapret/download/whatsapp-ips.txt",
+      "git_blob_sha1": "da6750a0ee65c84ca63ca13768c9a2bb7521f99b",
+      "git_blob_verified_against_pinned_tree": true,
+      "active_entries": 14,
+      "ipv4_address_count": 1479680
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/upstream/telegram-ips.txt",
+      "url": "https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/28200e99440e97c5904145db3a0187c3650085c6/setup/root/antizapret/download/telegram-ips.txt",
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 270,
+      "sha256": "b5f8a7cf0759322b17738b7051767cab46d2766445791323a6f9c41d99aadfda",
+      "preservation": "HTTP response body, unchanged",
+      "upstream_path": "setup/root/antizapret/download/telegram-ips.txt",
+      "git_blob_sha1": "b82f7a2fd61911eb6a72d87e0e8142b6fc1ad268",
+      "git_blob_verified_against_pinned_tree": true,
+      "active_entries": 8,
+      "ipv4_address_count": 15104
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/upstream/cloudflare-ips.txt",
+      "url": "https://raw.githubusercontent.com/GubernievS/AntiZapret-VPN/28200e99440e97c5904145db3a0187c3650085c6/setup/root/antizapret/download/cloudflare-ips.txt",
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 443,
+      "sha256": "d178008d3648c05e233e58ffc57a11ab32f9779256427b594c7a3a76e8d4cbf5",
+      "preservation": "HTTP response body, unchanged",
+      "upstream_path": "setup/root/antizapret/download/cloudflare-ips.txt",
+      "git_blob_sha1": "88d8f0a240ebc3bc682d7a2bb8aca033b3cd78f6",
+      "git_blob_verified_against_pinned_tree": true,
+      "active_entries": 16,
+      "ipv4_address_count": 1787392
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/official/telegram-cidr.txt",
+      "url": "https://core.telegram.org/resources/cidr.txt",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 227,
+      "sha256": "3ecd072cedf72eceee6961b18a51e37f905d5ce4a656a5d24cf5fea63e6ec651",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/official/cloudflare-ips-v4.txt",
+      "url": "https://www.cloudflare.com/ips-v4",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 230,
+      "sha256": "f02c6d83bc01ab0ae8577160e036d700c7455359bce054df884e5d7d9e4e9e7b",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/official/cloudflare-ips-v6.txt",
+      "url": "https://www.cloudflare.com/ips-v6",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:43:34 UTC",
+      "bytes": 104,
+      "sha256": "9e9d39e3e83bad00c4decafd53c63fa62029f3d95db68de937d2be28234ca0a9",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/registry/ripe-95.161.64.0-20-prefix-overview.json",
+      "url": "https://stat.ripe.net/data/prefix-overview/data.json?resource=95.161.64.0%2F20",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:44:38 UTC",
+      "bytes": 880,
+      "sha256": "bd6fea11ffaef3c8329c11b1732bc5b2ea94f18a71adc767497df86e82f4ead0",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/registry/ripe-104.28.0.0-14-prefix-overview.json",
+      "url": "https://stat.ripe.net/data/prefix-overview/data.json?resource=104.28.0.0%2F14",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:44:38 UTC",
+      "bytes": 8123,
+      "sha256": "a34a593435b4be5555a3d4770634ca9205f76957d40e32756d78ac596c8723d8",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/registry/ripe-8.6.112.0-24-prefix-overview.json",
+      "url": "https://stat.ripe.net/data/prefix-overview/data.json?resource=8.6.112.0%2F24",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:44:38 UTC",
+      "bytes": 852,
+      "sha256": "d8ded283b52b3a704faf79bbaa9b509e9d810d83e3c1405aa199735f4fca41e6",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/registry/ripe-8.47.69.0-24-prefix-overview.json",
+      "url": "https://stat.ripe.net/data/prefix-overview/data.json?resource=8.47.69.0%2F24",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:44:38 UTC",
+      "bytes": 854,
+      "sha256": "61118f3622f86168d4b86f839cd5f1ea39742ccacb55b4d7bec30fa272b75ce3",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/registry/ripe-95.161.64.0-rdap.json",
+      "url": "https://rdap.db.ripe.net/ip/95.161.64.0",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:44:38 UTC",
+      "bytes": 8678,
+      "sha256": "f47e644b0986ba14d2fda2a9c8f2c4c171671183bb850c502eb86acd19bce67e",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/registry/arin-8.6.112.0-rdap.json",
+      "url": "https://rdap.arin.net/registry/ip/8.6.112.0",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:44:38 UTC",
+      "bytes": 8968,
+      "sha256": "0597d266a84a7ad1cf4f74a09013f1fd66fecddb2e7b3a875ed0e5ce24e19c13",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/registry/arin-8.47.69.0-rdap.json",
+      "url": "https://rdap.arin.net/registry/ip/8.47.69.0",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:44:38 UTC",
+      "bytes": 7719,
+      "sha256": "569e7baf755dbc211ac1c4359a89c74f227407c65996b844beee6fea578a2262",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/registry/arin-104.28.0.0-rdap.json",
+      "url": "https://rdap.arin.net/registry/ip/104.28.0.0",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:44:38 UTC",
+      "bytes": 12258,
+      "sha256": "7ac48aa8d6239746e4a6588baef71d9f21e7d657f77c2abaa601a63cce8f56a6",
+      "preservation": "HTTP response body, unchanged"
+    },
+    {
+      "path": "docs/antizapret-independence/2026-10-14/official/iana-tlds.txt",
+      "url": "https://data.iana.org/TLD/tlds-alpha-by-domain.txt",
+      "commit": null,
+      "retrieved_at_utc": "2026-10-14 07:45:58 UTC",
+      "bytes": 9528,
+      "sha256": "2156a23a0f81c0f6401885a255192c5f0088781303542d3b224755055f908635",
+      "preservation": "HTTP response body, unchanged"
+    }
+  ],
+  "derived_files": [
+    {
+      "path": "lists/baseline/telegram-extra-ips.txt",
+      "sha256": "4033b6b166c8eb0e75b9d86ce5785b0d4bfc5b046a38fdaf469fb90cf4c2ad23",
+      "bytes": 15,
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "derived_from": [
+        {
+          "path": "docs/antizapret-independence/2026-10-14/upstream/telegram-ips.txt",
+          "sha256": "b5f8a7cf0759322b17738b7051767cab46d2766445791323a6f9c41d99aadfda"
+        },
+        {
+          "path": "docs/antizapret-independence/2026-10-14/official/telegram-cidr.txt",
+          "sha256": "3ecd072cedf72eceee6961b18a51e37f905d5ce4a656a5d24cf5fea63e6ec651"
+        }
+      ],
+      "operation": "IPv4 upstream minus official address coverage; all residuals retained",
+      "cidrs": [
+        "95.161.64.0/20"
+      ],
+      "decision_document": "docs/ANTIZAPRET-INDEPENDENCE-DATA.md"
+    },
+    {
+      "path": "lists/baseline/cloudflare-extra-ips.txt",
+      "sha256": "6c4e5d06eb525d20b7d83ec06e699d2d1d5d9e2b84e14a88e081f57f105d89ed",
+      "bytes": 40,
+      "commit": "28200e99440e97c5904145db3a0187c3650085c6",
+      "derived_from": [
+        {
+          "path": "docs/antizapret-independence/2026-10-14/upstream/cloudflare-ips.txt",
+          "sha256": "d178008d3648c05e233e58ffc57a11ab32f9779256427b594c7a3a76e8d4cbf5"
+        },
+        {
+          "path": "docs/antizapret-independence/2026-10-14/official/cloudflare-ips-v4.txt",
+          "sha256": "f02c6d83bc01ab0ae8577160e036d700c7455359bce054df884e5d7d9e4e9e7b"
+        },
+        {
+          "path": "docs/antizapret-independence/2026-10-14/official/cloudflare-ips-v6.txt",
+          "sha256": "9e9d39e3e83bad00c4decafd53c63fa62029f3d95db68de937d2be28234ca0a9"
+        }
+      ],
+      "operation": "IPv4 upstream minus official address coverage; all residuals retained",
+      "cidrs": [
+        "8.6.112.0/24",
+        "8.47.69.0/24",
+        "104.28.0.0/14"
+      ],
+      "decision_document": "docs/ANTIZAPRET-INDEPENDENCE-DATA.md"
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+# НЕ РЕДАКТИРУЙТЕ ЭТОТ ФАЙЛ!
+connectivitycheck.gstatic.com
+notifications.googleapis.com
+notifications-pa.googleapis.com
+searchnotifications.googleapis.com
+searchnotifications-pa.googleapis.com
+crashlyticsreports.googleapis.com
+crashlyticsreports-pa.googleapis.com
+firebaselogging.googleapis.com
+firebaselogging-pa.googleapis.com
+eu.sentry.io
+de.sentry.io
+us.sentry.io
+downloads.cursor.com
+
+# IP
+ip.hetzner.com
+checkip.amazonaws.com
+redirector.googlevideo.com
+2ip.ua
+# НЕ РЕДАКТИРУЙТЕ ЭТОТ ФАЙЛ!

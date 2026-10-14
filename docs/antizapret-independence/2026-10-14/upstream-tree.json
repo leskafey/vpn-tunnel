@@ -1,0 +1,927 @@
+{
+  "sha": "d450a7fc3b0bff226641ae0ec1405a0abfd05214",
+  "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/d450a7fc3b0bff226641ae0ec1405a0abfd05214",
+  "tree": [
+    {
+      "path": "Keenetic.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7b6c99f954ce42593437c11044844a6d1a6f6c2f",
+      "size": 2548,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/7b6c99f954ce42593437c11044844a6d1a6f6c2f"
+    },
+    {
+      "path": "README.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d7750fc6fbe962aa90f025bec72e5ef1cfb61351",
+      "size": 27328,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/d7750fc6fbe962aa90f025bec72e5ef1cfb61351"
+    },
+    {
+      "path": "TP-Link.md",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f56758653772ebf7d1cc1bce87c8dd8efbcfeaf0",
+      "size": 897,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/f56758653772ebf7d1cc1bce87c8dd8efbcfeaf0"
+    },
+    {
+      "path": "proxy.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "443f305dd37940e49e2789479e845c88ce317b7f",
+      "size": 17832,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/443f305dd37940e49e2789479e845c88ce317b7f"
+    },
+    {
+      "path": "setup.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "edf1af1d57a22385c8efa02439aac8df356c4808",
+      "size": 29929,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/edf1af1d57a22385c8efa02439aac8df356c4808"
+    },
+    {
+      "path": "setup",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "041a7eef6b1b75c931045ab96434346f0ccbffef",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/041a7eef6b1b75c931045ab96434346f0ccbffef"
+    },
+    {
+      "path": "setup/etc",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4849ba84894da6dda43c2b2de018422c4f19e2aa",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/4849ba84894da6dda43c2b2de018422c4f19e2aa"
+    },
+    {
+      "path": "setup/etc/knot-resolver",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "13edc225ead11e38f3ca7b3dc2d677905928b80a",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/13edc225ead11e38f3ca7b3dc2d677905928b80a"
+    },
+    {
+      "path": "setup/etc/knot-resolver/custom.lua",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e8bdcb7196481c855a101537d78e172f6f395aaa",
+      "size": 245,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e8bdcb7196481c855a101537d78e172f6f395aaa"
+    },
+    {
+      "path": "setup/etc/knot-resolver/custom2.lua",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "da970399c63cf50fea46078d340a4633fae54db1",
+      "size": 239,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/da970399c63cf50fea46078d340a4633fae54db1"
+    },
+    {
+      "path": "setup/etc/knot-resolver/deny.rpz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "setup/etc/knot-resolver/deny2.rpz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "setup/etc/knot-resolver/kresd.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "58ed98d1cdb3a3be3ece2c8b31a6a5053d26233f",
+      "size": 10309,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/58ed98d1cdb3a3be3ece2c8b31a6a5053d26233f"
+    },
+    {
+      "path": "setup/etc/knot-resolver/proxy.rpz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "setup/etc/knot-resolver/renumber.lua",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ac06f19cfcf2a047b66552517eda41b6e7252417",
+      "size": 202,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/ac06f19cfcf2a047b66552517eda41b6e7252417"
+    },
+    {
+      "path": "setup/etc/knot-resolver/renumber2.lua",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b664df03de564e0951ba540a8523cd987431cc6f",
+      "size": 196,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/b664df03de564e0951ba540a8523cd987431cc6f"
+    },
+    {
+      "path": "setup/etc/knot-resolver/warp.rpz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8b137891791fe96927ad78e64b0aad7bded08bdc",
+      "size": 1,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/8b137891791fe96927ad78e64b0aad7bded08bdc"
+    },
+    {
+      "path": "setup/etc/openvpn",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "4f9969fafd17d6a2634dc843df46a19ec7a371b2",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/4f9969fafd17d6a2634dc843df46a19ec7a371b2"
+    },
+    {
+      "path": "setup/etc/openvpn/client",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "da4237df45e1095d5850042d072aa474f491a591",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/da4237df45e1095d5850042d072aa474f491a591"
+    },
+    {
+      "path": "setup/etc/openvpn/client/templates",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "ef0ef88a6aacda060f36c74c088b53b99c6ebeb2",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/ef0ef88a6aacda060f36c74c088b53b99c6ebeb2"
+    },
+    {
+      "path": "setup/etc/openvpn/client/templates/antizapret-tcp.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2762d58afa58f7777f3c66c0539ea081c1577070",
+      "size": 392,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/2762d58afa58f7777f3c66c0539ea081c1577070"
+    },
+    {
+      "path": "setup/etc/openvpn/client/templates/antizapret-udp.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7d1cc9738930f69e5aa0e5a4699591d4b25c7967",
+      "size": 392,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/7d1cc9738930f69e5aa0e5a4699591d4b25c7967"
+    },
+    {
+      "path": "setup/etc/openvpn/client/templates/antizapret.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "64be05622c7a849bac2bc10d31fa960a36c5a5b8",
+      "size": 483,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/64be05622c7a849bac2bc10d31fa960a36c5a5b8"
+    },
+    {
+      "path": "setup/etc/openvpn/client/templates/vpn-tcp.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6734cc3a859412effbcb8792b5b4c94ab83e6c5b",
+      "size": 384,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/6734cc3a859412effbcb8792b5b4c94ab83e6c5b"
+    },
+    {
+      "path": "setup/etc/openvpn/client/templates/vpn-udp.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "453bc1bd5dcce76dfde8208495c16b68825b98c4",
+      "size": 384,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/453bc1bd5dcce76dfde8208495c16b68825b98c4"
+    },
+    {
+      "path": "setup/etc/openvpn/client/templates/vpn.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4a6b4341a909c6c5ab79ef26f5f565741bf4b2bb",
+      "size": 474,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/4a6b4341a909c6c5ab79ef26f5f565741bf4b2bb"
+    },
+    {
+      "path": "setup/etc/openvpn/server",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "216d8febb09ab2f14e81e110e1e5883061f01006",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/216d8febb09ab2f14e81e110e1e5883061f01006"
+    },
+    {
+      "path": "setup/etc/openvpn/server/antizapret-tcp.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a336910e4ba65787d0f22ad244faa61d0d3303b7",
+      "size": 944,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/a336910e4ba65787d0f22ad244faa61d0d3303b7"
+    },
+    {
+      "path": "setup/etc/openvpn/server/antizapret-udp.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d2d89b3d0f40320900c313c738b124e1239b41fd",
+      "size": 954,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/d2d89b3d0f40320900c313c738b124e1239b41fd"
+    },
+    {
+      "path": "setup/etc/openvpn/server/scripts",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "384c68dd7a65506b63839aebe977f4b2e6ec07cc",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/384c68dd7a65506b63839aebe977f4b2e6ec07cc"
+    },
+    {
+      "path": "setup/etc/openvpn/server/scripts/client-connect.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f1eb383671bf7751e24bbc37abd433a6145257a9",
+      "size": 248,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/f1eb383671bf7751e24bbc37abd433a6145257a9"
+    },
+    {
+      "path": "setup/etc/openvpn/server/scripts/client-disconnect.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c3c3f3f53f62cce772ed8631bcf132674afc92e7",
+      "size": 18,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/c3c3f3f53f62cce772ed8631bcf132674afc92e7"
+    },
+    {
+      "path": "setup/etc/openvpn/server/vpn-tcp.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "d84a8c98bef140934c86941ab4b0d5e3e4a571cb",
+      "size": 986,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/d84a8c98bef140934c86941ab4b0d5e3e4a571cb"
+    },
+    {
+      "path": "setup/etc/openvpn/server/vpn-udp.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e21ea7f7eea684692aaba64fd72bb7067dd50a13",
+      "size": 997,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e21ea7f7eea684692aaba64fd72bb7067dd50a13"
+    },
+    {
+      "path": "setup/etc/sysctl.d",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b0d428dee983ce4bb13f067343cf4d0f77162110",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/b0d428dee983ce4bb13f067343cf4d0f77162110"
+    },
+    {
+      "path": "setup/etc/sysctl.d/99-antizapret.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "acf1f44d21ccd13a9c8ae881f02aa1a142259250",
+      "size": 2459,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/acf1f44d21ccd13a9c8ae881f02aa1a142259250"
+    },
+    {
+      "path": "setup/etc/sysctl.d/99-disable-ipv6.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "69fee18540be45e732445b02224e375fa69e05f0",
+      "size": 116,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/69fee18540be45e732445b02224e375fa69e05f0"
+    },
+    {
+      "path": "setup/etc/systemd",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "dd81b1f1ef6646c99d9e2610314f1e724627b828",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/dd81b1f1ef6646c99d9e2610314f1e724627b828"
+    },
+    {
+      "path": "setup/etc/systemd/system",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "044d5576eb57e232d3c656ea6b2535025b136818",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/044d5576eb57e232d3c656ea6b2535025b136818"
+    },
+    {
+      "path": "setup/etc/systemd/system/antizapret-update.service",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ecc0e67ac044af38cd3cb18b1dbc9a56005ff4cd",
+      "size": 365,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/ecc0e67ac044af38cd3cb18b1dbc9a56005ff4cd"
+    },
+    {
+      "path": "setup/etc/systemd/system/antizapret-update.timer",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "1cf2756e81397985803f73f8f0f62742fa9bb2ac",
+      "size": 159,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/1cf2756e81397985803f73f8f0f62742fa9bb2ac"
+    },
+    {
+      "path": "setup/etc/systemd/system/antizapret.service",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97b6b08cf46d623cb030375c2a983aab36622a52",
+      "size": 417,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/97b6b08cf46d623cb030375c2a983aab36622a52"
+    },
+    {
+      "path": "setup/etc/systemd/system/kresd@.service.d",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "627429a63e4ae00cd1c55244f0974be8b1c4f77f",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/627429a63e4ae00cd1c55244f0974be8b1c4f77f"
+    },
+    {
+      "path": "setup/etc/systemd/system/kresd@.service.d/override.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63fa694072bd04f2704b610f2b45dcd0a04195b6",
+      "size": 102,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/63fa694072bd04f2704b610f2b45dcd0a04195b6"
+    },
+    {
+      "path": "setup/etc/systemd/system/openvpn-server@.service.d",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "627429a63e4ae00cd1c55244f0974be8b1c4f77f",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/627429a63e4ae00cd1c55244f0974be8b1c4f77f"
+    },
+    {
+      "path": "setup/etc/systemd/system/openvpn-server@.service.d/override.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63fa694072bd04f2704b610f2b45dcd0a04195b6",
+      "size": 102,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/63fa694072bd04f2704b610f2b45dcd0a04195b6"
+    },
+    {
+      "path": "setup/etc/systemd/system/wg-quick@.service.d",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "627429a63e4ae00cd1c55244f0974be8b1c4f77f",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/627429a63e4ae00cd1c55244f0974be8b1c4f77f"
+    },
+    {
+      "path": "setup/etc/systemd/system/wg-quick@.service.d/override.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "63fa694072bd04f2704b610f2b45dcd0a04195b6",
+      "size": 102,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/63fa694072bd04f2704b610f2b45dcd0a04195b6"
+    },
+    {
+      "path": "setup/etc/wireguard",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2eb1f5eda1f7b50da4c67e6e3dd82b90321fda5b",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/2eb1f5eda1f7b50da4c67e6e3dd82b90321fda5b"
+    },
+    {
+      "path": "setup/etc/wireguard/ips",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e69de29bb2d1d6434b8b29ae775ad8c2e48c5391",
+      "size": 0,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e69de29bb2d1d6434b8b29ae775ad8c2e48c5391"
+    },
+    {
+      "path": "setup/etc/wireguard/templates",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "02cbff0b17e144e7ab7d7a45996899b922a4825d",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/02cbff0b17e144e7ab7d7a45996899b922a4825d"
+    },
+    {
+      "path": "setup/etc/wireguard/templates/antizapret-client-am.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "204cacfb9e56607459dc03370cda207440200309",
+      "size": 1419,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/204cacfb9e56607459dc03370cda207440200309"
+    },
+    {
+      "path": "setup/etc/wireguard/templates/antizapret-client-wg.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55534eb9da933d3f156b95c06c8dc09371a8f3bf",
+      "size": 251,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/55534eb9da933d3f156b95c06c8dc09371a8f3bf"
+    },
+    {
+      "path": "setup/etc/wireguard/templates/antizapret.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9617a9169a60869d5e86b1b7788e1ad5c7add586",
+      "size": 94,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/9617a9169a60869d5e86b1b7788e1ad5c7add586"
+    },
+    {
+      "path": "setup/etc/wireguard/templates/vpn-client-am.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b9923dde07528c8d1f9d0ec8e6a6b70df58e8ac9",
+      "size": 1417,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/b9923dde07528c8d1f9d0ec8e6a6b70df58e8ac9"
+    },
+    {
+      "path": "setup/etc/wireguard/templates/vpn-client-wg.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "acf13a0621480e581ab65587a850ed8f59977612",
+      "size": 249,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/acf13a0621480e581ab65587a850ed8f59977612"
+    },
+    {
+      "path": "setup/etc/wireguard/templates/vpn.conf",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "f4df6408d21ee01bd37e196d5609b70f15a33961",
+      "size": 94,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/f4df6408d21ee01bd37e196d5609b70f15a33961"
+    },
+    {
+      "path": "setup/root",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "c2e526d24c0c382603832f02585982b2f8154684",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/c2e526d24c0c382603832f02585982b2f8154684"
+    },
+    {
+      "path": "setup/root/antizapret",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "9fee1fdbbf0718b9caaa7cd34e44344d70152e4e",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/9fee1fdbbf0718b9caaa7cd34e44344d70152e4e"
+    },
+    {
+      "path": "setup/root/antizapret/client.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "8881414fd756ffbf1f8ef436796ff7445854f023",
+      "size": 17306,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/8881414fd756ffbf1f8ef436796ff7445854f023"
+    },
+    {
+      "path": "setup/root/antizapret/config",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b462c68776203361d5a7922e5b87384c75eba80d",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/b462c68776203361d5a7922e5b87384c75eba80d"
+    },
+    {
+      "path": "setup/root/antizapret/config/allow-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b40c663f04c166657e0b919ce9f761b828014086",
+      "size": 834,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/b40c663f04c166657e0b919ce9f761b828014086"
+    },
+    {
+      "path": "setup/root/antizapret/config/deny-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e3644673bc5caf73c7182b126b95552da3a6b820",
+      "size": 857,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e3644673bc5caf73c7182b126b95552da3a6b820"
+    },
+    {
+      "path": "setup/root/antizapret/config/deny-rpz.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "97864344c7c9a235ff7678cdc05814cd4bfd8909",
+      "size": 226,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/97864344c7c9a235ff7678cdc05814cd4bfd8909"
+    },
+    {
+      "path": "setup/root/antizapret/config/deny2-rpz.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e29a2694c69d604b6e3ffebac54f60562c7363c2",
+      "size": 230,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e29a2694c69d604b6e3ffebac54f60562c7363c2"
+    },
+    {
+      "path": "setup/root/antizapret/config/drop-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "721f1ab865a9b96f09315cd525686eadf0214481",
+      "size": 809,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/721f1ab865a9b96f09315cd525686eadf0214481"
+    },
+    {
+      "path": "setup/root/antizapret/config/exclude-adblock-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cc90414ad7f364d0cced6ef3ada648bf6c5decff",
+      "size": 1163,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/cc90414ad7f364d0cced6ef3ada648bf6c5decff"
+    },
+    {
+      "path": "setup/root/antizapret/config/exclude-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bfc365243ac053a2c1e0be9d01bdebe85d3dd578",
+      "size": 1142,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/bfc365243ac053a2c1e0be9d01bdebe85d3dd578"
+    },
+    {
+      "path": "setup/root/antizapret/config/exclude-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "00a2db9fe550407c1d0d472c2b338ade7e5c626d",
+      "size": 909,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/00a2db9fe550407c1d0d472c2b338ade7e5c626d"
+    },
+    {
+      "path": "setup/root/antizapret/config/exclude-warp-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "15b439a70ed78beb91b4bb50e04e72c198a710a1",
+      "size": 1161,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/15b439a70ed78beb91b4bb50e04e72c198a710a1"
+    },
+    {
+      "path": "setup/root/antizapret/config/forward-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2b04a3ab1e509bf039e26f8d22e8664de7fa9f3d",
+      "size": 838,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/2b04a3ab1e509bf039e26f8d22e8664de7fa9f3d"
+    },
+    {
+      "path": "setup/root/antizapret/config/include-adblock-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a903a5303cda03a126b6032841eb687fc66cec7d",
+      "size": 1026,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/a903a5303cda03a126b6032841eb687fc66cec7d"
+    },
+    {
+      "path": "setup/root/antizapret/config/include-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c5ee57abff287ce8691450732e12ab348face67e",
+      "size": 1155,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/c5ee57abff287ce8691450732e12ab348face67e"
+    },
+    {
+      "path": "setup/root/antizapret/config/include-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3b0c8831f89204bed568b884f769372f0752757e",
+      "size": 802,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/3b0c8831f89204bed568b884f769372f0752757e"
+    },
+    {
+      "path": "setup/root/antizapret/config/include-warp-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0dded77e122d83d026ccb513d3a3057792696ca9",
+      "size": 1176,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/0dded77e122d83d026ccb513d3a3057792696ca9"
+    },
+    {
+      "path": "setup/root/antizapret/config/proxy-rpz.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "181616dbe545fcb56ec6557a2ab829abf19a43cd",
+      "size": 282,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/181616dbe545fcb56ec6557a2ab829abf19a43cd"
+    },
+    {
+      "path": "setup/root/antizapret/config/remove-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ee947e18fedf2591d885d5ce75ab943227edf095",
+      "size": 1037,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/ee947e18fedf2591d885d5ce75ab943227edf095"
+    },
+    {
+      "path": "setup/root/antizapret/config/warp-rpz.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ea68593c243c9fb45783ba64497b016192b35ada",
+      "size": 262,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/ea68593c243c9fb45783ba64497b016192b35ada"
+    },
+    {
+      "path": "setup/root/antizapret/custom-doall.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "05a7907cf5a4a5927d09b1e964aae97a096908f6",
+      "size": 13,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/05a7907cf5a4a5927d09b1e964aae97a096908f6"
+    },
+    {
+      "path": "setup/root/antizapret/custom-down.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "05a7907cf5a4a5927d09b1e964aae97a096908f6",
+      "size": 13,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/05a7907cf5a4a5927d09b1e964aae97a096908f6"
+    },
+    {
+      "path": "setup/root/antizapret/custom-parse.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "05a7907cf5a4a5927d09b1e964aae97a096908f6",
+      "size": 13,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/05a7907cf5a4a5927d09b1e964aae97a096908f6"
+    },
+    {
+      "path": "setup/root/antizapret/custom-up.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "05a7907cf5a4a5927d09b1e964aae97a096908f6",
+      "size": 13,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/05a7907cf5a4a5927d09b1e964aae97a096908f6"
+    },
+    {
+      "path": "setup/root/antizapret/custom-update.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "05a7907cf5a4a5927d09b1e964aae97a096908f6",
+      "size": 13,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/05a7907cf5a4a5927d09b1e964aae97a096908f6"
+    },
+    {
+      "path": "setup/root/antizapret/doall.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e77aded277c3e1fcd8d4a949f18292be620eacaf",
+      "size": 442,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e77aded277c3e1fcd8d4a949f18292be620eacaf"
+    },
+    {
+      "path": "setup/root/antizapret/down.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "c217ae0f0c8009405c2ebec6c5f6641c1d994755",
+      "size": 12488,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/c217ae0f0c8009405c2ebec6c5f6641c1d994755"
+    },
+    {
+      "path": "setup/root/antizapret/download",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "5290e70848f8617c7546c628766bdc665f7a9ad0",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/5290e70848f8617c7546c628766bdc665f7a9ad0"
+    },
+    {
+      "path": "setup/root/antizapret/download/akamai-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "6faa2b4c9c380ef61191e08fcf4260939fe20c20",
+      "size": 1342,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/6faa2b4c9c380ef61191e08fcf4260939fe20c20"
+    },
+    {
+      "path": "setup/root/antizapret/download/amazon-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "3286b02c9d07cd14ededc5f683c19b0525daede5",
+      "size": 5219,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/3286b02c9d07cd14ededc5f683c19b0525daede5"
+    },
+    {
+      "path": "setup/root/antizapret/download/cloudflare-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "88d8f0a240ebc3bc682d7a2bb8aca033b3cd78f6",
+      "size": 443,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/88d8f0a240ebc3bc682d7a2bb8aca033b3cd78f6"
+    },
+    {
+      "path": "setup/root/antizapret/download/deny-rpz.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2d5233a51e746bc648f772fcb53893400cc350a7",
+      "size": 10534,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/2d5233a51e746bc648f772fcb53893400cc350a7"
+    },
+    {
+      "path": "setup/root/antizapret/download/deny2-rpz.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "2c1bf0dcd2d7dd4664bb0e9f0496eedbbcbe0bae",
+      "size": 5287,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/2c1bf0dcd2d7dd4664bb0e9f0496eedbbcbe0bae"
+    },
+    {
+      "path": "setup/root/antizapret/download/digitalocean-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "9a86c120988e8e8e4d666c6d096450d14211f92b",
+      "size": 1165,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/9a86c120988e8e8e4d666c6d096450d14211f92b"
+    },
+    {
+      "path": "setup/root/antizapret/download/discord-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "ad30d7b5f0be120c1b63fb791d20d8db0ba6e9fb",
+      "size": 240,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/ad30d7b5f0be120c1b63fb791d20d8db0ba6e9fb"
+    },
+    {
+      "path": "setup/root/antizapret/download/exclude-adblock-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e5ba43c32710ce8cd1adef33375518c034e05b63",
+      "size": 183,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e5ba43c32710ce8cd1adef33375518c034e05b63"
+    },
+    {
+      "path": "setup/root/antizapret/download/exclude-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a7525960d04f2fb7d5eebce2d11dc7167f339bd9",
+      "size": 538,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/a7525960d04f2fb7d5eebce2d11dc7167f339bd9"
+    },
+    {
+      "path": "setup/root/antizapret/download/exclude-ru-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "29d582f5c74a603a9d3af7922b2c22571a658db0",
+      "size": 569,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/29d582f5c74a603a9d3af7922b2c22571a658db0"
+    },
+    {
+      "path": "setup/root/antizapret/download/fastly-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "7af59c33f10d62a6d4994eba7dc7eaeb275379a0",
+      "size": 437,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/7af59c33f10d62a6d4994eba7dc7eaeb275379a0"
+    },
+    {
+      "path": "setup/root/antizapret/download/google-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "28a9efeab2dd8397916bf6c73707c7bd3accb57a",
+      "size": 1622,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/28a9efeab2dd8397916bf6c73707c7bd3accb57a"
+    },
+    {
+      "path": "setup/root/antizapret/download/hetzner-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "a3db78fffb4dc3c1cdf0a12078c3f724a0741c6e",
+      "size": 930,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/a3db78fffb4dc3c1cdf0a12078c3f724a0741c6e"
+    },
+    {
+      "path": "setup/root/antizapret/download/include-adblock-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "30644a9fe33a318844ad6e8e0596dd86f1b44f7d",
+      "size": 254,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/30644a9fe33a318844ad6e8e0596dd86f1b44f7d"
+    },
+    {
+      "path": "setup/root/antizapret/download/include-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "701d90f828b68066155a2ee2b407a3322c43e410",
+      "size": 18116,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/701d90f828b68066155a2ee2b407a3322c43e410"
+    },
+    {
+      "path": "setup/root/antizapret/download/include-warp-hosts.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "cc0434d7bafbff079e364c00243304e27841d029",
+      "size": 344,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/cc0434d7bafbff079e364c00243304e27841d029"
+    },
+    {
+      "path": "setup/root/antizapret/download/ovh-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "208fb920493c7de273e14f47f811555540a3a451",
+      "size": 880,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/208fb920493c7de273e14f47f811555540a3a451"
+    },
+    {
+      "path": "setup/root/antizapret/download/remove-hosts.txt.gz",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "e2cfee95575ba9cfdc0f27ad1fffb608577a310d",
+      "size": 2544342,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/e2cfee95575ba9cfdc0f27ad1fffb608577a310d"
+    },
+    {
+      "path": "setup/root/antizapret/download/roblox-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "5616e6d640c7f5bcb3ead025c7e92a71d025a202",
+      "size": 154,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/5616e6d640c7f5bcb3ead025c7e92a71d025a202"
+    },
+    {
+      "path": "setup/root/antizapret/download/telegram-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "b82f7a2fd61911eb6a72d87e0e8142b6fc1ad268",
+      "size": 270,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/b82f7a2fd61911eb6a72d87e0e8142b6fc1ad268"
+    },
+    {
+      "path": "setup/root/antizapret/download/whatsapp-ips.txt",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "da6750a0ee65c84ca63ca13768c9a2bb7521f99b",
+      "size": 348,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/da6750a0ee65c84ca63ca13768c9a2bb7521f99b"
+    },
+    {
+      "path": "setup/root/antizapret/openvpn-dco.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bd30d4531231a202a227c8ee13e6d4857bf545af",
+      "size": 1510,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/bd30d4531231a202a227c8ee13e6d4857bf545af"
+    },
+    {
+      "path": "setup/root/antizapret/parse.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "55c17e207cc6f2ad5c0e2766fdb51a1f4718bd35",
+      "size": 17117,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/55c17e207cc6f2ad5c0e2766fdb51a1f4718bd35"
+    },
+    {
+      "path": "setup/root/antizapret/patch-openvpn.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "4e282f3a88f6f877f367ec7a45e02095510d3757",
+      "size": 4918,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/4e282f3a88f6f877f367ec7a45e02095510d3757"
+    },
+    {
+      "path": "setup/root/antizapret/proxy.py",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "00d5f63fd59e87cb787ad65d855458ab527bcff3",
+      "size": 10719,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/00d5f63fd59e87cb787ad65d855458ab527bcff3"
+    },
+    {
+      "path": "setup/root/antizapret/up.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "0ea825a42b75786e729d8dee253a8aaa9b29c2bd",
+      "size": 20718,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/0ea825a42b75786e729d8dee253a8aaa9b29c2bd"
+    },
+    {
+      "path": "setup/root/antizapret/update.sh",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "bc8008afe1e9883d6139beb7c8d2d7596524fadd",
+      "size": 7573,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/bc8008afe1e9883d6139beb7c8d2d7596524fadd"
+    },
+    {
+      "path": "setup/usr",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "2bb273812ce7da02c708a814642399c8476ac5bb",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/2bb273812ce7da02c708a814642399c8476ac5bb"
+    },
+    {
+      "path": "setup/usr/lib",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "6532b62131c576c92e19655abaafa38807fbbc0d",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/6532b62131c576c92e19655abaafa38807fbbc0d"
+    },
+    {
+      "path": "setup/usr/lib/knot-resolver",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "b84d0a8e878f4e444b99307449a79652338d6045",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/b84d0a8e878f4e444b99307449a79652338d6045"
+    },
+    {
+      "path": "setup/usr/lib/knot-resolver/kres_modules",
+      "mode": "040000",
+      "type": "tree",
+      "sha": "d8b538077ce45d96e5f8f2a9eae0bbdfbf3b4ab4",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/d8b538077ce45d96e5f8f2a9eae0bbdfbf3b4ab4"
+    },
+    {
+      "path": "setup/usr/lib/knot-resolver/kres_modules/fallback.lua",
+      "mode": "100644",
+      "type": "blob",
+      "sha": "dd525875ffb0de4ee1b5985234c0b8b730959e67",
+      "size": 2380,
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/blobs/dd525875ffb0de4ee1b5985234c0b8b730959e67"
+    }
+  ],
+  "truncated": false
+}

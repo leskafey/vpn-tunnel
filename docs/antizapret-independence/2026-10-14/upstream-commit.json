@@ -1,0 +1,101 @@
+{
+  "sha": "28200e99440e97c5904145db3a0187c3650085c6",
+  "node_id": "C_kwDOMi8nFdoAKDI4MjAwZTk5NDQwZTk3YzU5MDQxNDVkYjNhMDE4N2MzNjUwMDg1YzY",
+  "commit": {
+    "author": {
+      "name": "GubernievS",
+      "email": "26377864+GubernievS@users.noreply.github.com",
+      "date": "2026-10-13T21:29:47Z"
+    },
+    "committer": {
+      "name": "GubernievS",
+      "email": "26377864+GubernievS@users.noreply.github.com",
+      "date": "2026-10-13T21:29:47Z"
+    },
+    "message": "Update include-hosts.txt",
+    "tree": {
+      "sha": "d450a7fc3b0bff226641ae0ec1405a0abfd05214",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/trees/d450a7fc3b0bff226641ae0ec1405a0abfd05214"
+    },
+    "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/git/commits/28200e99440e97c5904145db3a0187c3650085c6",
+    "comment_count": 0,
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/commits/28200e99440e97c5904145db3a0187c3650085c6",
+  "html_url": "https://github.com/GubernievS/AntiZapret-VPN/commit/28200e99440e97c5904145db3a0187c3650085c6",
+  "comments_url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/commits/28200e99440e97c5904145db3a0187c3650085c6/comments",
+  "author": {
+    "login": "GubernievS",
+    "id": 26377864,
+    "node_id": "MDQ6VXNlcjI2Mzc3ODY0",
+    "avatar_url": "https://avatars.githubusercontent.com/u/26377864?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/GubernievS",
+    "html_url": "https://github.com/GubernievS",
+    "followers_url": "https://api.github.com/users/GubernievS/followers",
+    "following_url": "https://api.github.com/users/GubernievS/following{/other_user}",
+    "gists_url": "https://api.github.com/users/GubernievS/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/GubernievS/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/GubernievS/subscriptions",
+    "organizations_url": "https://api.github.com/users/GubernievS/orgs",
+    "repos_url": "https://api.github.com/users/GubernievS/repos",
+    "events_url": "https://api.github.com/users/GubernievS/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/GubernievS/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "GubernievS",
+    "id": 26377864,
+    "node_id": "MDQ6VXNlcjI2Mzc3ODY0",
+    "avatar_url": "https://avatars.githubusercontent.com/u/26377864?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/GubernievS",
+    "html_url": "https://github.com/GubernievS",
+    "followers_url": "https://api.github.com/users/GubernievS/followers",
+    "following_url": "https://api.github.com/users/GubernievS/following{/other_user}",
+    "gists_url": "https://api.github.com/users/GubernievS/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/GubernievS/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/GubernievS/subscriptions",
+    "organizations_url": "https://api.github.com/users/GubernievS/orgs",
+    "repos_url": "https://api.github.com/users/GubernievS/repos",
+    "events_url": "https://api.github.com/users/GubernievS/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/GubernievS/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "92d51a26ce52f5a9100496d434dc2cccafe6c8c8",
+      "url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/commits/92d51a26ce52f5a9100496d434dc2cccafe6c8c8",
+      "html_url": "https://github.com/GubernievS/AntiZapret-VPN/commit/92d51a26ce52f5a9100496d434dc2cccafe6c8c8"
+    }
+  ],
+  "stats": {
+    "total": 1,
+    "additions": 1,
+    "deletions": 0
+  },
+  "files": [
+    {
+      "sha": "701d90f828b68066155a2ee2b407a3322c43e410",
+      "filename": "setup/root/antizapret/download/include-hosts.txt",
+      "status": "modified",
+      "additions": 1,
+      "deletions": 0,
+      "changes": 1,
+      "blob_url": "https://github.com/GubernievS/AntiZapret-VPN/blob/28200e99440e97c5904145db3a0187c3650085c6/setup%2Froot%2Fantizapret%2Fdownload%2Finclude-hosts.txt",
+      "raw_url": "https://github.com/GubernievS/AntiZapret-VPN/raw/28200e99440e97c5904145db3a0187c3650085c6/setup%2Froot%2Fantizapret%2Fdownload%2Finclude-hosts.txt",
+      "contents_url": "https://api.github.com/repos/GubernievS/AntiZapret-VPN/contents/setup%2Froot%2Fantizapret%2Fdownload%2Finclude-hosts.txt?ref=28200e99440e97c5904145db3a0187c3650085c6",
+      "patch": "@@ -1273,6 +1273,7 @@ zerro.app\n railway.com\n stubhub.com\n citycodegame.com\n+mobile.de\n \n # Сертификаты\n #letsencrypt.org"
+    }
+  ]
+}
